@@ -108,3 +108,23 @@ export interface SeasonalityResult {
   yearsData: SeasonalityYearData[];
   periodMetrics: SeasonalityPeriodMetrics[];
 }
+
+// --- Best Periods & Screener Models ---
+export interface BestPeriodEntry {
+  periodLabel: string;
+  periodIndex: number;
+  averageReturn: number;
+  positiveProbability: number;
+  negativeProbability: number;
+}
+
+export interface ScreenerStock {
+  instrument: UpstoxInstrument;
+  positiveProbability: number;
+  negativeProbability: number;
+  periodToDate: number;      // MTD / WTD / DTD (% change so far in current period)
+  maxPositive: number;        // Best historical return for this period
+  avgPositive: number;        // Average positive return
+  minPositive: number;        // Smallest positive return (weakest bull case)
+  currentPrice: number;
+}

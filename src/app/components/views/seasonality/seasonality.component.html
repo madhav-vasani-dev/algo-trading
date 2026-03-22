@@ -1,4 +1,4 @@
-<div class="dropdown-backdrop" *ngIf="isSectorDropdownOpen || isPeriodDropdownOpen || filteredStocks.length > 0" (click)="closeDropdowns()"></div>
+<div class="dropdown-backdrop" *ngIf="isSectorDropdownOpen || isPeriodDropdownOpen || isIndexDropdownOpen || isScreenerIndexDropdownOpen || isScreenerPeriodDropdownOpen || isScreenerPeriodIndexDropdownOpen || filteredStocks.length > 0" (click)="closeDropdowns()"></div>
 
 <div class="dashboard-header">
   <div>
@@ -8,6 +8,259 @@
 </div>
 
 <div class="dashboard-content">
+
+  <!-- ═══════════════════════════════════════════════════════
+       FEATURE 3: Seasonal Stock Screener Card (Top)
+       ═══════════════════════════════════════════════════════ -->
+  <div class="panel screener-panel">
+    <div class="panel-header">
+      <h2>
+        <span class="material-icons" style="font-size:20px; vertical-align:middle; margin-right:6px; color:#6366f1">filter_alt</span>
+        Seasonal Stock Screener
+      </h2>
+      <span class="panel-badge screener-badge">NEW</span>
+    </div>
+    <div class="panel-body">
+      <p class="screener-description">Find stocks with historically strong seasonal patterns. Select an index, period type, and specific period to discover stocks that are bullish or bearish ≥75% of the time.</p>
+
+      <div class="engine-form">
+        <div class="form-row">
+          <!-- Index Select -->
+          <div class="form-group flex-1 dropdown-container">
+            <label>
+              <span class="material-icons label-icon">show_chart</span>
+              Index
+            </label>
+            <div class="select-wrapper" (click)="isScreenerIndexDropdownOpen = !isScreenerIndexDropdownOpen">
+              <span class="material-icons select-icon">expand_more</span>
+              <div class="styled-select display-value">
+                {{ screenerIndex || 'Select Index' }}
+              </div>
+            </div>
+            <div class="dropdown-list top-75" *ngIf="isScreenerIndexDropdownOpen">
+              <div class="dropdown-item" *ngFor="let idx of indexNames"
+                   [class.selected]="screenerIndex === idx"
+                   (click)="selectScreenerIndex(idx)">
+                <div class="dropdown-item-content">
+                  <strong>{{ idx }}</strong>
+                  <span class="material-icons check-icon" *ngIf="screenerIndex === idx">check</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Period Type Select -->
+          <div class="form-group flex-1 dropdown-container">
+            <label>
+              <span class="material-icons label-icon">calendar_view_month</span>
+              Period
+            </label>
+            <div class="select-wrapper" (click)="isScreenerPeriodDropdownOpen = !isScreenerPeriodDropdownOpen">
+              <span class="material-icons select-icon">expand_more</span>
+              <div class="styled-select display-value">
+                {{ screenerPeriod === 'month' ? 'Monthly' : screenerPeriod === 'week' ? 'Weekly' : 'Daily' }}
+              </div>
+            </div>
+            <div class="dropdown-list" *ngIf="isScreenerPeriodDropdownOpen">
+              <div class="dropdown-item" [class.selected]="screenerPeriod === 'month'" (click)="selectScreenerPeriod('month')">
+                <div class="dropdown-item-content">
+                  <strong>Monthly</strong>
+                  <span class="material-icons check-icon" *ngIf="screenerPeriod === 'month'">check</span>
+                </div>
+              </div>
+              <div class="dropdown-item" [class.selected]="screenerPeriod === 'week'" (click)="selectScreenerPeriod('week')">
+                <div class="dropdown-item-content">
+                  <strong>Weekly</strong>
+                  <span class="material-icons check-icon" *ngIf="screenerPeriod === 'week'">check</span>
+                </div>
+              </div>
+              <div class="dropdown-item" [class.selected]="screenerPeriod === 'day'" (click)="selectScreenerPeriod('day')">
+                <div class="dropdown-item-content">
+                  <strong>Daily</strong>
+                  <span class="material-icons check-icon" *ngIf="screenerPeriod === 'day'">check</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Specific Period Select -->
+          <div class="form-group flex-1 dropdown-container">
+            <label>
+              <span class="material-icons label-icon">event</span>
+              Select {{ screenerPeriod === 'month' ? 'Month' : screenerPeriod === 'week' ? 'Week' : 'Day' }}
+            </label>
+            <div class="select-wrapper" (click)="isScreenerPeriodIndexDropdownOpen = !isScreenerPeriodIndexDropdownOpen">
+              <span class="material-icons select-icon">expand_more</span>
+              <div class="styled-select display-value">
+                {{ currentScreenerPeriodLabel || 'Select...' }}
+              </div>
+            </div>
+            <div class="dropdown-list screener-period-dropdown" *ngIf="isScreenerPeriodIndexDropdownOpen">
+              <div class="dropdown-item" *ngFor="let label of screenerPeriodLabels; let i = index"
+                   [class.selected]="screenerPeriodIndex === i"
+                   (click)="selectScreenerPeriodIndex(i)">
+                <div class="dropdown-item-content">
+                  <strong>{{ label }}</strong>
+                  <span class="material-icons check-icon" *ngIf="screenerPeriodIndex === i">check</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Run Screener Button -->
+        <div class="generate-row" style="margin-top: 12px;">
+          <button class="generate-btn screener-btn" (click)="runScreener()"
+                  [disabled]="isScreenerRunning || !screenerIndex"
+                  [class.loading]="isScreenerRunning">
+            <ng-container *ngIf="!isScreenerRunning">
+              <span class="material-icons btn-icon">search</span>
+              Run Seasonal Screener
+              <span class="material-icons btn-arrow">arrow_forward</span>
+            </ng-container>
+            <ng-container *ngIf="isScreenerRunning">
+              <span class="spinner button-spinner"></span>
+              &nbsp;{{ screenerProgress || 'Scanning stocks...' }}
+            </ng-container>
+          </button>
+          <p class="generate-hint" *ngIf="isScreenerRunning && screenerProgress">
+            Fetching 15 years of history per stock (3 at a time for speed).
+          </p>
+        </div>
+      </div>
+
+      <!-- Screener Error -->
+      <div class="error-banner" *ngIf="screenerError" style="margin-top: 16px;">
+        <span class="material-icons">error_outline</span>
+        {{ screenerError }}
+      </div>
+
+      <!-- Screener Results -->
+      <div class="screener-results" *ngIf="screenerHasRun && !isScreenerRunning">
+
+        <!-- No stocks at all -->
+        <div class="screener-empty-full" *ngIf="screenerBullish.length === 0 && screenerBearish.length === 0">
+          <span class="material-icons" style="font-size:40px; color:#cbd5e1">filter_alt_off</span>
+          <h4>No Strong Seasonal Patterns Found</h4>
+          <p>None of the stocks in <strong>{{ screenerIndex }}</strong> have ≥75% positive or negative probability for <strong>{{ currentScreenerPeriodLabel }}</strong>.</p>
+          <p class="screener-empty-tip">Try selecting a different period or a sector-specific index with fewer, more concentrated stocks.</p>
+        </div>
+
+        <ng-container *ngIf="screenerBullish.length > 0 || screenerBearish.length > 0">
+        <!-- Tabs -->
+        <div class="screener-tabs">
+          <button class="tab-btn" [class.active]="screenerTab === 'bullish'" (click)="screenerTab = 'bullish'">
+            <span class="material-icons tab-icon bullish-icon">trending_up</span>
+            Bullish ({{ screenerBullish.length }})
+          </button>
+          <button class="tab-btn" [class.active]="screenerTab === 'bearish'" (click)="screenerTab = 'bearish'">
+            <span class="material-icons tab-icon bearish-icon">trending_down</span>
+            Bearish ({{ screenerBearish.length }})
+          </button>
+        </div>
+
+        <!-- No Results -->
+        <div class="screener-empty" *ngIf="(screenerTab === 'bullish' && screenerBullish.length === 0) || (screenerTab === 'bearish' && screenerBearish.length === 0)">
+          <span class="material-icons" style="font-size:32px; color:#94a3b8;">search_off</span>
+          <p>No {{ screenerTab }} stocks found with ≥75% probability for {{ currentScreenerPeriodLabel }}.</p>
+        </div>
+
+        <!-- Bullish Stocks -->
+        <div class="screener-stock-list" *ngIf="screenerTab === 'bullish'">
+          <details class="screener-stock-accordion" *ngFor="let stock of screenerBullish">
+            <summary class="screener-stock-summary">
+              <div class="screener-stock-header">
+                <div class="screener-stock-name">
+                  <strong>{{ stock.instrument.tradingsymbol }}</strong>
+                  <span class="screener-stock-price">₹{{ stock.currentPrice | number:'1.2-2' }}</span>
+                </div>
+                <div class="screener-stock-prob bullish-prob">
+                  {{ stock.positiveProbability | number:'1.0-0' }}% positive
+                </div>
+              </div>
+              <span class="material-icons accordion-icon">expand_more</span>
+            </summary>
+            <div class="screener-stock-body">
+              <div class="screener-stats-grid">
+                <div class="screener-stat">
+                  <span class="stat-label">% Positive</span>
+                  <span class="stat-value bullish-text">{{ stock.positiveProbability | number:'1.0-0' }}%</span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">{{ screenerPeriod === 'month' ? 'MTD' : screenerPeriod === 'week' ? 'WTD' : 'DTD' }}</span>
+                  <span class="stat-value" [class.bullish-text]="stock.periodToDate > 0" [class.bearish-text]="stock.periodToDate < 0">
+                    {{ stock.periodToDate > 0 ? '+' : '' }}{{ stock.periodToDate | number:'1.2-2' }}%
+                  </span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">Max Positive</span>
+                  <span class="stat-value bullish-text">+{{ stock.maxPositive | number:'1.2-2' }}%</span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">Avg Positive</span>
+                  <span class="stat-value bullish-text">+{{ stock.avgPositive | number:'1.2-2' }}%</span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">Min Positive</span>
+                  <span class="stat-value bullish-text">+{{ stock.minPositive | number:'1.2-2' }}%</span>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Bearish Stocks -->
+        <div class="screener-stock-list" *ngIf="screenerTab === 'bearish'">
+          <details class="screener-stock-accordion" *ngFor="let stock of screenerBearish">
+            <summary class="screener-stock-summary">
+              <div class="screener-stock-header">
+                <div class="screener-stock-name">
+                  <strong>{{ stock.instrument.tradingsymbol }}</strong>
+                  <span class="screener-stock-price">₹{{ stock.currentPrice | number:'1.2-2' }}</span>
+                </div>
+                <div class="screener-stock-prob bearish-prob">
+                  {{ stock.negativeProbability | number:'1.0-0' }}% negative
+                </div>
+              </div>
+              <span class="material-icons accordion-icon">expand_more</span>
+            </summary>
+            <div class="screener-stock-body">
+              <div class="screener-stats-grid">
+                <div class="screener-stat">
+                  <span class="stat-label">% Negative</span>
+                  <span class="stat-value bearish-text">{{ stock.negativeProbability | number:'1.0-0' }}%</span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">{{ screenerPeriod === 'month' ? 'MTD' : screenerPeriod === 'week' ? 'WTD' : 'DTD' }}</span>
+                  <span class="stat-value" [class.bullish-text]="stock.periodToDate > 0" [class.bearish-text]="stock.periodToDate < 0">
+                    {{ stock.periodToDate > 0 ? '+' : '' }}{{ stock.periodToDate | number:'1.2-2' }}%
+                  </span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">Max Negative</span>
+                  <span class="stat-value bearish-text">{{ stock.maxPositive | number:'1.2-2' }}%</span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">Avg Negative</span>
+                  <span class="stat-value bearish-text">{{ stock.avgPositive | number:'1.2-2' }}%</span>
+                </div>
+                <div class="screener-stat">
+                  <span class="stat-label">Min Negative</span>
+                  <span class="stat-value bearish-text">{{ stock.minPositive | number:'1.2-2' }}%</span>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       Existing: Configure Instruments Panel
+       ═══════════════════════════════════════════════════════ -->
   <div class="panel config-panel">
     <div class="panel-header">
       <h2>Configure Instruments</h2>
@@ -33,7 +286,6 @@
           <div class="form-group flex-2 dropdown-container">
             <label>Search Stocks (NSE Equity)</label>
             <div class="search-input-wrapper">
-              <!-- Using SVG instead of Material icon to avoid font subset issues -->
               <svg class="search-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
@@ -57,7 +309,6 @@
               </div>
             </div>
 
-            <!-- No results hint -->
             <p class="search-hint" *ngIf="searchText.length > 0 && filteredStocks.length === 0">
               No matching stocks found for "{{ searchText }}"
             </p>
@@ -133,6 +384,37 @@
               </div>
             </div>
           </div>
+
+          <!-- Index Select (Feature 2) -->
+          <div class="form-group flex-1 dropdown-container">
+            <label>
+              <span class="material-icons label-icon">show_chart</span>
+              Benchmark Index
+            </label>
+            <div class="select-wrapper" (click)="isIndexDropdownOpen = !isIndexDropdownOpen">
+              <span class="material-icons select-icon">expand_more</span>
+              <div class="styled-select display-value">
+                {{ selectedIndex || 'None' }}
+              </div>
+            </div>
+            
+            <div class="dropdown-list top-75" *ngIf="isIndexDropdownOpen">
+              <div class="dropdown-item" [class.selected]="selectedIndex === ''" (click)="selectIndex('')">
+                <div class="dropdown-item-content">
+                  <strong>None</strong>
+                  <span class="material-icons check-icon" *ngIf="selectedIndex === ''">check</span>
+                </div>
+              </div>
+              <div class="dropdown-item" *ngFor="let idx of indexNames"
+                   [class.selected]="selectedIndex === idx"
+                   (click)="selectIndex(idx)">
+                <div class="dropdown-item-content">
+                  <strong>{{ idx }}</strong>
+                  <span class="material-icons check-icon" *ngIf="selectedIndex === idx">check</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Selected Stocks -->
@@ -169,11 +451,11 @@
             </ng-container>
             <ng-container *ngIf="isCalculating">
               <span class="spinner button-spinner"></span>
-              &nbsp;Fetching maximum available history...
+              &nbsp;{{ fetchProgress || 'Fetching data...' }}
             </ng-container>
           </button>
           <p class="generate-hint" *ngIf="selectedStocks.length > 0 && isCalculating">
-            Fetching full daily history for {{ selectedStocks.length }} stock{{ selectedStocks.length > 1 ? 's' : '' }} — this may take a moment.
+            Fetching up to 20 years of daily data for {{ selectedStocks.length }} stock{{ selectedStocks.length > 1 ? 's' : '' }}{{ selectedIndex ? ' + ' + selectedIndex + ' index' : '' }}.
           </p>
           <p class="generate-hint disabled" *ngIf="selectedStocks.length === 0">
             Select at least one stock above to generate the heatmap.
@@ -185,15 +467,124 @@
     </div>
   </div>
 
-  <!-- Results Panel -->
-  <div class="panel results-panel" *ngIf="results.length > 0">
+  <!-- ═══════════════════════════════════════════════════════
+       Results Panel
+       ═══════════════════════════════════════════════════════ -->
+  <div class="panel results-panel" *ngIf="results.length > 0 || indexResult">
     <div class="panel-header">
       <h2>Seasonality Heatmaps</h2>
     </div>
     
     <div class="panel-body">
+
+      <!-- ── Feature 2: Index Heatmap (rendered first) ──── -->
+      <details class="stock-result-accordion index-accordion" *ngIf="indexResult" open>
+        <summary class="stock-title-summary">
+          <h3 class="stock-title">
+            <span class="index-badge">INDEX</span>
+            {{ indexResult.instrument.tradingsymbol }}
+          </h3>
+          <span class="material-icons accordion-icon">expand_more</span>
+        </summary>
+        
+        <div class="accordion-content">
+          <div class="table-responsive">
+            <div class="table-scroll-container">
+              <table class="seasonality-table">
+              <thead>
+                <tr>
+                  <th class="year-header">Year</th>
+                  <th *ngFor="let m of indexResult.periodMetrics">{{ m.periodLabel }}</th>
+                  <th class="year-header yearly-return">Yearly Return</th>
+                </tr>
+                <tr class="avg-row">
+                  <td class="year-cell">Avg. Return</td>
+                  <td *ngFor="let m of indexResult.periodMetrics"
+                      [ngStyle]="{ color: m.averageReturn > 0 ? '#15803d' : m.averageReturn < 0 ? '#b91c1c' : '#6b7280' }">
+                    {{ m.averageReturn > 0 ? '+' : '' }}{{ m.averageReturn | number:'1.1-1' }}%
+                  </td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let yearData of indexResult.yearsData">
+                  <td class="year-cell">{{ yearData.year }}</td>
+                  <td *ngFor="let dp of yearData.dataPoints"
+                      class="data-cell"
+                      [ngStyle]="getCellStyle(dp.percentageChange, dp.startPrice)">
+                    <span *ngIf="dp.startPrice !== 0">{{ dp.percentageChange > 0 ? '+' : '' }}{{ dp.percentageChange | number:'1.1-1' }}%</span>
+                    <span *ngIf="dp.startPrice === 0" style="color:#d1d5db">-</span>
+                  </td>
+                  <td class="data-cell yearly-return-cell" [ngStyle]="getCellStyle(yearData.yearlyReturn || 0, yearData.yearlyReturn !== undefined ? 1 : 0)">
+                    <span *ngIf="yearData.yearlyReturn !== undefined">{{ yearData.yearlyReturn > 0 ? '+' : '' }}{{ yearData.yearlyReturn | number:'1.1-1' }}%</span>
+                    <span *ngIf="yearData.yearlyReturn === undefined" style="color:#d1d5db">-</span>
+                  </td>
+                </tr>
+
+                <tr class="pos-row">
+                  <td class="year-cell">Positive %</td>
+                  <td *ngFor="let m of indexResult.periodMetrics">
+                    {{ m.positiveProbability | number:'1.0-0' }}%
+                  </td>
+                  <td></td>
+                </tr>
+                <tr class="neg-row">
+                  <td class="year-cell">Negative %</td>
+                  <td *ngFor="let m of indexResult.periodMetrics">
+                    {{ m.negativeProbability | number:'1.0-0' }}%
+                  </td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Best periods for index -->
+        <ng-container *ngIf="indexBestPeriods as bestPeriods">
+          <div class="best-periods-section" *ngIf="bestPeriods.bullish.length > 0 || bestPeriods.bearish.length > 0">
+            <div class="best-periods-divider"></div>
+            <h4 class="best-periods-title">
+              <span class="material-icons" style="font-size:18px; vertical-align:middle; color:#6366f1">insights</span>
+              Strong Seasonal Patterns (≥75%)
+            </h4>
+            <div class="best-periods-grid">
+              <div class="best-periods-column bullish-column" *ngIf="bestPeriods.bullish.length > 0">
+                <div class="best-periods-column-header bullish-header">
+                  <span class="material-icons">trending_up</span> Bullish Periods
+                </div>
+                <div class="best-period-card bullish-card" *ngFor="let entry of bestPeriods.bullish">
+                  <div class="best-period-label">{{ entry.periodLabel }}</div>
+                  <div class="best-period-stats">
+                    <span class="best-period-prob">{{ entry.positiveProbability | number:'1.0-0' }}% positive</span>
+                    <span class="best-period-avg" [class.positive]="entry.averageReturn > 0" [class.negative]="entry.averageReturn < 0">
+                      avg {{ entry.averageReturn > 0 ? '+' : '' }}{{ entry.averageReturn | number:'1.1-1' }}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="best-periods-column bearish-column" *ngIf="bestPeriods.bearish.length > 0">
+                <div class="best-periods-column-header bearish-header">
+                  <span class="material-icons">trending_down</span> Bearish Periods
+                </div>
+                <div class="best-period-card bearish-card" *ngFor="let entry of bestPeriods.bearish">
+                  <div class="best-period-label">{{ entry.periodLabel }}</div>
+                  <div class="best-period-stats">
+                    <span class="best-period-prob">{{ entry.negativeProbability | number:'1.0-0' }}% negative</span>
+                    <span class="best-period-avg" [class.positive]="entry.averageReturn > 0" [class.negative]="entry.averageReturn < 0">
+                      avg {{ entry.averageReturn > 0 ? '+' : '' }}{{ entry.averageReturn | number:'1.1-1' }}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        </div>
+      </details>
       
-      <!-- One table per selected stock -->
+      <!-- ── Stock Heatmaps ────────────────────────────── -->
       <details class="stock-result-accordion" *ngFor="let result of results" open>
         <summary class="stock-title-summary">
           <h3 class="stock-title" style="margin: 0;">{{ result.instrument.tradingsymbol }} <span>({{ result.instrument.name || result.instrument.exchange }})</span></h3>
@@ -258,6 +649,48 @@
             </table>
           </div>
         </div>
+
+        <!-- ── Feature 1: Best Periods Below Table ──── -->
+        <ng-container *ngIf="getBestPeriods(result) as bestPeriods">
+          <div class="best-periods-section" *ngIf="bestPeriods.bullish.length > 0 || bestPeriods.bearish.length > 0">
+            <div class="best-periods-divider"></div>
+            <h4 class="best-periods-title">
+              <span class="material-icons" style="font-size:18px; vertical-align:middle; color:#6366f1">insights</span>
+              Strong Seasonal Patterns (≥75%)
+            </h4>
+            <div class="best-periods-grid">
+              <div class="best-periods-column bullish-column" *ngIf="bestPeriods.bullish.length > 0">
+                <div class="best-periods-column-header bullish-header">
+                  <span class="material-icons">trending_up</span> Bullish Periods
+                </div>
+                <div class="best-period-card bullish-card" *ngFor="let entry of bestPeriods.bullish">
+                  <div class="best-period-label">{{ entry.periodLabel }}</div>
+                  <div class="best-period-stats">
+                    <span class="best-period-prob">{{ entry.positiveProbability | number:'1.0-0' }}% positive</span>
+                    <span class="best-period-avg" [class.positive]="entry.averageReturn > 0" [class.negative]="entry.averageReturn < 0">
+                      avg {{ entry.averageReturn > 0 ? '+' : '' }}{{ entry.averageReturn | number:'1.1-1' }}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="best-periods-column bearish-column" *ngIf="bestPeriods.bearish.length > 0">
+                <div class="best-periods-column-header bearish-header">
+                  <span class="material-icons">trending_down</span> Bearish Periods
+                </div>
+                <div class="best-period-card bearish-card" *ngFor="let entry of bestPeriods.bearish">
+                  <div class="best-period-label">{{ entry.periodLabel }}</div>
+                  <div class="best-period-stats">
+                    <span class="best-period-prob">{{ entry.negativeProbability | number:'1.0-0' }}% negative</span>
+                    <span class="best-period-avg" [class.positive]="entry.averageReturn > 0" [class.negative]="entry.averageReturn < 0">
+                      avg {{ entry.averageReturn > 0 ? '+' : '' }}{{ entry.averageReturn | number:'1.1-1' }}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
         </div>
       </details>
 

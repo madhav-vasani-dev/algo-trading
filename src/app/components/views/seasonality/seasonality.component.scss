@@ -756,3 +756,464 @@ label {
     max-width: 320px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   FEATURE 3: Screener Panel
+   ═══════════════════════════════════════════════════════════ */
+
+.screener-panel {
+  margin-bottom: 16px;
+  border: 1.5px solid #e0e7ff;
+  background: linear-gradient(135deg, #fefeff 0%, #f8faff 100%);
+
+  .panel-header {
+    background: linear-gradient(135deg, #eef2ff 0%, #f0f4ff 100%);
+    border-bottom-color: #c7d2fe;
+  }
+
+  .screener-badge {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    font-size: 10px;
+    letter-spacing: 0.8px;
+    padding: 3px 10px;
+  }
+}
+
+.screener-description {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.screener-btn {
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%) !important;
+  box-shadow: 0 4px 15px rgba(15, 118, 110, 0.4), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 8px 25px rgba(15, 118, 110, 0.5), inset 0 1px 0 rgba(255,255,255,0.15) !important;
+  }
+
+  &.loading {
+    background: linear-gradient(135deg, #115e59 0%, #0f766e 100%) !important;
+  }
+}
+
+.screener-period-dropdown {
+  max-height: 220px;
+}
+
+/* ─── Screener Tabs ───────────────────────────────────── */
+
+.screener-results {
+  margin-top: 20px;
+}
+
+.screener-tabs {
+  display: flex;
+  gap: 0;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 16px;
+
+  .tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: #64748b;
+    transition: all 0.2s;
+
+    .tab-icon { font-size: 18px; }
+    .bullish-icon { color: #16a34a; }
+    .bearish-icon { color: #dc2626; }
+
+    &.active {
+      background: white;
+      color: #0f172a;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    &:hover:not(.active) {
+      background: rgba(255,255,255,0.5);
+    }
+  }
+}
+
+/* ─── Screener Empty ──────────────────────────────────── */
+
+.screener-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 32px 16px;
+  text-align: center;
+
+  p {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.screener-empty-full {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 24px;
+  text-align: center;
+  background: #f8fafc;
+  border: 1px dashed #e2e8f0;
+  border-radius: 12px;
+
+  h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #334155;
+    margin: 4px 0 0;
+  }
+
+  p {
+    color: #64748b;
+    font-size: 14px;
+    margin: 0;
+    max-width: 420px;
+    line-height: 1.5;
+  }
+
+  .screener-empty-tip {
+    font-size: 12px;
+    color: #94a3b8;
+    font-style: italic;
+    margin-top: 4px;
+  }
+}
+
+/* ─── Screener Stock Accordion ────────────────────────── */
+
+.screener-stock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.screener-stock-accordion {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+
+  &[open] {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+    .accordion-icon { transform: rotate(180deg); }
+    .screener-stock-summary { border-bottom: 1px solid #e2e8f0; }
+  }
+
+  .screener-stock-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+    list-style: none;
+
+    &::-webkit-details-marker { display: none; }
+
+    &:hover { background: #f8fafc; }
+  }
+
+  .screener-stock-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+  }
+
+  .screener-stock-name {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+
+    strong {
+      font-size: 15px;
+      color: #0f172a;
+    }
+  }
+
+  .screener-stock-price {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+  }
+
+  .screener-stock-prob {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+
+    &.bullish-prob {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    &.bearish-prob {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+  }
+
+  .accordion-icon {
+    color: #94a3b8;
+    transition: transform 0.25s ease;
+    font-size: 20px;
+  }
+
+  .screener-stock-body {
+    padding: 16px;
+    background: #fafbfc;
+  }
+}
+
+/* ─── Screener Stats Grid ─────────────────────────────── */
+
+.screener-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+
+  .screener-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .bullish-text { color: #16a34a; }
+    .bearish-text { color: #dc2626; }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FEATURE 2: Index Accordion Badge
+   ═══════════════════════════════════════════════════════════ */
+
+.index-accordion {
+  border-color: #c7d2fe;
+  background: linear-gradient(135deg, #fefeff 0%, #f8f9ff 100%);
+
+  .stock-title-summary {
+    background: #f0f2ff;
+
+    &:hover { background: #ebeeff; }
+  }
+
+  &[open] .stock-title-summary {
+    background: #ebeeff;
+    border-bottom-color: #c7d2fe;
+  }
+}
+
+.index-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FEATURE 1: Best Periods Section
+   ═══════════════════════════════════════════════════════════ */
+
+.best-periods-section {
+  margin-top: 4px;
+}
+
+.best-periods-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c7d2fe, transparent);
+  margin: 20px 0 16px;
+}
+
+.best-periods-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+  margin: 0 0 14px;
+}
+
+.best-periods-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.best-periods-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.best-periods-column-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid;
+  margin-bottom: 4px;
+
+  .material-icons { font-size: 16px; }
+
+  &.bullish-header {
+    color: #15803d;
+    border-bottom-color: #86efac;
+  }
+
+  &.bearish-header {
+    color: #b91c1c;
+    border-bottom-color: #fca5a5;
+  }
+}
+
+.best-period-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid;
+  transition: transform 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+  }
+
+  &.bullish-card {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+  }
+
+  &.bearish-card {
+    background: #fef2f2;
+    border-color: #fecdd3;
+  }
+
+  .best-period-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .best-period-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .best-period-prob {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  &.bullish-card .best-period-prob {
+    background: #dcfce7;
+    color: #15803d;
+  }
+
+  &.bearish-card .best-period-prob {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+
+  .best-period-avg {
+    font-size: 12px;
+    font-weight: 600;
+
+    &.positive { color: #15803d; }
+    &.negative { color: #b91c1c; }
+  }
+}
+
+/* ─── Mobile: Screener + Best Periods ─────────────────── */
+
+@media (max-width: 768px) {
+  .screener-tabs .tab-btn {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .screener-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .screener-stock-accordion {
+    .screener-stock-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+  }
+
+  .best-period-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

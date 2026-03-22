@@ -21,7 +21,7 @@ export class SeasonalityEngineService {
    * Fetches the maximum available daily data for a given instrument.
    * Bypasses the 1-year Upstox limit by making multiple sequential calls backwards in time until Upstox returns empty.
    */
-  async fetchDeepHistoricalData(instrumentKey: string): Promise<Candle[]> {
+  async fetchDeepHistoricalData(instrumentKey: string, maxYears: number = 20): Promise<Candle[]> {
       const token = await this.upstox.getValidToken();
     if (!token) throw new Error("No Upstox token found. Please connect Broker Account.");
 
@@ -30,9 +30,9 @@ export class SeasonalityEngineService {
     // We start from today
     let currentEndDate = new Date();
     
-    // Since we don't know the exact IPO/Listing date for every stock, we just loop backwards until we hit a wall.
-    // We put a hardcap of 50 years to prevent infinite loops in case of API bugs.
-    const MAX_YEARS_SAFEGUARD = 50; 
+    // Use the provided maxYears cap (default 20) to limit how far back we fetch.
+    // Most NSE stocks have meaningful data for ~15-25 years.
+    const MAX_YEARS_SAFEGUARD = maxYears; 
     
     for (let i = 0; i < MAX_YEARS_SAFEGUARD; i++) {
         // Calculate the start date for this 1-year chunk (strictly 1 year to avoid Upstox limits)
