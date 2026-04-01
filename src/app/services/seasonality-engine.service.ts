@@ -15,13 +15,63 @@ export class SeasonalityEngineService {
   // Cache the full list so we don't re-download the massive CSV on every component load
   private allInstruments: UpstoxInstrument[] = [];
 
+  // ── Rate-limiter state ────────────────────────────────
+  // Minimum gap (ms) between consecutive Upstox API calls
+  private readonly API_CALL_DELAY_MS = 50;
+  // Max retries on 429 / rate-limit errors
+  private readonly MAX_RETRIES = 3;
+  // Timestamp of the last successful API call (used to throttle)
+  private lastApiCallTimestamp = 0;
+
     constructor(private http: HttpClient, private upstox: UpstoxService) { }
+
+  /**
+   * Waits until at least API_CALL_DELAY_MS has elapsed since the last API call.
+   * This prevents rapid-fire requests that trigger Upstox rate limits.
+   */
+  private async throttle(): Promise<void> {
+    const now = Date.now();
+    const elapsed = now - this.lastApiCallTimestamp;
+    if (elapsed < this.API_CALL_DELAY_MS) {
+      await new Promise(resolve => setTimeout(resolve, this.API_CALL_DELAY_MS - elapsed));
+    }
+  }
+
+  /**
+   * Makes a throttled API call with automatic retry + exponential backoff on 429 errors.
+   */
+  private async throttledApiCall(url: string, token: string): Promise<any> {
+    for (let attempt = 0; attempt <= this.MAX_RETRIES; attempt++) {
+      await this.throttle();
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        this.lastApiCallTimestamp = Date.now();
+        return response;
+      } catch (error: any) {
+        this.lastApiCallTimestamp = Date.now();
+        const status = error?.response?.status;
+        // Retry on 429 (Too Many Requests) or 503 (Service Unavailable)
+        if ((status === 429 || status === 503) && attempt < this.MAX_RETRIES) {
+          const backoffMs = Math.pow(2, attempt + 1) * 1000; // 2s, 4s, 8s
+          console.warn(`[SeasonalityEngine] Rate limited (${status}). Retrying in ${backoffMs / 1000}s (attempt ${attempt + 1}/${this.MAX_RETRIES})...`);
+          await new Promise(resolve => setTimeout(resolve, backoffMs));
+          continue;
+        }
+        throw error;
+      }
+    }
+  }
 
   /**
    * Fetches the maximum available daily data for a given instrument.
    * Bypasses the 1-year Upstox limit by making multiple sequential calls backwards in time until Upstox returns empty.
    */
-  async fetchDeepHistoricalData(instrumentKey: string, maxYears: number = 20): Promise<Candle[]> {
+  async fetchDeepHistoricalData(instrumentKey: string, maxYears: number = 30): Promise<Candle[]> {
       const token = await this.upstox.getValidToken();
     if (!token) throw new Error("No Upstox token found. Please connect Broker Account.");
 
@@ -52,12 +102,7 @@ export class SeasonalityEngineService {
             // v3 format: /v3/historical-candle/{key}/{unit}/{interval}/{to}/{from}
             // unit = 'days', interval = '1' (v2 used a single 'day' parameter)
             const url = `${base}/v3/historical-candle/${encodeURIComponent(instrumentKey)}/days/1/${toDateStr}/${fromDateStr}`;
-            const response = await axios.get(url, {
-              headers: {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-              }
-            });
+          const response = await this.throttledApiCall(url, token);
 
             if (response.data && response.data.status === 'success' && response.data.data) {
                 const chunkData = response.data.data.candles;

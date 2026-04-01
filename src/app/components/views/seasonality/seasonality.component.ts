@@ -217,11 +217,11 @@ export class SeasonalityComponent implements OnInit {
    * Fetches candle data for a single stock, using cache if available.
    * Uses NgZone.run to ensure Angular picks up changes after axios calls.
    */
-  private async fetchStockCandles(stock: UpstoxInstrument, maxYears = 20): Promise<Candle[] | null> {
+  private async fetchStockCandles(stock: UpstoxInstrument): Promise<Candle[] | null> {
     let candles = this.cachedCandles.get(stock.instrument_key);
     if (candles) return candles;
 
-    candles = await this.seasonalityEngine.fetchDeepHistoricalData(stock.instrument_key, maxYears);
+    candles = await this.seasonalityEngine.fetchDeepHistoricalData(stock.instrument_key);
     if (!candles || candles.length === 0) return null;
 
     this.cachedCandles.set(stock.instrument_key, candles);
@@ -433,28 +433,27 @@ export class SeasonalityComponent implements OnInit {
 
       const allResults: SeasonalityResult[] = [];
       const total = stocks.length;
-      const BATCH_SIZE = 3; // Fetch 3 stocks concurrently to speed things up
 
-      for (let i = 0; i < total; i += BATCH_SIZE) {
-        const batch = stocks.slice(i, i + BATCH_SIZE);
+      // Process stocks ONE AT A TIME to stay within Upstox API rate limits.
+      // The service layer adds 250ms throttle + exponential backoff on 429s,
+      // but sequential processing avoids multiplying concurrent load.
+      for (let i = 0; i < total; i++) {
+        const stock = stocks[i];
 
-        // Update progress
+        // Update progress with current stock name
         this.ngZone.run(() => {
-          this.screenerProgress = `Scanning ${Math.min(i + BATCH_SIZE, total)}/${total} stocks...`;
+          this.screenerProgress = `Scanning ${stock.tradingsymbol} (${i + 1}/${total})...`;
           this.cdr.detectChanges();
         });
 
-        // Fetch batch concurrently (3 at a time)
-        const batchResults = await Promise.all(
-          batch.map(async (stock) => {
-            const candles = await this.fetchStockCandles(stock, 15);
-            if (!candles) return null;
-            return this.seasonalityEngine.calculateSeasonality(stock, candles, this.screenerPeriod);
-          })
-        );
-
-        for (const result of batchResults) {
+        try {
+          const candles = await this.fetchStockCandles(stock);
+          if (!candles) continue;
+          const result = this.seasonalityEngine.calculateSeasonality(stock, candles, this.screenerPeriod);
           if (result) allResults.push(result);
+        } catch (err: any) {
+          console.warn(`[Screener] Skipping ${stock.tradingsymbol}: ${err.message}`);
+        // Continue with next stock instead of aborting the entire screener
         }
       }
 
