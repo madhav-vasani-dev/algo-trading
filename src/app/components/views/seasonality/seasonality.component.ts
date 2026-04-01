@@ -5,6 +5,7 @@ import { SeasonalityEngineService } from '../../../services/seasonality-engine.s
 import { UpstoxInstrument, SeasonalityResult, Candle, BestPeriodEntry, ScreenerStock } from '../../../models/backtest.models';
 import { SECTOR_MAPPING, SECTORS } from '../../../data/sectors';
 import { INDEX_MAPPING, INDEX_NAMES, SECTOR_TO_INDEX } from '../../../data/indices';
+import { INDEX_CONSTITUENTS } from '../../../data/index-constituents';
 
 @Component({
   selector: 'app-seasonality',
@@ -515,46 +516,10 @@ export class SeasonalityComponent implements OnInit {
    * Gets constituent stocks for an index from our available instrument list.
    */
   private getIndexStocks(indexName: string): UpstoxInstrument[] {
-    const indexToSectors: Record<string, string[]> = {
-      'NIFTY IT': ['IT', 'Software services'],
-      'NIFTY BANK': ['Financial services', 'NBFC'],
-      'NIFTY FINANCIAL SERVICES': ['Financial services', 'NBFC'],
-      'NIFTY AUTO': ['Auto ancillary'],
-      'NIFTY METAL': ['Metals'],
-      'NIFTY REALTY': ['Real estate'],
-      'NIFTY ENERGY': ['Energy'],
-      'NIFTY MEDIA': ['Media & entertainment'],
-      'NIFTY PHARMA': ['Healthcare'],
-    };
-
-    const nifty50Symbols = [
-      'RELIANCE','TCS','HDFCBANK','INFY','ICICIBANK','HINDUNILVR','ITC','SBIN',
-      'BHARTIARTL','KOTAKBANK','LT','HCLTECH','AXISBANK','ASIANPAINT','MARUTI',
-      'TITAN','SUNPHARMA','BAJFINANCE','WIPRO','ULTRACEMCO','NESTLEIND','TATAMOTORS',
-      'NTPC','POWERGRID','M&M','TATASTEEL','TECHM','JSWSTEEL','INDUSINDBK','HINDALCO',
-      'BAJAJFINSV','ADANIENT','COALINDIA','ONGC','GRASIM','CIPLA','DRREDDY','EICHERMOT',
-      'DIVISLAB','BRITANNIA','TATACONSUM','HEROMOTOCO','APOLLOHOSP','LTIM','UPL',
-      'BAJAJ-AUTO','BPCL','SBILIFE','HDFCLIFE','ADANIPORTS'
-    ];
-
-    const sectorKeys = indexToSectors[indexName];
-    if (sectorKeys) {
-      const allSymbols = new Set<string>();
-      for (const key of sectorKeys) {
-        (SECTOR_MAPPING[key] || []).forEach(s => allSymbols.add(s));
-      }
-      return this.allStocks.filter(s => allSymbols.has(s.tradingsymbol));
-    }
-
-    if (indexName === 'NIFTY 50' || indexName === 'NIFTY NEXT 50' || indexName === 'NIFTY MIDCAP 100') {
-      return this.allStocks.filter(s => nifty50Symbols.includes(s.tradingsymbol));
-    }
-
-    if (indexName === 'SENSEX') {
-      return this.allStocks.filter(s => nifty50Symbols.slice(0, 30).includes(s.tradingsymbol));
-    }
-
-    return [];
+    const symbols = INDEX_CONSTITUENTS[indexName];
+    if (!symbols || symbols.length === 0) return [];
+    const symbolSet = new Set(symbols);
+    return this.allStocks.filter(s => symbolSet.has(s.tradingsymbol));
   }
 
   getCellStyle(percent: number, startPrice: number): any {
