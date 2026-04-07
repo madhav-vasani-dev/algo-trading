@@ -174,10 +174,28 @@ export class SeasonalityEngineService {
              const week1 = new Date(tempDate.getFullYear(), 0, 4);
              periodKey = 1 + Math.round(((tempDate.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
          } else {
-             const start = new Date(year, 0, 0);
-             const diff = candle.timestamp.getTime() - start.getTime();
-             periodKey = Math.round(diff / 86400000); // 1-366
-         }
+              // Use UTC-based day-of-year to avoid DST-induced off-by-one errors.
+              // Then normalise non-leap-year days so they align with the leap-year
+              // 366-slot grid (the UI labels are anchored to 2024, a leap year).
+              const utcStart = Date.UTC(year, 0, 1);
+              const utcNow   = Date.UTC(
+                  candle.timestamp.getFullYear(),
+                  candle.timestamp.getMonth(),
+                  candle.timestamp.getDate()
+              );
+              let dayOfYear = Math.floor((utcNow - utcStart) / 86400000) + 1; // 1-based
+
+              // Is this year a leap year?
+              const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+              if (!isLeapYear && dayOfYear >= 60) {
+                  // In non-leap years, day 60 is Mar 1.  In the leap-year grid
+                  // Mar 1 is day 61 (day 60 = Feb 29).  Shift by 1 so that the
+                  // calendar dates line up with the correct column labels.
+                  dayOfYear += 1;
+              }
+
+              periodKey = dayOfYear; // 1-366
+          }
 
          if (!yearlyGroups.has(year)) {
              yearlyGroups.set(year, new Map());
@@ -250,12 +268,26 @@ export class SeasonalityEngineService {
                           }
                       }
                   } else {
-                      const prevKey = period === 'month' ? p - 1 : p;
-                      const prevCandles = periodsMap.get(prevKey);
-                      if (prevCandles && prevCandles.length > 0) {
-                          const ps = prevCandles.slice().sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
-                          prevClose = ps[ps.length - 1].close;
-                      }
+                       if (period === 'day') {
+                           // For daily view, the previous day slot might be empty
+                           // (Feb 29 gap in non-leap years, weekends, holidays).
+                           // Walk backwards up to 10 slots to find the last trading day.
+                           for (let back = lookupKey - 1; back >= Math.max(1, lookupKey - 10); back--) {
+                               const prevCandles = periodsMap.get(back);
+                               if (prevCandles && prevCandles.length > 0) {
+                                   const ps = prevCandles.slice().sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+                                   prevClose = ps[ps.length - 1].close;
+                                   break;
+                               }
+                           }
+                       } else {
+                           const prevKey = period === 'month' ? p - 1 : p;
+                           const prevCandles = periodsMap.get(prevKey);
+                           if (prevCandles && prevCandles.length > 0) {
+                               const ps = prevCandles.slice().sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+                               prevClose = ps[ps.length - 1].close;
+                           }
+                       }
                   }
 
                   if (prevClose === 0) {
