@@ -1,5 +1,13 @@
 export type TimeInterval = '1minute' | '5minute' | '15minute' | '30minute' | '60minute' | 'day' | 'week' | 'month';
 
+export interface OptionDetails {
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+}
+
 export interface Candle {
   timestamp: Date;
   open: number;
@@ -8,6 +16,15 @@ export interface Candle {
   close: number;
   volume: number;
   openInterest?: number;
+  atmStrike?: number;
+  callClose?: number;
+  putClose?: number;
+  options?: {
+    [strike: string]: {
+      CE: OptionDetails;
+      PE: OptionDetails;
+    };
+  };
 }
 
 export interface MarketDataRequest {
@@ -32,6 +49,19 @@ export interface TradePosition {
   exitTime?: Date;
   exitPrice?: number;
   pnl?: number; // Profit and Loss for this specific trade
+  entrySpot?: number;
+  exitSpot?: number;
+  exitReason?: string;
+  strikePrice?: number;
+  stopLossPrice?: number;
+  targetPrice?: number;
+  isSlMovedToCost?: boolean;
+  ceEntryPrice?: number;
+  peEntryPrice?: number;
+  ceExitPrice?: number;
+  peExitPrice?: number;
+  longOptionLots?: number;
+  shortOptionLots?: number;
 }
 
 export interface BacktestConfig {
@@ -47,6 +77,30 @@ export interface BacktestConfig {
   brokeragePerOrder?: number; // e.g., ₹20
 }
 
+export interface ORBParams {
+  openingRangeMinutes: number; // e.g., 15, 30, 60
+  direction: 'LONG' | 'SHORT' | 'BOTH';
+  stopLossType: 'POINTS' | 'PERCENT' | 'OR_OPPOSITE' | 'ENTRY_CANDLE';
+  stopLossValue: number;       // points or percent or buffer points
+  takeProfitType: 'POINTS' | 'PERCENT' | 'OR_MULTIPLE' | 'SL_MULTIPLE';
+  takeProfitValue: number;     // points, percent, or e.g., 1.5x range
+  entryStartTime: string;      // e.g., "09:30"
+  entryEndTime: string;        // e.g., "14:30"
+  squareOffTime: string;       // e.g., "15:15"
+  lotSize: number;             // e.g., 75
+  numberOfLots: number;        // e.g., 1
+  slippagePoints: number;      // e.g., 2.0
+  brokerageFlat: number;       // e.g., 80
+  tradeType?: 'SPOT' | 'OPTIONS'; // e.g., trade spot index or option premiums
+  entryType?: 'MARKET' | 'RETEST' | 'REVERSION' | 'FVG'; // market or pullback limit entry or mean reversion opposite entry or FVG pullback entry
+  maxTradesPerDay?: number;
+  trailingStopLoss?: number;   // 0 to disable, or points trailing SL
+  trailToCostAtFiftyPercentTarget?: boolean;
+  maxTradesOnSLHit?: number;
+  longOptionLots?: number;
+  shortOptionLots?: number;
+}
+
 export interface BacktestMetrics {
   totalTrades: number;
   winningTrades: number;
@@ -58,6 +112,12 @@ export interface BacktestMetrics {
   maxDrawdown: number;
   maxDrawdownPercent: number;
   finalCapital: number;
+  avgWin?: number;
+  avgLoss?: number;
+  winLossRatio?: number;
+  recoveryFactor?: number;
+  maxConsecutiveWins?: number;
+  maxConsecutiveLosses?: number;
 }
 
 export interface BacktestResult {
@@ -65,6 +125,13 @@ export interface BacktestResult {
   metrics: BacktestMetrics;
   trades: TradePosition[];
   equityCurve: { time: Date; equity: number }[];
+}
+
+export interface SavedSimulation {
+  id: string;
+  runTime: string;
+  name: string;
+  result: BacktestResult;
 }
 
 // --- Seasonality Models ---

@@ -1,10 +1,11 @@
 <div class="dashboard-header">
   <div>
-    <h1>Strategy Backtesting</h1>
-    <p>Configure algorithmic trading parameters and simulate historical performance.</p>
+    <h1>Strategy Backtesting Studio</h1>
+    <p>Configure algorithmic trading parameters and simulate historical performance on Spot or Synthetic Options Futures.</p>
   </div>
 </div>
 
+<!-- Key Performance Metrics Grid -->
 <div class="stats-grid" *ngIf="lastResult">
   <div class="stat-card">
     <h3>Net P&L</h3>
@@ -12,140 +13,569 @@
       ₹{{ lastResult.metrics.netProfit | number:'1.2-2' }}
     </div>
     <div class="trend" [ngClass]="lastResult.metrics.netProfit >= 0 ? 'positive' : 'negative'">
+      <span class="material-icons">{{ lastResult.metrics.netProfit >= 0 ? 'trending_up' : 'trending_down' }}</span>
       {{ lastResult.metrics.netProfit >= 0 ? 'Profit' : 'Loss' }}
     </div>
   </div>
   <div class="stat-card">
     <h3>Win Rate</h3>
     <div class="value">{{ lastResult.metrics.winRate | number:'1.1-1' }}%</div>
-    <div class="trend neutral">Trades: {{ lastResult.metrics.totalTrades }}</div>
+    <div class="trend neutral">
+      <span class="material-icons">swap_horiz</span>
+      Total Trades: {{ lastResult.metrics.totalTrades }}
+    </div>
   </div>
   <div class="stat-card">
     <h3>Max Drawdown</h3>
     <div class="value text-red-600">-₹{{ lastResult.metrics.maxDrawdown | number:'1.2-2' }}</div>
-    <div class="trend negative">{{ lastResult.metrics.maxDrawdownPercent | number:'1.1-1' }}%</div>
+    <div class="trend negative">
+      <span class="material-icons">warning</span>
+      {{ lastResult.metrics.maxDrawdownPercent | number:'1.1-1' }}% of Cap
+    </div>
   </div>
   <div class="stat-card">
     <h3>Final Capital</h3>
     <div class="value">₹{{ lastResult.metrics.finalCapital | number:'1.2-2' }}</div>
-    <div class="trend neutral">From ₹{{ initialCapital }}</div>
+    <div class="trend neutral">
+      <span class="material-icons">account_balance_wallet</span>
+      Initial: ₹{{ initialCapital | number }}
+    </div>
   </div>
 </div>
 
-<div class="dashboard-content">
+<div class="dashboard-content-layout">
+  
+  <!-- Left Column: Config Form & Trade Log -->
+  <div class="main-column">
+    
+    <!-- Config Panel -->
+    <div class="panel config-panel">
+      <div class="panel-header">
+        <h2>Simulation Settings</h2>
+        <span class="badge bg-indigo-100 text-indigo-800" *ngIf="activeSavedSimId">Viewing Saved Run</span>
+      </div>
+      <div class="panel-body">
+        
+        <div class="error-banner" *ngIf="errorMessage">
+          <span class="material-icons">error_outline</span>
+          {{ errorMessage }}
+        </div>
 
-  <!-- Configuration Form Panel -->
-  <div class="panel config-panel">
-    <div class="panel-header">
-      <h2>Configure Backtest</h2>
+        <!-- Strategy Info Alert for ORB -->
+        <div class="info-alert" *ngIf="strategyId === 'ORB'">
+          <div class="alert-header">
+            <span class="material-icons info-icon">offline_bolt</span>
+            <strong>Synthetic Options Futures Simulation Active</strong>
+          </div>
+          <p>
+            Simulates trading Nifty using **Synthetic Futures** (Buy ATM CE + Sell ATM PE for Long, and vice versa).
+            Options closes are resolved directly from cached 1-minute historical premium contract data.
+          </p>
+        </div>
+
+        <form (ngSubmit)="runBacktest()" class="engine-form">
+          <!-- 1. Data Source & Instrument -->
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Data Source</label>
+              <select [(ngModel)]="dataSource" name="dataSource">
+                <option value="local">Offline Local Data (417 Days cached)</option>
+                <option value="upstox">Upstox API (Requires Active Token)</option>
+              </select>
+            </div>
+            <div class="form-group flex-1">
+              <label>Instrument Key</label>
+              <select [(ngModel)]="instrumentKey" name="instrumentKey" *ngIf="dataSource === 'local'">
+                <option value="NSE_INDEX|Nifty 50">NIFTY 50 (Index Spot)</option>
+              </select>
+              <input type="text" [(ngModel)]="instrumentKey" name="instrumentKey" *ngIf="dataSource === 'upstox'" required placeholder="e.g. NSE_INDEX|Nifty 50">
+            </div>
+            <div class="form-group flex-1">
+              <label>Interval</label>
+              <select [(ngModel)]="interval" name="interval">
+                <option value="1minute">1 Minute (Required for ORB)</option>
+                <option value="5minute" *ngIf="strategyId !== 'ORB'">5 Minute</option>
+                <option value="15minute" *ngIf="strategyId !== 'ORB'">15 Minute</option>
+                <option value="30minute" *ngIf="strategyId !== 'ORB'">30 Minute</option>
+                <option value="60minute" *ngIf="strategyId !== 'ORB'">60 Minute</option>
+                <option value="day" *ngIf="strategyId !== 'ORB'">Daily</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 2. Date Range & Capital -->
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>From Date</label>
+              <input type="date" [(ngModel)]="fromDate" name="fromDate" required>
+            </div>
+            <div class="form-group flex-1">
+              <label>To Date</label>
+              <input type="date" [(ngModel)]="toDate" name="toDate" required>
+            </div>
+            <div class="form-group flex-1">
+              <label>Initial Capital (₹)</label>
+              <input type="number" [(ngModel)]="initialCapital" name="initialCapital" required min="1000">
+            </div>
+          </div>
+
+          <!-- 3. Strategy Selection -->
+          <div class="form-row">
+            <div class="form-group flex-2">
+              <label>Strategy Type</label>
+              <select [(ngModel)]="strategyId" name="strategyId">
+                <option value="ORB">Opening Range Breakout (ORB) - 5 Min closes + Custom exits</option>
+                <option value="MACross">Moving Average Crossover (Golden Cross / Cash)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 4. ORB Strategy Configuration Parameters -->
+          <div class="strategy-section" *ngIf="strategyId === 'ORB'">
+            <h3 class="section-title">ORB Rule Configuration</h3>
+            
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Opening Range (Minutes)</label>
+                <select [(ngModel)]="openingRangeMinutes" name="openingRangeMinutes">
+                  <option [ngValue]="5">5 Minutes</option>
+                  <option [ngValue]="15">15 Minutes</option>
+                  <option [ngValue]="30">30 Minutes</option>
+                  <option [ngValue]="60">60 Minutes</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label>Breakout Direction</label>
+                <select [(ngModel)]="direction" name="direction">
+                  <option value="BOTH">Both (Long & Short)</option>
+                  <option value="LONG">Long Only</option>
+                  <option value="SHORT">Short Only</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label>Lot Size / Lots</label>
+                <div class="dual-input">
+                  <input type="number" [(ngModel)]="lotSize" name="lotSize" placeholder="Size" required style="width: 50%;">
+                  <input type="number" [(ngModel)]="numberOfLots" name="numberOfLots" placeholder="Lots" required style="width: 50%;">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Stop Loss Type</label>
+                <select [(ngModel)]="stopLossType" name="stopLossType">
+                  <option value="OR_OPPOSITE">OR Opposite Band (Range Low/High)</option>
+                  <option value="POINTS">Fixed Points</option>
+                  <option value="PERCENT">Percentage</option>
+                  <option value="ENTRY_CANDLE">Entry Candle Low/High</option>
+                </select>
+              </div>
+              <div class="form-group flex-1" *ngIf="stopLossType !== 'OR_OPPOSITE'">
+                <label>Stop Loss Value ({{ stopLossType === 'POINTS' ? 'Points' : (stopLossType === 'ENTRY_CANDLE' ? 'Buffer Points' : '%') }})</label>
+                <input type="number" [(ngModel)]="stopLossValue" name="stopLossValue" required min="0">
+              </div>
+              <div class="form-group flex-1">
+                <label>Take Profit Type</label>
+                <select [(ngModel)]="takeProfitType" name="takeProfitType">
+                  <option value="OR_MULTIPLE">OR Range Multiple (e.g. 2.0x)</option>
+                  <option value="POINTS">Fixed Points</option>
+                  <option value="PERCENT">Percentage</option>
+                  <option value="SL_MULTIPLE">SL Multiple (e.g. 2.0x SL)</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label>Take Profit Value ({{ takeProfitType === 'OR_MULTIPLE' ? 'x Range' : (takeProfitType === 'SL_MULTIPLE' ? 'x SL' : (takeProfitType === 'POINTS' ? 'Points' : '%')) }})</label>
+                <input type="number" [(ngModel)]="takeProfitValue" name="takeProfitValue" required min="0.1" step="0.1">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Start Entries (IST)</label>
+                <input type="text" [(ngModel)]="entryStartTime" name="entryStartTime" required placeholder="09:30">
+              </div>
+              <div class="form-group flex-1">
+                <label>Stop Entries (IST)</label>
+                <input type="text" [(ngModel)]="entryEndTime" name="entryEndTime" required placeholder="14:30">
+              </div>
+              <div class="form-group flex-1">
+                <label>Auto Square-Off (IST)</label>
+                <input type="text" [(ngModel)]="squareOffTime" name="squareOffTime" required placeholder="15:15">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Asset Class / Trade Target</label>
+                <select [(ngModel)]="tradeType" name="tradeType">
+                  <option value="SPOT">Nifty Spot Index (Standard)</option>
+                  <option value="OPTIONS">Option Premiums (ATM Call & Put)</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label>Entry Trigger Type</label>
+                <select [(ngModel)]="entryType" name="entryType">
+                  <option value="MARKET">Market Entry (At Block Close)</option>
+                  <option value="RETEST">Retest Entry (Pullback to Boundary)</option>
+                  <option value="REVERSION">Mean Reversion (Opposite Entry)</option>
+                  <option value="FVG">FVG Pullback Entry (Fair Value Gap)</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label>Max Trades Per Day</label>
+                <input type="number" [(ngModel)]="maxTradesPerDay" name="maxTradesPerDay" required min="1" step="1">
+              </div>
+              <div class="form-group flex-1">
+                <label>Max Trades if SL Hits</label>
+                <input type="number" [(ngModel)]="maxTradesOnSLHit" name="maxTradesOnSLHit" required min="1" step="1" title="Capping total daily trades to this value if a Stop Loss is hit today.">
+              </div>
+            </div>
+
+            <div class="form-row" *ngIf="tradeType === 'OPTIONS'">
+              <div class="form-group flex-1">
+                <label>Long Option Lots (Bought Leg)</label>
+                <input type="number" [(ngModel)]="longOptionLots" name="longOptionLots" required min="1" step="1" title="Number of lots for the bought leg (CE on LONG, PE on SHORT)">
+              </div>
+              <div class="form-group flex-1">
+                <label>Short Option Lots (Sold Leg)</label>
+                <input type="number" [(ngModel)]="shortOptionLots" name="shortOptionLots" required min="0" step="1" title="Number of lots for the sold leg (PE on LONG, CE on SHORT)">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Slippage (Premium Points)</label>
+                <input type="number" [(ngModel)]="slippagePoints" name="slippagePoints" required step="0.5" min="0">
+              </div>
+              <div class="form-group flex-1">
+                <label>Tcost / Brokerage Flat (₹)</label>
+                <input type="number" [(ngModel)]="brokerageFlat" name="brokerageFlat" required min="0" title="Includes brokerage per leg (entry CE+PE, exit CE+PE) and transaction taxes">
+              </div>
+              <div class="form-group flex-1">
+                <label>Trailing Stop Loss (Spot Points)</label>
+                <input type="number" [(ngModel)]="trailingStopLoss" name="trailingStopLoss" required min="0" step="1" title="Set to 0 to disable trailing SL. Trailed dynamically based on Spot index highs/lows.">
+              </div>
+              <div class="form-group flex-1">
+                <label>Trail to Cost at 50% Target</label>
+                <select [(ngModel)]="trailToCostAtFiftyPercentTarget" name="trailToCostAtFiftyPercentTarget" title="Moves Stop Loss to Spot entry price once Spot reaches 50% of target points.">
+                  <option [ngValue]="false">Disabled</option>
+                  <option [ngValue]="true">Enabled</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. MACross Strategy Parameters -->
+          <div class="strategy-section" *ngIf="strategyId === 'MACross'">
+            <h3 class="section-title">Moving Average Parameters</h3>
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label>Short MA Window (Periods)</label>
+                <input type="number" [(ngModel)]="maShortWindow" name="maShortWindow" required min="1">
+              </div>
+              <div class="form-group flex-1">
+                <label>Long MA Window (Periods)</label>
+                <input type="number" [(ngModel)]="maLongWindow" name="maLongWindow" required min="2">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-group flex-1 form-actions">
+               <button type="submit" class="btn-primary" [disabled]="isLoading" style="height: 48px; font-weight: 600; font-size: 16px;">
+                 <span *ngIf="!isLoading">Run Strategy Simulation &nbsp;▶</span>
+                 <span *ngIf="isLoading" class="loading-spinner"></span>
+                 <span *ngIf="isLoading">&nbsp; Running Backtest...</span>
+               </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="panel-body">
+
+    <!-- Analytical Report Dashboard Panel -->
+    <div class="panel analysis-panel mt-6" *ngIf="lastResult">
+      <div class="panel-header">
+        <h2>Performance Analysis Report</h2>
+        <span class="badge bg-green-100 text-green-800">Verified Results</span>
+      </div>
+      <div class="panel-body">
+        <div class="analysis-report-grid">
+          <div class="analysis-card">
+            <h4>Profit Factor</h4>
+            <div class="value highlight" [ngClass]="(lastResult.metrics.grossLoss > 0 ? (lastResult.metrics.grossProfit / lastResult.metrics.grossLoss) : lastResult.metrics.grossProfit) >= 1 ? 'text-green-600' : 'text-red-600'">
+              {{ (lastResult.metrics.grossLoss > 0 ? (lastResult.metrics.grossProfit / lastResult.metrics.grossLoss) : lastResult.metrics.grossProfit) | number:'1.2-2' }}
+            </div>
+            <p class="description">Gross Profit divided by Gross Loss. Values above 1.0 indicate positive expectancy.</p>
+          </div>
+          <div class="analysis-card">
+            <h4>Average Trade Net P&L</h4>
+            <div class="value" [ngClass]="(lastResult.metrics.netProfit / lastResult.metrics.totalTrades) >= 0 ? 'text-green-600' : 'text-red-600'">
+              ₹{{ (lastResult.metrics.totalTrades > 0 ? (lastResult.metrics.netProfit / lastResult.metrics.totalTrades) : 0) | number:'1.2-2' }}
+            </div>
+            <p class="description">Expectancy per execution including slippage, flat brokerage, and taxes.</p>
+          </div>
+          <div class="analysis-card">
+            <h4>Recovery Factor</h4>
+            <div class="value highlight" [ngClass]="(lastResult.metrics.recoveryFactor || 0) >= 1.5 ? 'text-green-600' : 'text-yellow-600'">
+              {{ (lastResult.metrics.recoveryFactor || 0) | number:'1.2-2' }}
+            </div>
+            <p class="description">Net profit divided by maximum drawdown. Measures profit relative to historical drawdown risk.</p>
+          </div>
+          <div class="analysis-card">
+            <h4>Win/Loss Ratio</h4>
+            <div class="value highlight" [ngClass]="(lastResult.metrics.winLossRatio || 0) >= 1.0 ? 'text-green-600' : 'text-red-600'">
+              {{ (lastResult.metrics.winLossRatio || 0) | number:'1.2-2' }}
+            </div>
+            <p class="description">Average winning trade amount divided by average losing trade amount.</p>
+          </div>
+          <div class="analysis-card">
+            <h4>Average Win / Loss</h4>
+            <div class="dual-values">
+              <div>
+                <span class="label text-green-600">Avg Win:</span>
+                <span class="val font-semibold text-green-600">₹{{ (lastResult.metrics.avgWin || 0) | number:'1.0-0' }}</span>
+              </div>
+              <div>
+                <span class="label text-red-600">Avg Loss:</span>
+                <span class="val font-semibold text-red-600">₹{{ (lastResult.metrics.avgLoss || 0) | number:'1.0-0' }}</span>
+              </div>
+            </div>
+            <p class="description">The average profit on winning trades versus the average loss on losing trades.</p>
+          </div>
+          <div class="analysis-card">
+            <h4>Max Consecutive Streaks</h4>
+            <div class="dual-values">
+              <div>
+                <span class="label text-green-600">Wins:</span>
+                <span class="val font-semibold text-green-600">{{ lastResult.metrics.maxConsecutiveWins || 0 }}</span>
+              </div>
+              <div>
+                <span class="label text-red-600">Losses:</span>
+                <span class="val font-semibold text-red-600">{{ lastResult.metrics.maxConsecutiveLosses || 0 }}</span>
+              </div>
+            </div>
+            <p class="description">Maximum consecutive winning trades streak versus consecutive losing trades streak.</p>
+          </div>
+          <div class="analysis-card">
+            <h4>Gross Earnings</h4>
+            <div class="dual-values">
+              <div>
+                <span class="label text-green-600">Wins:</span>
+                <span class="val font-semibold text-green-600">₹{{ lastResult.metrics.grossProfit | number:'1.0-0' }}</span>
+              </div>
+              <div>
+                <span class="label text-red-600">Losses:</span>
+                <span class="val font-semibold text-red-600">₹{{ lastResult.metrics.grossLoss | number:'1.0-0' }}</span>
+              </div>
+            </div>
+            <p class="description">Total sum of all positive trade payouts vs total sum of all negative payouts.</p>
+          </div>
+          <div class="analysis-card">
+            <h4>Win/Loss Distribution</h4>
+            <div class="trade-dist">
+              <div class="dist-bar">
+                <div class="win-bar" [style.width.%]="lastResult.metrics.winRate"></div>
+                <div class="loss-bar" [style.width.%]="100 - lastResult.metrics.winRate"></div>
+              </div>
+              <div class="dist-labels">
+                <span class="text-green-600 font-semibold">{{ lastResult.metrics.winningTrades }} Wins ({{ lastResult.metrics.winRate | number:'1.0-0' }}%)</span>
+                <span class="text-red-600 font-semibold">{{ lastResult.metrics.losingTrades }} Losses ({{ (100 - lastResult.metrics.winRate) | number:'1.0-0' }}%)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trade List Log Panel -->
+    <div class="panel results-panel mt-6">
+      <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 20px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <h2>Detailed Execution Logs</h2>
+          <span class="badge bg-indigo-100 text-indigo-800" *ngIf="lastResult">{{ lastResult.trades.length }} executions</span>
+        </div>
+        <button 
+          *ngIf="lastResult && lastResult.trades.length > 0" 
+          class="btn-secondary" 
+          (click)="downloadTradeLogsCSV()" 
+          style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; font-size: 13.5px; font-weight: 600;"
+        >
+          <span class="material-icons" style="font-size: 18px; margin-right: 2px;">file_download</span>
+          Download CSV
+        </button>
+      </div>
       
-      <div class="error-banner" *ngIf="errorMessage">
-        <span class="material-icons">error_outline</span>
-        {{ errorMessage }}
+      <div class="panel-body empty-state" *ngIf="!lastResult && !isLoading">
+        <span class="material-icons empty-icon text-indigo-500" style="font-size: 56px;">play_circle_filled</span>
+        <h3>Launch Simulation</h3>
+        <p>Run a backtest using settings on the left to review your detailed trade list, execution spot levels, and synthetic contracts.</p>
       </div>
 
-      <form (ngSubmit)="runBacktest()" class="engine-form">
-        <div class="form-row">
-          <div class="form-group flex-2">
-            <label>Instrument Key (Upstox Format)</label>
-            <input type="text" [(ngModel)]="instrumentKey" name="instrumentKey" required placeholder="NSE_EQ|INE002A01018">
-          </div>
-          <div class="form-group flex-1">
-            <label>Interval</label>
-            <select [(ngModel)]="interval" name="interval">
-              <option value="1minute">1 Minute</option>
-              <option value="5minute">5 Minute</option>
-              <option value="15minute">15 Minute</option>
-              <option value="30minute">30 Minute</option>
-              <option value="60minute">60 Minute</option>
-              <option value="day">Daily</option>
-            </select>
-          </div>
+      <!-- Trade List Table -->
+      <div class="panel-body p-0" *ngIf="lastResult">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Entry Time</th>
+                <th>Type</th>
+                <th>ATM Strike</th>
+                <th>Quantity (Lots)</th>
+                <th>Entry Spot</th>
+                <th>Entry Option (Synth)</th>
+                <th>Exit Time</th>
+                <th>Exit Spot</th>
+                <th>Exit Option (Synth)</th>
+                <th>Exit Reason</th>
+                <th>Stop Loss (Spot)</th>
+                <th>Target (Spot)</th>
+                <th>Brokerage</th>
+                <th>Net P&L (₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let trade of lastResult.trades">
+                <td>{{ trade.entryTime | date:'yyyy-MM-dd HH:mm' }}</td>
+                <td>
+                  <span class="badge" [ngClass]="trade.type === 'LONG' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                    {{ trade.type === 'LONG' ? 'LONG (CE+PE)' : 'SHORT (PE+CE)' }}
+                  </span>
+                </td>
+                <td>{{ trade.strikePrice ? '₹' + trade.strikePrice : '--' }}</td>
+                <td>
+                  <span *ngIf="trade.longOptionLots !== undefined; else defaultLots">
+                    Buy: {{ trade.longOptionLots }} L<br>
+                    <span *ngIf="trade.shortOptionLots! > 0" style="color: #666; font-size: 11px;">
+                      Sell: {{ trade.shortOptionLots }} L
+                    </span>
+                  </span>
+                  <ng-template #defaultLots>
+                    {{ trade.quantity }} ({{ trade.quantity / (lotSize || 75) }} Lots)
+                  </ng-template>
+                </td>
+                <td>₹{{ trade.entrySpot | number:'1.1-1' }}</td>
+                <td>
+                  <div *ngIf="trade.ceEntryPrice !== undefined; else defaultEntryPrice">
+                    <span class="text-indigo-600 font-medium">Net: ₹{{ trade.entryPrice | number:'1.2-2' }}</span>
+                    <div style="font-size: 11px; color: #666; margin-top: 2px;" *ngIf="trade.type === 'LONG'">
+                      Buy CE: ₹{{ trade.ceEntryPrice | number:'1.2-2' }}
+                    </div>
+                    <div style="font-size: 11px; color: #666;" *ngIf="trade.type === 'LONG' && trade.shortOptionLots! > 0">
+                      Sell PE: ₹{{ trade.peEntryPrice | number:'1.2-2' }}
+                    </div>
+                    <div style="font-size: 11px; color: #666; margin-top: 2px;" *ngIf="trade.type === 'SHORT'">
+                      Buy PE: ₹{{ trade.peEntryPrice | number:'1.2-2' }}
+                    </div>
+                    <div style="font-size: 11px; color: #666;" *ngIf="trade.type === 'SHORT' && trade.shortOptionLots! > 0">
+                      Sell CE: ₹{{ trade.ceEntryPrice | number:'1.2-2' }}
+                    </div>
+                  </div>
+                  <ng-template #defaultEntryPrice>
+                    ₹{{ trade.entryPrice | number:'1.2-2' }}
+                  </ng-template>
+                </td>
+                <td>{{ trade.exitTime ? (trade.exitTime | date:'yyyy-MM-dd HH:mm') : 'Open' }}</td>
+                <td>{{ trade.exitSpot ? '₹' + (trade.exitSpot | number:'1.1-1') : '--' }}</td>
+                <td>
+                  <div *ngIf="trade.ceExitPrice !== undefined && trade.exitPrice !== null; else defaultExitPrice">
+                    <div *ngIf="trade.exitPrice !== undefined">
+                      <span class="text-indigo-600 font-medium">Net: ₹{{ trade.exitPrice | number:'1.2-2' }}</span>
+                      <div style="font-size: 11px; color: #666; margin-top: 2px;" *ngIf="trade.type === 'LONG'">
+                        Sell CE: ₹{{ trade.ceExitPrice | number:'1.2-2' }}
+                      </div>
+                      <div style="font-size: 11px; color: #666;" *ngIf="trade.type === 'LONG' && trade.shortOptionLots! > 0">
+                        Buy PE: ₹{{ trade.peExitPrice | number:'1.2-2' }}
+                      </div>
+                      <div style="font-size: 11px; color: #666; margin-top: 2px;" *ngIf="trade.type === 'SHORT'">
+                        Sell PE: ₹{{ trade.peExitPrice | number:'1.2-2' }}
+                      </div>
+                      <div style="font-size: 11px; color: #666;" *ngIf="trade.type === 'SHORT' && trade.shortOptionLots! > 0">
+                        Buy CE: ₹{{ trade.ceExitPrice | number:'1.2-2' }}
+                      </div>
+                    </div>
+                    <span *ngIf="trade.exitPrice === undefined">--</span>
+                  </div>
+                  <ng-template #defaultExitPrice>
+                    {{ trade.exitPrice ? '₹' + (trade.exitPrice | number:'1.2-2') : '--' }}
+                  </ng-template>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="{
+                    'bg-blue-100 text-blue-800': trade.exitReason === 'Square-off',
+                    'bg-red-100 text-red-800': trade.exitReason === 'Stop Loss',
+                    'bg-green-100 text-green-800': trade.exitReason === 'Target',
+                    'bg-gray-100 text-gray-800': !trade.exitReason
+                  }">
+                    {{ trade.exitReason || 'System Close' }}
+                  </span>
+                </td>
+                <td>{{ trade.stopLossPrice ? '₹' + (trade.stopLossPrice | number:'1.1-1') : '--' }}</td>
+                <td>{{ trade.targetPrice ? '₹' + (trade.targetPrice | number:'1.1-1') : '--' }}</td>
+                <td>₹{{ brokerageFlat | number:'1.0-0' }}</td>
+                <td [ngClass]="(trade.pnl || 0) >= 0 ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'">
+                  {{ trade.pnl ? '₹' + (trade.pnl | number:'1.2-2') : '--' }}
+                </td>
+              </tr>
+              <tr *ngIf="lastResult.trades.length === 0">
+                <td colspan="14" class="text-center py-6 text-gray-500">No trades were triggered. Try adjusting the breakout range or relaxing Stop Loss/Take Profit targets.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="form-row">
-          <div class="form-group flex-1">
-            <label>From Date</label>
-            <input type="date" [(ngModel)]="fromDate" name="fromDate" required>
-          </div>
-          <div class="form-group flex-1">
-            <label>To Date</label>
-            <input type="date" [(ngModel)]="toDate" name="toDate" required>
-          </div>
-          <div class="form-group flex-1">
-            <label>Initial Capital (₹)</label>
-            <input type="number" [(ngModel)]="initialCapital" name="initialCapital" required min="1000">
-          </div>
-        </div>
-        <p class="text-xs text-gray-500 mb-4" style="margin-top: -10px;">
-          <strong>Upstox API Limits:</strong> Max 1 year for Daily interval. Max 1 month for 1-minute interval.
-        </p>
-
-        <div class="form-row">
-          <div class="form-group flex-2">
-            <label>Strategy Type</label>
-            <select [(ngModel)]="strategyId" name="strategyId">
-              <option value="MACross">Moving Average Crossover (Golden Cross)</option>
-            </select>
-          </div>
-          <div class="form-group flex-1 form-actions">
-             <button type="submit" class="btn-primary" [disabled]="isLoading">
-               <span *ngIf="!isLoading">Run Backtest &nbsp;▶</span>
-               <span *ngIf="isLoading" class="loading-spinner"></span>
-               <span *ngIf="isLoading">&nbsp; Running...</span>
-             </button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 
-  <!-- Results Panel -->
-  <div class="panel results-panel mt-6">
-    <div class="panel-header">
-      <h2>Trade Log & Results</h2>
-    </div>
-    
-    <div class="panel-body empty-state" *ngIf="!lastResult && !isLoading">
-      <span class="material-icons empty-icon text-blue-500" style="font-size: 48px;">trending_up</span>
-      <h3>Ready to Simulate</h3>
-      <p>Configure and run your first backtest to view performance charts and trade logs here.</p>
-    </div>
-
-    <!-- Trade List -->
-    <div class="panel-body p-0" *ngIf="lastResult">
-      <div class="table-responsive">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Entry Time</th>
-              <th>Type</th>
-              <th>Quantity</th>
-              <th>Entry Price</th>
-              <th>Exit Time</th>
-              <th>Exit Price</th>
-              <th>Net P&L</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let trade of lastResult.trades">
-              <td>{{ trade.entryTime | date:'short' }}</td>
-              <td><span class="badge" [ngClass]="trade.type === 'LONG' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">{{ trade.type }}</span></td>
-              <td>{{ trade.quantity }}</td>
-              <td>₹{{ trade.entryPrice | number:'1.2-2' }}</td>
-              <td>{{ trade.exitTime ? (trade.exitTime | date:'short') : 'Open' }}</td>
-              <td>{{ trade.exitPrice ? '₹' + (trade.exitPrice | number:'1.2-2') : '--' }}</td>
-              <td [ngClass]="(trade.pnl || 0) >= 0 ? 'text-green-600 font-medium' : 'text-red-600 font-medium'">
-                {{ trade.pnl ? '₹' + (trade.pnl | number:'1.2-2') : '--' }}
-              </td>
-            </tr>
-            <tr *ngIf="lastResult.trades.length === 0">
-              <td colspan="7" class="text-center py-4 text-gray-500">No trades were executed during this period with the selected strategy.</td>
-            </tr>
-          </tbody>
-        </table>
+  <!-- Right Column: Saved Backtests History -->
+  <div class="sidebar-column">
+    <div class="panel history-panel">
+      <div class="panel-header">
+        <h2>Saved Simulations</h2>
+        <span class="badge bg-indigo-100 text-indigo-800" style="padding: 2px 8px; font-size: 11px;">{{ savedSimulations.length }} saved</span>
+      </div>
+      <div class="panel-body p-0" *ngIf="savedSimulations.length > 0">
+        <div class="history-list">
+          <div 
+            class="history-item" 
+            *ngFor="let sim of savedSimulations" 
+            [ngClass]="{'active': activeSavedSimId === sim.id}"
+            (click)="viewSimulation(sim)"
+          >
+            <div class="history-item-header">
+              <span class="strategy-name">{{ sim.name }}</span>
+              <span class="date">{{ sim.runTime | date:'MM/dd HH:mm' }}</span>
+            </div>
+            <div class="history-item-range">
+              {{ sim.result.config.fromDate | date:'yyyy-MM-dd' }} to {{ sim.result.config.toDate | date:'yyyy-MM-dd' }}
+            </div>
+            <div class="history-item-metrics">
+              <div>
+                <span class="label">P&L: </span>
+                <span class="value font-semibold" [ngClass]="sim.result.metrics.netProfit >= 0 ? 'text-green-600' : 'text-red-600'">
+                  ₹{{ sim.result.metrics.netProfit | number:'1.0-0' }}
+                </span>
+              </div>
+              <div>
+                <span class="label">Win Rate: </span>
+                <span class="value font-semibold">{{ sim.result.metrics.winRate | number:'1.0-0' }}%</span>
+              </div>
+            </div>
+            <div class="history-item-actions">
+              <button class="btn-delete" (click)="deleteSimulation(sim.id, $event)" title="Delete simulation">
+                <span class="material-icons" style="font-size: 18px;">delete_outline</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body empty-state" *ngIf="savedSimulations.length === 0">
+        <span class="material-icons empty-icon text-gray-400" style="font-size: 40px; margin-bottom: 8px;">history</span>
+        <h4>No Saved Simulation Runs</h4>
+        <p style="font-size: 12.5px; color: #64748b; line-height: 1.4; max-width: 200px; margin: 0 auto;">
+          Runs are cached in your local browser storage automatically.
+        </p>
       </div>
     </div>
   </div>

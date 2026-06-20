@@ -63,4 +63,34 @@ export class StrategyLogicService {
     const sum = slice.reduce((acc, candle) => acc + candle.close, 0);
     return sum / period;
   }
+
+  /**
+   * Helper function to convert Date objects to Indian Standard Time (IST, UTC+5:30)
+   * components regardless of the user's browser/system timezone.
+   */
+  public getISTTime(date: Date): { hour: number; minute: number; dateStr: string; timeStr: string } {
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kolkata',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23'
+    });
+
+    const parts = formatter.formatToParts(date);
+    const partsMap = parts.reduce((acc, part) => {
+      acc[part.type] = part.value;
+      return acc;
+    }, {} as Record<string, string>);
+
+    const hour = parseInt(partsMap['hour'], 10);
+    const minute = parseInt(partsMap['minute'], 10);
+    const dateStr = `${partsMap['year']}-${partsMap['month']}-${partsMap['day']}`;
+    const timeStr = `${partsMap['hour']}:${partsMap['minute']}`;
+    
+    return { hour, minute, dateStr, timeStr };
+  }
 }
