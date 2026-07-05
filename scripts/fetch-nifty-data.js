@@ -292,9 +292,10 @@ async function run() {
 
     console.log(`[Day ${i + 1}/${tradingDays.length}] ${dateStr} | Open: ${openPrice.toFixed(1)} | Open Strike: ${openStrike} | Expiry: ${expiryDate}`);
 
-    // Generate list of 9 strikes around openStrike: [openStrike-200, openStrike-150, ..., openStrike+200]
+    // Generate list of 33 strikes around openStrike: [openStrike-800, openStrike-750, ..., openStrike+800]
+    // Wide range needed for hedged straddle testing (buying cheap OTM options)
     const strikeRange = [];
-    for (let offset = -200; offset <= 200; offset += 50) {
+    for (let offset = -800; offset <= 800; offset += 50) {
       strikeRange.push(openStrike + offset);
     }
 

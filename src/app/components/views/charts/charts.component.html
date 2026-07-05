@@ -1,0 +1,281 @@
+<div class="charts-view-container">
+
+  <!-- Header Bar -->
+  <div class="charts-header">
+    <div class="title-section">
+      <h1 class="page-title">
+        <span class="material-icons title-icon">show_chart</span>
+        Market Data Visualizer
+      </h1>
+      <p class="page-subtitle">
+        Interactive Historical Spot, Futures & Options Data for Nifty 50 and BankNifty
+      </p>
+    </div>
+
+    <!-- Control Bar Card -->
+    <div class="controls-card">
+      
+      <!-- Index Symbol Selector -->
+      <div class="control-group">
+        <label class="control-label">Index Symbol</label>
+        <select [(ngModel)]="selectedSymbol" (change)="onSymbolChange()" class="form-select symbol-select">
+          <option *ngFor="let sym of availableSymbols" [value]="sym.value">{{ sym.label }}</option>
+        </select>
+      </div>
+
+      <!-- Chart Engine Selector -->
+      <div class="control-group">
+        <label class="control-label">Chart Engine</label>
+        <div class="button-toggle-group">
+          <button (click)="onEngineChange('PRIMENG')" [class.active]="chartEngine === 'PRIMENG'" class="toggle-btn">
+            PrimeNG Charts
+          </button>
+          <button (click)="onEngineChange('LIGHTWEIGHT')" [class.active]="chartEngine === 'LIGHTWEIGHT'" class="toggle-btn">
+            Candlestick Canvas
+          </button>
+        </div>
+      </div>
+
+      <!-- Timeframe Selector (1M, 3M, 5M, 15M, 30M, 1H) -->
+      <div class="control-group">
+        <label class="control-label">Timeframe</label>
+        <div class="button-toggle-group">
+          <button *ngFor="let tf of availableTimeframes" 
+                  (click)="onTimeframeChange(tf.value)" 
+                  [class.active]="selectedTimeframeMinutes === tf.value" 
+                  class="toggle-btn px-2">
+            {{ tf.label }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Month Dropdown -->
+      <div class="control-group">
+        <label class="control-label">Calendar Month</label>
+        <select [(ngModel)]="selectedMonth" (change)="onMonthChange()" class="form-select">
+          <option *ngFor="let m of availableMonths" [value]="m">{{ m }}</option>
+        </select>
+      </div>
+
+      <!-- Trading Day Dropdown -->
+      <div class="control-group">
+        <label class="control-label">Trading Day</label>
+        <select [(ngModel)]="selectedDay" (change)="onDayChange()" class="form-select">
+          <option *ngFor="let d of availableDays" [value]="d">{{ d }}</option>
+        </select>
+      </div>
+
+      <!-- View Mode Buttons -->
+      <div class="control-group">
+        <label class="control-label">View Mode</label>
+        <div class="button-toggle-group">
+          <button (click)="viewMode = 'SPOT'; onFilterChange()" [class.active]="viewMode === 'SPOT'" class="toggle-btn">
+            Spot
+          </button>
+          <button (click)="viewMode = 'FUTURE'; onFilterChange()" [class.active]="viewMode === 'FUTURE'" class="toggle-btn">
+            Future
+          </button>
+          <button (click)="viewMode = 'SPOT_VS_FUTURE'; onFilterChange()" [class.active]="viewMode === 'SPOT_VS_FUTURE'" class="toggle-btn">
+            Spot vs Fut
+          </button>
+          <button (click)="viewMode = 'ATM_OPTIONS'; onFilterChange()" [class.active]="viewMode === 'ATM_OPTIONS'" class="toggle-btn">
+            ATM Options
+          </button>
+          <button (click)="viewMode = 'OPTION_STRIKE'; onFilterChange()" [class.active]="viewMode === 'OPTION_STRIKE'" class="toggle-btn">
+            Strike Inspector
+          </button>
+        </div>
+      </div>
+
+      <!-- Strike Selector (Visible only in OPTION_STRIKE mode) -->
+      <div class="control-group" *ngIf="viewMode === 'OPTION_STRIKE'">
+        <label class="control-label">Strike Price</label>
+        <select [(ngModel)]="selectedStrike" (change)="onFilterChange()" class="form-select strike-select">
+          <option *ngFor="let s of availableStrikes" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+
+      <!-- Option Type Selector (Visible only in OPTION_STRIKE mode) -->
+      <div class="control-group" *ngIf="viewMode === 'OPTION_STRIKE'">
+        <label class="control-label">Option Type</label>
+        <select [(ngModel)]="optionType" (change)="onFilterChange()" class="form-select">
+          <option value="BOTH">CE & PE</option>
+          <option value="CE">CE Only</option>
+          <option value="PE">PE Only</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="state-card loading">
+    <div class="spinner"></div>
+    <p>Loading Candle Data for {{ selectedDay || selectedMonth }}...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="state-card error">
+    <span class="material-icons icon">error</span>
+    {{ errorMessage }}
+  </div>
+
+  <!-- Main Dashboard Layout Grid -->
+  <div class="dashboard-grid" *ngIf="!isLoading && filteredCandles.length > 0">
+
+    <!-- Chart Panel -->
+    <div class="chart-panel">
+      
+      <!-- Live Crosshair / Hover Info Ribbon -->
+      <div class="hover-ribbon">
+        <div class="ribbon-left">
+          <span class="mono-time">
+            <span class="material-icons time-icon">schedule</span>
+            {{ formatDisplayTime(hoveredCandle ? hoveredCandle.timestamp : filteredCandles[filteredCandles.length - 1].timestamp) }} IST
+          </span>
+          <span class="mono-spot">
+            {{ activeOHLC.label }} O: <strong>{{ activeOHLC.open.toFixed(2) }}</strong>
+            H: <strong>{{ activeOHLC.high.toFixed(2) }}</strong>
+            L: <strong>{{ activeOHLC.low.toFixed(2) }}</strong>
+            C: <strong [class.text-green]="activeOHLC.close >= activeOHLC.open" [class.text-red]="activeOHLC.close < activeOHLC.open">{{ activeOHLC.close.toFixed(2) }}</strong>
+          </span>
+        </div>
+
+        <div class="ribbon-right">
+          <span class="text-cyan" *ngIf="(hoveredCandle || filteredCandles[filteredCandles.length - 1]).future">
+            Fut: {{ (hoveredCandle || filteredCandles[filteredCandles.length - 1]).future?.close?.toFixed(2) }}
+            <span class="basis-tag" *ngIf="(hoveredCandle || filteredCandles[filteredCandles.length - 1]).future">
+              (Basis: {{ ((hoveredCandle || filteredCandles[filteredCandles.length - 1]).future!.close - (hoveredCandle || filteredCandles[filteredCandles.length - 1]).close).toFixed(1) }})
+            </span>
+          </span>
+          <span class="text-purple" *ngIf="(hoveredCandle || filteredCandles[filteredCandles.length - 1]).atmStrike">
+            ATM: {{ (hoveredCandle || filteredCandles[filteredCandles.length - 1]).atmStrike }}
+            (CE: {{ (hoveredCandle || filteredCandles[filteredCandles.length - 1]).callClose }} / PE: {{ (hoveredCandle || filteredCandles[filteredCandles.length - 1]).putClose }})
+          </span>
+        </div>
+      </div>
+
+      <!-- PrimeNG Chart Container -->
+      <div *ngIf="chartEngine === 'PRIMENG'" class="primeng-charts-wrapper">
+        <div class="chart-container main-primeng">
+          <p-chart type="line" [data]="primengMainData" [options]="primengMainOptions" height="380px"></p-chart>
+        </div>
+        <div class="chart-container sub-primeng">
+          <p-chart type="bar" [data]="primengSubData" [options]="primengSubOptions" height="140px"></p-chart>
+        </div>
+      </div>
+
+      <!-- Lightweight Canvas Chart Container -->
+      <div *ngIf="chartEngine === 'LIGHTWEIGHT'" class="lightweight-charts-wrapper">
+        <div #mainChartContainer class="lightweight-container main"></div>
+        <div #volumeChartContainer class="lightweight-container sub"></div>
+      </div>
+
+    </div>
+
+    <!-- Stats & Options Summary Sidebar -->
+    <div class="sidebar-panel">
+      
+      <!-- Intraday Key Metrics Card -->
+      <div class="stat-card">
+        <h3 class="card-title">
+          <span class="material-icons icon-purple">analytics</span>
+          Intraday Summary
+        </h3>
+
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="label">Spot Open</span>
+            <span class="val font-mono text-white">{{ dayStats.open.toFixed(2) }}</span>
+          </div>
+
+          <div class="metric-item">
+            <span class="label">Spot Close</span>
+            <span class="val font-mono" [class.text-green]="dayStats.change >= 0" [class.text-red]="dayStats.change < 0">
+              {{ dayStats.close.toFixed(2) }}
+            </span>
+          </div>
+
+          <div class="metric-item">
+            <span class="label">Day High</span>
+            <span class="val font-mono text-green">{{ dayStats.high.toFixed(2) }}</span>
+          </div>
+
+          <div class="metric-item">
+            <span class="label">Day Low</span>
+            <span class="val font-mono text-red">{{ dayStats.low.toFixed(2) }}</span>
+          </div>
+
+          <div class="metric-item full-width flex-between">
+            <span class="label">Day Change</span>
+            <span class="val font-mono" [class.text-green]="dayStats.change >= 0" [class.text-red]="dayStats.change < 0">
+              {{ dayStats.change >= 0 ? '+' : '' }}{{ dayStats.change.toFixed(2) }} ({{ dayStats.changePct.toFixed(2) }}%)
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Futures & Derivatives Card -->
+      <div class="stat-card">
+        <h3 class="card-title">
+          <span class="material-icons icon-cyan">trending_up</span>
+          Futures & ATM Straddle
+        </h3>
+
+        <div class="info-list">
+          <div class="info-row">
+            <span class="label">Futures Basis (Spread)</span>
+            <span class="val font-mono" [class.text-green]="dayStats.basis >= 0" [class.text-red]="dayStats.basis < 0">
+              {{ dayStats.basis >= 0 ? '+' : '' }}{{ dayStats.basis.toFixed(2) }} pts
+            </span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">ATM Strike</span>
+            <span class="val font-mono text-purple">{{ dayStats.atmStrike }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">ATM Straddle Premium</span>
+            <span class="val font-mono text-amber">₹{{ dayStats.straddlePremium.toFixed(2) }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">Max Futures OI</span>
+            <span class="val font-mono text-cyan">{{ dayStats.maxOI > 0 ? (dayStats.maxOI | number) : 'N/A' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Strike Quick Chain Inspector -->
+      <div class="stat-card flex-grow">
+        <h3 class="card-title justify-between">
+          <span class="flex-center">
+            <span class="material-icons icon-green">grid_on</span>
+            Option Chain
+          </span>
+          <span class="badge">{{ availableStrikes.length }} Strikes</span>
+        </h3>
+
+        <div class="strikes-table">
+          <div class="strike-header">
+            <span>CALL</span>
+            <span>STRIKE</span>
+            <span>PUT</span>
+          </div>
+          <div *ngFor="let s of availableStrikes" 
+               (click)="selectedStrike = s; viewMode = 'OPTION_STRIKE'; onFilterChange()"
+               class="strike-row"
+               [class.active]="s === selectedStrike">
+            <span class="strike-ce">CE {{ s }}</span>
+            <span class="strike-center" [class.atm]="s === dayStats.atmStrike">{{ s }}</span>
+            <span class="strike-pe">PE {{ s }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

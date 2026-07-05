@@ -7,6 +7,7 @@ import { authGuard } from './guards/auth.guard';
 import { AccountComponent } from './components/views/account/account.component';
 import { BacktestComponent } from './components/views/backtest/backtest.component';
 import { SeasonalityComponent } from './components/views/seasonality/seasonality.component';
+import { ChartsComponent } from './components/views/charts/charts.component';
 
 export const routes: Routes = [
     // Public Routes
@@ -21,6 +22,7 @@ export const routes: Routes = [
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: DashboardComponent },
+            { path: 'charts', component: ChartsComponent },
             { path: 'backtest', component: BacktestComponent },
             { path: 'seasonality', component: SeasonalityComponent },
             { path: 'account', component: AccountComponent }
