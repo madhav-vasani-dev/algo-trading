@@ -26,18 +26,45 @@ var path = require('path');
 var https = require('https');
 
 var ACCESS_TOKEN = process.argv[2] || process.env.UPSTOX_ACCESS_TOKEN;
-var START_DATE_STR = process.argv[3] || '2024-09-27';
-var END_DATE_STR = process.argv[4] || new Date().toISOString().split('T')[0];
-var FRESH_START = process.argv.indexOf('--fresh') >= 0;
 
-// If --fresh was passed as arg 3 or 4, adjust dates
-if (START_DATE_STR === '--fresh') { START_DATE_STR = '2024-09-27'; FRESH_START = true; }
-if (END_DATE_STR === '--fresh') { END_DATE_STR = new Date().toISOString().split('T')[0]; FRESH_START = true; }
+// Determine if user passed a custom start and end date
+var customStart = process.argv[3] && !process.argv[3].startsWith('-');
+var customEnd = process.argv[4] && !process.argv[4].startsWith('-');
+
+var START_DATE_STR = '2024-09-27';
+var END_DATE_STR = new Date().toISOString().split('T')[0];
+var isCustomRange = false;
+
+if (customStart && customEnd) {
+  START_DATE_STR = process.argv[3];
+  END_DATE_STR = process.argv[4];
+  isCustomRange = true;
+}
+
+// Check for manual chunk choice
+var chunkArgIdx = process.argv.indexOf('--chunk');
+var manualChunkIdx = -1;
+if (chunkArgIdx >= 0 && chunkArgIdx + 1 < process.argv.length) {
+  manualChunkIdx = parseInt(process.argv[chunkArgIdx + 1], 10) - 1;
+}
+
+var FRESH_START = process.argv.indexOf('--fresh') >= 0;
 
 var OUT_DIR = path.join(__dirname, '..', 'public', 'data', 'nifty_1min');
 var CHECKPOINT_DIR = path.join(__dirname, '..', 'public', 'data', '_checkpoint');
-var CHECKPOINT_FILE = path.join(CHECKPOINT_DIR, 'fetch_progress.json');
-var SPOT_CACHE_FILE = path.join(CHECKPOINT_DIR, 'spot_candles.json');
+var CHECKPOINT_FILE = path.join(CHECKPOINT_DIR, 'fetch_progress_v3.json');
+var SPOT_CACHE_FILE = path.join(CHECKPOINT_DIR, 'spot_candles_v3.json');
+
+var CHUNKS = [
+  { start: '2024-09-27', end: '2024-12-31', name: 'Sep-Dec 2024' },
+  { start: '2025-01-01', end: '2025-03-31', name: 'Jan-Mar 2025' },
+  { start: '2025-04-01', end: '2025-06-30', name: 'Apr-Jun 2025' },
+  { start: '2025-07-01', end: '2025-09-30', name: 'Jul-Sep 2025' },
+  { start: '2025-10-01', end: '2025-12-31', name: 'Oct-Dec 2025' },
+  { start: '2026-01-01', end: '2026-03-31', name: 'Jan-Mar 2026' },
+  { start: '2026-04-01', end: '2026-06-30', name: 'Apr-Jun 2026' },
+  { start: '2026-07-01', end: new Date().toISOString().split('T')[0], name: 'Jul 2026' }
+];
 
 var STRIKE_STEP = 50;
 var STRIKE_RANGE = 800;    // ATM +/- 800 points
@@ -75,7 +102,7 @@ function httpsGet(urlStr) {
         'Authorization': 'Bearer ' + ACCESS_TOKEN
       }
     };
-    https.get(opts, function (res) {
+    var req = https.get(opts, function (res) {
       var data = '';
       res.on('data', function (chunk) { data += chunk; });
       res.on('end', function () {
@@ -85,7 +112,12 @@ function httpsGet(urlStr) {
           resolve({ status: res.statusCode, body: data });
         }
       });
-    }).on('error', function (err) { reject(err); });
+    });
+    req.on('error', function (err) { reject(err); });
+    req.setTimeout(15000, function () {
+      req.destroy();
+      reject(new Error('Request Timeout (15s)'));
+    });
   });
 }
 
@@ -171,21 +203,29 @@ function ensureCheckpointDir() {
 }
 
 function loadCheckpoint() {
+  var defaultCheckpoint = {
+    completedChunks: {},
+    currentChunkName: '',
+    completedExpiries: {},
+    optionData: {}
+  };
   if (FRESH_START) {
     console.log('Fresh start requested. Ignoring any existing checkpoint.\n');
-    return { completedExpiries: {}, optionData: {} };
+    return defaultCheckpoint;
   }
   if (fs.existsSync(CHECKPOINT_FILE)) {
     try {
       var data = JSON.parse(fs.readFileSync(CHECKPOINT_FILE, 'utf8'));
-      var count = Object.keys(data.completedExpiries || {}).length;
-      console.log('\u267b\ufe0f  Resuming from checkpoint: ' + count + ' expiries already fetched.\n');
+      if (!data.completedChunks) data.completedChunks = {};
+      if (!data.completedExpiries) data.completedExpiries = {};
+      if (!data.optionData) data.optionData = {};
+      if (!data.currentChunkName) data.currentChunkName = '';
       return data;
     } catch (e) {
       console.warn('Checkpoint file corrupt. Starting fresh.\n');
     }
   }
-  return { completedExpiries: {}, optionData: {} };
+  return defaultCheckpoint;
 }
 
 function saveCheckpoint(checkpoint) {
@@ -360,15 +400,63 @@ function run() {
   var startTime = Date.now();
   console.log('===================================================');
   console.log('  Nifty Data Fetcher v2 (Optimized, ATM +/- ' + STRIKE_RANGE + ')');
-  console.log('  With Checkpoint/Resume Support');
+  console.log('  With Checkpoint/Resume Support (Chunked Version)');
   console.log('===================================================');
+
+  // Load checkpoint
+  var checkpoint = loadCheckpoint();
+  
+  var activeChunk = null;
+  if (isCustomRange) {
+    console.log('Running manual custom range: ' + START_DATE_STR + ' to ' + END_DATE_STR);
+  } else {
+    // Determine active chunk
+    if (manualChunkIdx >= 0) {
+      if (manualChunkIdx >= CHUNKS.length) {
+        console.error('ERROR: Invalid chunk index ' + (manualChunkIdx + 1) + '. Available chunks: 1 to ' + CHUNKS.length);
+        process.exit(1);
+      }
+      activeChunk = CHUNKS[manualChunkIdx];
+      console.log('Manual chunk selection: Chunk ' + (manualChunkIdx + 1) + ' (' + activeChunk.name + ')');
+    } else {
+      // Find first non-completed chunk
+      for (var i = 0; i < CHUNKS.length; i++) {
+        if (!checkpoint.completedChunks[CHUNKS[i].name]) {
+          activeChunk = CHUNKS[i];
+          console.log('Auto-detected next pending chunk: Chunk ' + (i + 1) + ' (' + activeChunk.name + ')');
+          break;
+        }
+      }
+      if (!activeChunk) {
+        console.log('\n\u2705 ALL CHUNKS HAVE BEEN COMPLETED! No further data to fetch.');
+        process.exit(0);
+      }
+    }
+
+    // Set dates to active chunk
+    START_DATE_STR = activeChunk.start;
+    END_DATE_STR = activeChunk.end;
+
+    // Check if transitioning to a new chunk
+    if (checkpoint.currentChunkName !== activeChunk.name) {
+      console.log('Transitioning to chunk: ' + activeChunk.name + '. Clearing current chunk progress.');
+      checkpoint.currentChunkName = activeChunk.name;
+      checkpoint.completedExpiries = {};
+      checkpoint.optionData = {};
+      // Delete spot cache if exists
+      try { if (fs.existsSync(SPOT_CACHE_FILE)) fs.unlinkSync(SPOT_CACHE_FILE); } catch (e) {}
+      saveCheckpoint(checkpoint);
+    } else {
+      var count = Object.keys(checkpoint.completedExpiries || {}).length;
+      console.log('Resuming active chunk: ' + activeChunk.name + ' (' + count + ' expiries already completed).');
+    }
+  }
+
   console.log('Date range: ' + START_DATE_STR + ' to ' + END_DATE_STR);
   console.log('Strike range: ATM +/- ' + STRIKE_RANGE + ' (step ' + STRIKE_STEP + ')');
   console.log('Concurrency: ' + CONCURRENCY + ' parallel requests');
   console.log('');
 
-  // Load checkpoint
-  var checkpoint = loadCheckpoint();
   var optionData = checkpoint.optionData || {};
   var completedExpiries = checkpoint.completedExpiries || {};
 
@@ -660,8 +748,32 @@ function run() {
         console.log('  ' + month + '.json: ' + candles.length + ' candles (' + sizeMB + ' MB)');
       });
 
-      // Clean up checkpoint files on successful completion
-      cleanupCheckpoint();
+      // Clean up checkpoint files on successful completion of chunk or custom range
+      if (isCustomRange) {
+        cleanupCheckpoint();
+      } else {
+        // Mark chunk as completed
+        checkpoint.completedChunks[activeChunk.name] = true;
+        checkpoint.currentChunkName = '';
+        checkpoint.completedExpiries = {};
+        checkpoint.optionData = {};
+        saveCheckpoint(checkpoint);
+
+        // Clean up spot cache
+        try {
+          if (fs.existsSync(SPOT_CACHE_FILE)) fs.unlinkSync(SPOT_CACHE_FILE);
+        } catch (e) { /* ignore */ }
+      }
+
+      // Automatically run daily splitting script to process monthly files
+      console.log('\nRunning split_nifty_by_day.js to split the new monthly files into daily files...');
+      try {
+        var execSync = require('child_process').execSync;
+        execSync('node scripts/split_nifty_by_day.js', { stdio: 'inherit' });
+        console.log('Daily files split successfully!');
+      } catch (err) {
+        console.error('Error running split_nifty_by_day.js:', err.message);
+      }
 
       var durationSec = ((Date.now() - startTime) / 1000).toFixed(1);
       console.log('\n===================================================');
@@ -672,6 +784,9 @@ function run() {
       console.log('  Total API Calls    : ' + apiCallCount);
       console.log('  Strikes Per Candle : ' + ((STRIKE_RANGE * 2 / STRIKE_STEP) + 1));
       console.log('===================================================');
+      if (!isCustomRange && activeChunk) {
+        console.log('Chunk ' + activeChunk.name + ' completed. Next run will automatically start the next chunk.');
+      }
     });
   });
 }

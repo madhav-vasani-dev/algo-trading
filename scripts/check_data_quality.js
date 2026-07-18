@@ -7,28 +7,30 @@ if (!fs.existsSync(dataDir)) {
   process.exit(0);
 }
 
-const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.json')).sort();
 console.log(`Checking data files in ${dataDir}...`);
 
 let totalDays = 0;
 let realDays = 0;
 let simDays = 0;
 
-for (const file of files) {
-  const data = JSON.parse(fs.readFileSync(path.join(dataDir, file), 'utf8'));
-  const daysMap = new Map();
+// Read subdirectories (YYYY-MM)
+const subdirs = fs.readdirSync(dataDir)
+  .filter(d => fs.statSync(path.join(dataDir, d)).isDirectory() && /^\d{4}-\d{2}$/.test(d))
+  .sort();
+
+for (const subdir of subdirs) {
+  const subdirPath = path.join(dataDir, subdir);
+  const files = fs.readdirSync(subdirPath).filter(f => f.endsWith('.json')).sort();
   
-  data.forEach(c => {
-    const dateStr = c.timestamp.substring(0, 10);
-    if (!daysMap.has(dateStr)) daysMap.set(dateStr, []);
-    daysMap.get(dateStr).push(c);
-  });
-  
-  for (const [dateStr, candles] of daysMap.entries()) {
+  for (const file of files) {
+    const filePath = path.join(subdirPath, file);
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const dateStr = file.replace('.json', '');
+    
     totalDays++;
     // Calculate total option volume
     let totalOptVol = 0;
-    candles.forEach(c => {
+    data.forEach(c => {
       if (c.options) {
         Object.values(c.options).forEach(opt => {
           if (opt.CE) totalOptVol += opt.CE.volume || 0;
@@ -41,9 +43,7 @@ for (const file of files) {
       realDays++;
     } else {
       simDays++;
-      if (simDays <= 15) {
-        console.log(`  Simulated Day: ${dateStr} (Total Option Volume = 0)`);
-      }
+      console.log(`  Simulated Day: ${dateStr} (Total Option Volume = 0)`);
     }
   }
 }
@@ -52,3 +52,4 @@ console.log(`\nData Quality Summary:`);
 console.log(`Total Days      : ${totalDays}`);
 console.log(`Real Option Days: ${realDays} (${((realDays/totalDays)*100).toFixed(1)}%)`);
 console.log(`Simulated Days  : ${simDays} (${((simDays/totalDays)*100).toFixed(1)}%)`);
+

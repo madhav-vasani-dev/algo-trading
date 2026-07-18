@@ -44,3 +44,8 @@ Thumbs.db
 Prompts.txt
 package-lock.json
 access_token.txt
+
+# Local trading strategy logs and checkpoints
+*.csv
+*.pdf
+public/data/_checkpoint/

@@ -44,13 +44,26 @@ if (!fs.existsSync(config.dataDir)) {
   process.exit(1);
 }
 
-const files = fs.readdirSync(config.dataDir).filter(f => f.endsWith('.json')).sort();
-console.log(`Loading data files from ${config.dataDir}...`);
+function getAllDailyFiles(dir) {
+  const results = [];
+  const items = fs.readdirSync(dir);
+  for (const item of items) {
+    const fullPath = path.join(dir, item);
+    if (fs.statSync(fullPath).isDirectory() && /^\d{4}-\d{2}$/.test(item)) {
+      const dayFiles = fs.readdirSync(fullPath).filter(f => f.endsWith('.json')).sort();
+      dayFiles.forEach(f => results.push(path.join(fullPath, f)));
+    }
+  }
+  return results.sort();
+}
+
+const files = getAllDailyFiles(config.dataDir);
+console.log(`Loading data files from ${config.dataDir}... (${files.length} daily files)`);
 
 let marketData = [];
 for (const file of files) {
   try {
-    const raw = JSON.parse(fs.readFileSync(path.join(config.dataDir, file), 'utf8'));
+    const raw = JSON.parse(fs.readFileSync(file, 'utf8'));
     marketData = marketData.concat(raw);
   } catch (err) {
     console.error(`Error reading ${file}:`, err.message);
@@ -58,6 +71,7 @@ for (const file of files) {
 }
 
 console.log(`Loaded ${marketData.length} total candles.`);
+
 
 // 2. Group candles by date and index times
 const daysMap = new Map();

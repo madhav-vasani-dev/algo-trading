@@ -38,100 +38,103 @@ const BASE = {
   trailingSlStep: null,
 };
 
-// 1. Load data
+// 1. Load data recursively
 if (!fs.existsSync(config.dataDir)) {
   console.error('ERROR: Data directory does not exist. Fetch data first.');
   process.exit(1);
 }
 
-const files = fs.readdirSync(config.dataDir).filter(f => f.endsWith('.json')).sort();
-console.log('Loading data files...');
+function getAllJsonFiles(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach(file => {
+    const fullPath = path.join(dir, file);
+    const stat = fs.statSync(fullPath);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(getAllJsonFiles(fullPath));
+    } else if (file.endsWith('.json') && file !== 'index.json') {
+      results.push(fullPath);
+    }
+  });
+  return results.sort();
+}
+
+const filePaths = getAllJsonFiles(config.dataDir);
+console.log(`Loading data from ${filePaths.length} daily files...`);
 
 let marketData = [];
-for (const file of files) {
+for (const filePath of filePaths) {
   try {
-    const raw = JSON.parse(fs.readFileSync(path.join(config.dataDir, file), 'utf8'));
+    const raw = JSON.parse(fs.readFileSync(filePath, 'utf8'));
     marketData = marketData.concat(raw);
   } catch (err) {
-    console.error('Error reading ' + file + ': ' + err.message);
+    console.error('Error reading ' + filePath + ': ' + err.message);
   }
 }
 
 console.log('Loaded ' + marketData.length + ' total candles.');
 
-// 2. Group candles by date
-const daysMap = new Map();
-marketData.forEach(function (c) {
-  const dateStr = c.timestamp.substring(0, 10);
-  const timeStr = c.timestamp.substring(11, 16);
-  if (!daysMap.has(dateStr)) {
-    daysMap.set(dateStr, []);
-  }
-  daysMap.get(dateStr).push({
-    timeStr: timeStr,
-    open: c.open,
-    high: c.high,
-    low: c.low,
-    close: c.close,
-    options: c.options
-  });
+// Group candles by date
+const daysMap = {};
+marketData.forEach(c => {
+  const date = c.timestamp.split('T')[0];
+  if (!daysMap[date]) daysMap[date] = [];
+  daysMap[date].push(c);
 });
 
-const days = Array.from(daysMap.entries()).map(function (entry) {
-  var dateStr = entry[0];
-  var candles = entry[1];
-  candles.sort(function (a, b) { return a.timeStr.localeCompare(b.timeStr); });
-  var timeMap = new Map();
-  candles.forEach(function (c, idx) {
-    timeMap.set(c.timeStr, idx);
-  });
-  return { dateStr: dateStr, candles: candles, timeMap: timeMap };
-}).sort(function (a, b) { return a.dateStr.localeCompare(b.dateStr); });
+const tradingDays = Object.keys(daysMap).sort();
+console.log('Total trading days: ' + tradingDays.length);
 
-console.log('Grouped into ' + days.length + ' trading days.');
+// Parse HH:MM to minutes from midnight
+function toMinutes(timeStr) {
+  const [h, m] = timeStr.split(':').map(Number);
+  return h * 60 + m;
+}
 
-// 3. Simulation function for hedged straddle
-// buyOffset = how many points further OTM from ATM to buy (e.g. 100 means buy CE at ATM+100, PE at ATM-100)
-// If buyOffset is null, no hedge (naked straddle)
-function runHedgedSimulation(buyOffset) {
-  var totalPnl = 0;
-  var totalTrades = 0;
-  var wins = 0;
-  var losses = 0;
-  var maxCapital = 200000;
-  var currentCapital = 200000;
-  var maxDrawdown = 0;
-  var totalBuyCost = 0;
-  var skippedDays = 0;
-  var dailyResults = [];
+// ----------------------------------------------------
+// Core Simulation Function
+// ----------------------------------------------------
+function runHedgedStraddle(buyOffset) {
+  let totalPnL = 0;
+  let totalTrades = 0;
+  let winTrades = 0;
+  let lossTrades = 0;
+  let maxDrawdown = 0;
+  let peakEquity = 0;
+  let currentEquity = 0;
+  let buyLegExitsWithSellCount = 0;
+  let missingStrikeDays = 0;
 
-  for (var d = 0; d < days.length; d++) {
-    var day = days[d];
-    var entryIdx = day.timeMap.get(BASE.entryTime);
-    var exitIdx = day.timeMap.get(BASE.exitTime);
+  const dailyResults = [];
 
-    if (entryIdx === undefined) continue;
-    if (exitIdx === undefined) {
-      exitIdx = day.candles.length - 1;
+  for (const date of tradingDays) {
+    const candles = daysMap[date];
+    if (candles.length === 0) continue;
+
+    // Find entry candle
+    const entryCandle = candles.find(c => {
+      const time = c.timestamp.split('T')[1].substring(0, 5);
+      return time === BASE.entryTime;
+    });
+
+    if (!entryCandle || !entryCandle.options) {
+      continue; // Skip if no data at entry time
     }
-    if (entryIdx >= exitIdx) continue;
 
-    var entryCandle = day.candles[entryIdx];
-    var spotEntry = entryCandle.open;
-    var atmStrike = Math.round(spotEntry / config.strikeStep) * config.strikeStep;
+    const spotAtEntry = entryCandle.close;
+    const atmStrike = entryCandle.atmStrike || (Math.round(spotAtEntry / config.strikeStep) * config.strikeStep);
+    
+    // Sold leg strikes (ATM + offset)
+    const sellCeStrike = atmStrike + BASE.offset;
+    const sellPeStrike = atmStrike - BASE.offset;
 
-    // Sold legs (ATM straddle)
-    var ceStrike = atmStrike + BASE.offset;
-    var peStrike = atmStrike - BASE.offset;
+    // Check if sold strikes exist in entry candle
+    const ceOptEntry = entryCandle.options[sellCeStrike];
+    const peOptEntry = entryCandle.options[sellPeStrike];
 
-    if (!entryCandle.options || !entryCandle.options[ceStrike] || !entryCandle.options[peStrike]) {
+    if (!ceOptEntry || !ceOptEntry.CE || !peOptEntry || !peOptEntry.PE) {
       continue;
     }
-
-    var ceOptEntry = entryCandle.options[ceStrike];
-    var peOptEntry = entryCandle.options[peStrike];
-
-    if (!ceOptEntry.CE || !peOptEntry.PE) continue;
 
     var ceEntryPrice = ceOptEntry.CE.open;
     var peEntryPrice = peOptEntry.PE.open;
@@ -149,278 +152,197 @@ function runHedgedSimulation(buyOffset) {
       buyCeStrike = atmStrike + buyOffset;
       buyPeStrike = atmStrike - buyOffset;
 
-      // Check if buy strikes exist in data
-      var buyCeOpt = entryCandle.options[buyCeStrike];
-      var buyPeOpt = entryCandle.options[buyPeStrike];
+      const buyCeOpt = entryCandle.options[buyCeStrike];
+      const buyPeOpt = entryCandle.options[buyPeStrike];
 
-      if (!buyCeOpt || !buyCeOpt.CE || !buyPeOpt || !buyPeOpt.PE) {
-        // If buy strikes not available, skip this day for hedged strategy
-        skippedDays++;
+      if (buyCeOpt && buyCeOpt.CE && buyPeOpt && buyPeOpt.PE) {
+        buyCeEntryPrice = buyCeOpt.CE.open;
+        buyPeEntryPrice = buyPeOpt.PE.open;
+        hasBuyLegs = true;
+      } else {
+        missingStrikeDays++;
+        // If requested buy strikes don't exist in option chain, skip day or skip hedge
         continue;
       }
-
-      buyCeEntryPrice = buyCeOpt.CE.open;
-      buyPeEntryPrice = buyPeOpt.PE.open;
-      hasBuyLegs = true;
-      totalBuyCost += (buyCeEntryPrice + buyPeEntryPrice) * config.lotSize;
     }
 
-    // Simulation state for sold legs
-    var ceStatus = 'OPEN';
-    var peStatus = 'OPEN';
-    var ceExitPrice = null;
-    var peExitPrice = null;
+    // Stop Losses for Sold Legs
+    const ceSl = ceEntryPrice * (1 + BASE.legSlPct / 100);
+    const peSl = peEntryPrice * (1 + BASE.legSlPct / 100);
 
-    var ceSlLevel = BASE.legSlPct !== null ? ceEntryPrice * (1 + BASE.legSlPct / 100) : Infinity;
-    var peSlLevel = BASE.legSlPct !== null ? peEntryPrice * (1 + BASE.legSlPct / 100) : Infinity;
+    let ceActive = true;
+    let peActive = true;
+    let ceExitPrice = 0;
+    let peExitPrice = 0;
+    let ceExitTime = '';
+    let peExitTime = '';
 
-    // Minute-by-minute simulation
-    for (var i = entryIdx; i <= exitIdx; i++) {
-      var c = day.candles[i];
-      var ceOpt = c.options[ceStrike];
-      var peOpt = c.options[peStrike];
-      if (!ceOpt || !peOpt) continue;
+    // Buy legs active state
+    let buyCeActive = hasBuyLegs;
+    let buyPeActive = hasBuyLegs;
 
-      // Check Stop Loss for sold CE leg
-      if (ceStatus === 'OPEN' && ceOpt.CE.high >= ceSlLevel) {
-        ceStatus = 'CLOSED';
-        ceExitPrice = ceOpt.CE.open > ceSlLevel ? ceOpt.CE.open : ceSlLevel;
+    const entryMinutes = toMinutes(BASE.entryTime);
+    const exitMinutes = toMinutes(BASE.exitTime);
 
-        if (BASE.squareOffMode === 'COMPLETE') {
-          peStatus = 'CLOSED';
-          peExitPrice = peOpt.PE.close;
-          break;
+    // Filter intraday candles after entry
+    const activeCandles = candles.filter(c => {
+      const time = c.timestamp.split('T')[1].substring(0, 5);
+      const m = toMinutes(time);
+      return m >= entryMinutes && m <= exitMinutes;
+    });
+
+    for (const c of activeCandles) {
+      const time = c.timestamp.split('T')[1].substring(0, 5);
+      const m = toMinutes(time);
+
+      const ceOpt = c.options ? c.options[sellCeStrike] : null;
+      const peOpt = c.options ? c.options[sellPeStrike] : null;
+      const buyCeOpt = (hasBuyLegs && c.options) ? c.options[buyCeStrike] : null;
+      const buyPeOpt = (hasBuyLegs && c.options) ? c.options[buyPeStrike] : null;
+
+      // 1. Check CE Sold Leg SL
+      if (ceActive && ceOpt && ceOpt.CE) {
+        if (ceOpt.CE.high >= ceSl) {
+          ceActive = false;
+          ceExitPrice = ceSl; // Assume SL hit price
+          ceExitTime = time;
         }
       }
 
-      // Check Stop Loss for sold PE leg
-      if (peStatus === 'OPEN' && peOpt.PE.high >= peSlLevel) {
-        peStatus = 'CLOSED';
-        peExitPrice = peOpt.PE.open > peSlLevel ? peOpt.PE.open : peSlLevel;
-
-        if (BASE.squareOffMode === 'COMPLETE') {
-          ceStatus = 'CLOSED';
-          ceExitPrice = ceOpt.CE.close;
-          break;
+      // 2. Check PE Sold Leg SL
+      if (peActive && peOpt && peOpt.PE) {
+        if (peOpt.PE.high >= peSl) {
+          peActive = false;
+          peExitPrice = peSl;
+          peExitTime = time;
         }
+      }
+
+      // Check if both sold legs hit SL -> Full Square Off
+      if (BASE.squareOffMode === 'FULL' && (!ceActive || !peActive)) {
+        if (ceActive) {
+          ceActive = false;
+          ceExitPrice = (ceOpt && ceOpt.CE) ? ceOpt.CE.close : ceEntryPrice;
+          ceExitTime = time;
+        }
+        if (peActive) {
+          peActive = false;
+          peExitPrice = (peOpt && peOpt.PE) ? peOpt.PE.close : peEntryPrice;
+          peExitTime = time;
+        }
+      }
+
+      // End of day forced exit
+      if (m === exitMinutes) {
+        if (ceActive) {
+          ceActive = false;
+          ceExitPrice = (ceOpt && ceOpt.CE) ? ceOpt.CE.close : ceEntryPrice;
+          ceExitTime = time;
+        }
+        if (peActive) {
+          peActive = false;
+          peExitPrice = (peOpt && peOpt.PE) ? peOpt.PE.close : peEntryPrice;
+          peExitTime = time;
+        }
+
+        // Exit Buy Legs at EOD
+        if (buyCeActive) {
+          buyCeActive = false;
+          buyCeExitPrice = (buyCeOpt && buyCeOpt.CE) ? buyCeOpt.CE.close : buyCeEntryPrice;
+        }
+        if (buyPeActive) {
+          buyPeActive = false;
+          buyPeExitPrice = (buyPeOpt && buyPeOpt.PE) ? buyPeOpt.PE.close : buyPeEntryPrice;
+        }
+        break;
       }
     }
 
-    // Exit remaining sold legs at final exit candle close
-    var exitCandle = day.candles[exitIdx];
-    var ceOptExit = exitCandle.options[ceStrike];
-    var peOptExit = exitCandle.options[peStrike];
+    // ----------------------------------------------------
+    // Calculate PnL
+    // ----------------------------------------------------
+    // Sold Legs PnL (Sell High, Buy Low) -> (Entry - Exit)
+    const ceSoldPnL = (ceEntryPrice - ceExitPrice) * config.lotSize;
+    const peSoldPnL = (peEntryPrice - peExitPrice) * config.lotSize;
+    const soldPnL = ceSoldPnL + peSoldPnL;
 
-    if (ceStatus === 'OPEN') {
-      ceExitPrice = ceOptExit ? ceOptExit.CE.close : ceEntryPrice;
-    }
-    if (peStatus === 'OPEN') {
-      peExitPrice = peOptExit ? peOptExit.PE.close : peEntryPrice;
-    }
-
-    // Buy legs: EXIT only at the exit time (never before sold legs)
-    // Buy legs profit = (exitPrice - entryPrice) * lotSize (we are long)
+    // Bought Legs PnL (Buy Low, Sell High) -> (Exit - Entry)
+    let boughtPnL = 0;
     if (hasBuyLegs) {
-      var buyCeOptExit = exitCandle.options[buyCeStrike];
-      var buyPeOptExit = exitCandle.options[buyPeStrike];
-
-      buyCeExitPrice = buyCeOptExit && buyCeOptExit.CE ? buyCeOptExit.CE.close : 0;
-      buyPeExitPrice = buyPeOptExit && buyPeOptExit.PE ? buyPeOptExit.PE.close : 0;
+      const buyCePnL = (buyCeExitPrice - buyCeEntryPrice) * config.lotSize;
+      const buyPePnL = (buyPeExitPrice - buyPeEntryPrice) * config.lotSize;
+      boughtPnL = buyCePnL + buyPePnL;
     }
 
-    // PnL calculation
-    // Sold legs: entry - exit (short position profit)
-    var dayCePnl = (ceEntryPrice - ceExitPrice) * config.lotSize;
-    var dayPePnl = (peEntryPrice - peExitPrice) * config.lotSize;
+    const dayPnL = soldPnL + boughtPnL;
 
-    // Buy legs: exit - entry (long position profit)
-    var dayBuyCePnl = 0;
-    var dayBuyPePnl = 0;
-    if (hasBuyLegs) {
-      dayBuyCePnl = (buyCeExitPrice - buyCeEntryPrice) * config.lotSize;
-      dayBuyPePnl = (buyPeExitPrice - buyPeEntryPrice) * config.lotSize;
-    }
-
-    var dayPnl = dayCePnl + dayPePnl + dayBuyCePnl + dayBuyPePnl;
-
-    totalPnl += dayPnl;
+    totalPnL += dayPnL;
     totalTrades++;
-    if (dayPnl > 0) wins++;
-    else losses++;
+    if (dayPnL > 0) winTrades++;
+    else if (dayPnL < 0) lossTrades++;
 
-    currentCapital += dayPnl;
-    if (currentCapital > maxCapital) {
-      maxCapital = currentCapital;
-    }
-    var dd = maxCapital - currentCapital;
-    if (dd > maxDrawdown) {
-      maxDrawdown = dd;
-    }
+    currentEquity += dayPnL;
+    if (currentEquity > peakEquity) peakEquity = currentEquity;
+    const dd = peakEquity - currentEquity;
+    if (dd > maxDrawdown) maxDrawdown = dd;
 
     dailyResults.push({
-      date: day.dateStr,
-      soldCePnl: dayCePnl,
-      soldPePnl: dayPePnl,
-      buyCePnl: dayBuyCePnl,
-      buyPePnl: dayBuyPePnl,
-      totalPnl: dayPnl,
-      buyCeEntry: buyCeEntryPrice,
-      buyPeEntry: buyPeEntryPrice,
-      buyCeExit: buyCeExitPrice,
-      buyPeExit: buyPeExitPrice,
+      date,
+      atmStrike,
+      sellCePrice: ceEntryPrice,
+      sellPePrice: peEntryPrice,
+      buyCePrice: buyCeEntryPrice,
+      buyPePrice: buyPeEntryPrice,
+      soldPnL,
+      boughtPnL,
+      dayPnL,
     });
   }
 
-  var winRate = totalTrades > 0 ? (wins / totalTrades) * 100 : 0;
-  var recoveryFactor = maxDrawdown > 0 ? totalPnl / maxDrawdown : 0;
+  const winRate = totalTrades > 0 ? ((winTrades / totalTrades) * 100).toFixed(2) : 0;
 
   return {
-    netProfit: totalPnl,
-    winRate: winRate,
-    totalTrades: totalTrades,
-    wins: wins,
-    losses: losses,
-    maxDrawdown: maxDrawdown,
-    recoveryFactor: recoveryFactor,
-    totalBuyCost: totalBuyCost,
-    avgBuyCostPerDay: totalTrades > 0 ? totalBuyCost / totalTrades : 0,
-    skippedDays: skippedDays,
-    dailyResults: dailyResults,
+    buyOffset: buyOffset === null ? 'UNHEDGED (Naked)' : `+${buyOffset} pts`,
+    totalPnL: Math.round(totalPnL),
+    totalTrades,
+    winRate: winRate + '%',
+    maxDrawdown: Math.round(maxDrawdown),
+    missingStrikeDays,
+    profitFactor: calculateProfitFactor(dailyResults),
   };
 }
 
-// 4. Run baseline (no hedge)
-console.log('\n===================================================');
-console.log('  BASELINE: NAKED SHORT STRADDLE (NO HEDGE)');
-console.log('===================================================');
+function calculateProfitFactor(dailyResults) {
+  let grossProfit = 0;
+  let grossLoss = 0;
 
-var baselineResult = runHedgedSimulation(null);
-console.log('Net Profit : Rs ' + baselineResult.netProfit.toFixed(0));
-console.log('Win Rate   : ' + baselineResult.winRate.toFixed(1) + '%');
-console.log('Total Days : ' + baselineResult.totalTrades);
-console.log('Max DD     : Rs ' + baselineResult.maxDrawdown.toFixed(0));
-console.log('Recovery F.: ' + baselineResult.recoveryFactor.toFixed(2));
-
-// 5. Test all possible buy offsets
-console.log('\n===================================================');
-console.log('  TESTING HEDGED STRADDLE COMBINATIONS');
-console.log('===================================================');
-
-// Buy offsets to test: from 50 to 400 points from ATM (step 50)
-var buyOffsets = [50, 100, 150, 200, 250, 300, 350, 400];
-
-var results = [];
-
-for (var idx = 0; idx < buyOffsets.length; idx++) {
-  var offset = buyOffsets[idx];
-  console.log('\nTesting Buy Offset: ATM +/- ' + offset + ' points...');
-
-  var res = runHedgedSimulation(offset);
-
-  var profitDiff = res.netProfit - baselineResult.netProfit;
-  var profitDiffPct = (profitDiff / Math.abs(baselineResult.netProfit)) * 100;
-
-  results.push({
-    buyOffset: offset,
-    metrics: {
-      netProfit: res.netProfit,
-      winRate: res.winRate,
-      totalTrades: res.totalTrades,
-      wins: res.wins,
-      losses: res.losses,
-      maxDrawdown: res.maxDrawdown,
-      recoveryFactor: res.recoveryFactor,
-      totalBuyCost: res.totalBuyCost,
-      avgBuyCostPerDay: res.avgBuyCostPerDay,
-      skippedDays: res.skippedDays,
-    },
-    profitDiff: profitDiff,
-    profitDiffPct: profitDiffPct,
+  dailyResults.forEach(r => {
+    if (r.dayPnL > 0) grossProfit += r.dayPnL;
+    else if (r.dayPnL < 0) grossLoss += Math.abs(r.dayPnL);
   });
 
-  console.log('  Net Profit  : Rs ' + res.netProfit.toFixed(0) +
-    ' (' + (profitDiff >= 0 ? '+' : '') + profitDiff.toFixed(0) + ' | ' +
-    (profitDiffPct >= 0 ? '+' : '') + profitDiffPct.toFixed(1) + '%)');
-  console.log('  Win Rate    : ' + res.winRate.toFixed(1) + '%');
-  console.log('  Total Days  : ' + res.totalTrades + ' (skipped: ' + res.skippedDays + ')');
-  console.log('  Max DD      : Rs ' + res.maxDrawdown.toFixed(0));
-  console.log('  Recovery F. : ' + res.recoveryFactor.toFixed(2));
-  console.log('  Avg Buy Cost: Rs ' + res.avgBuyCostPerDay.toFixed(0) + '/day');
+  return grossLoss === 0 ? 'INF' : (grossProfit / grossLoss).toFixed(2);
 }
 
-// 6. Summary Table
-console.log('\n===================================================');
-console.log('  SUMMARY: HEDGED STRADDLE RESULTS');
-console.log('===================================================');
+// ----------------------------------------------------
+// Execution: Test Baseline & Buy Offset Options
+// ----------------------------------------------------
+console.log('\n========================================================================');
+console.log('  OPTIMIZING HEDGED SHORT STRADDLE (BUY HEDGE LEGS)');
+console.log('========================================================================');
 
-console.log('\n| Buy Offset | Net Profit | vs Baseline | Win Rate | Days | Skipped | Max DD | Recovery F | Avg Buy Cost/Day |');
-console.log('|------------|------------|-------------|----------|------|---------|--------|------------|------------------|');
+// Test Offsets: 100, 150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000
+const buyOffsetsToTest = [null, 100, 150, 200, 250, 300, 350, 400, 450, 500, 600, 700, 800, 900, 1000];
 
-// First row: baseline
-console.log('| NONE (Naked) | Rs ' + baselineResult.netProfit.toFixed(0) +
-  ' | BASELINE | ' + baselineResult.winRate.toFixed(1) + '% | ' +
-  baselineResult.totalTrades + ' | 0 | Rs ' + baselineResult.maxDrawdown.toFixed(0) +
-  ' | ' + baselineResult.recoveryFactor.toFixed(2) + ' | Rs 0 |');
+const summaryTable = [];
 
-for (var i = 0; i < results.length; i++) {
-  var r = results[i];
-  var diffStr = (r.profitDiff >= 0 ? '+' : '') + 'Rs ' + r.profitDiff.toFixed(0) + 
-    ' (' + (r.profitDiffPct >= 0 ? '+' : '') + r.profitDiffPct.toFixed(1) + '%)';
-  console.log('| ATM +/- ' + r.buyOffset + ' | Rs ' + r.metrics.netProfit.toFixed(0) +
-    ' | ' + diffStr + ' | ' + r.metrics.winRate.toFixed(1) + '% | ' +
-    r.metrics.totalTrades + ' | ' + r.metrics.skippedDays +
-    ' | Rs ' + r.metrics.maxDrawdown.toFixed(0) +
-    ' | ' + r.metrics.recoveryFactor.toFixed(2) +
-    ' | Rs ' + r.metrics.avgBuyCostPerDay.toFixed(0) + ' |');
+for (const offset of buyOffsetsToTest) {
+  const result = runHedgedStraddle(offset);
+  summaryTable.push(result);
 }
 
-// 7. Filter: Only show combinations that don't reduce baseline profit
-console.log('\n===================================================');
-console.log('  VIABLE COMBINATIONS (Profit >= Baseline)');
-console.log('===================================================');
+console.table(summaryTable);
 
-var viable = results.filter(function (r) {
-  return r.metrics.netProfit >= baselineResult.netProfit * 0.95; // Allow 5% tolerance
-});
-
-if (viable.length === 0) {
-  console.log('No viable combinations found that maintain baseline profit.');
-  console.log('All hedge combinations reduce net profit due to the cost of buying options.');
-} else {
-  console.log('\n| Buy Offset | Net Profit | vs Baseline | Win Rate | Max DD | Avg Buy Cost/Day |');
-  console.log('|------------|------------|-------------|----------|--------|------------------|');
-  for (var j = 0; j < viable.length; j++) {
-    var v = viable[j];
-    var vDiffStr = (v.profitDiff >= 0 ? '+' : '') + 'Rs ' + v.profitDiff.toFixed(0);
-    console.log('| ATM +/- ' + v.buyOffset + ' | Rs ' + v.metrics.netProfit.toFixed(0) +
-      ' | ' + vDiffStr + ' | ' + v.metrics.winRate.toFixed(1) + '% | Rs ' +
-      v.metrics.maxDrawdown.toFixed(0) + ' | Rs ' + v.metrics.avgBuyCostPerDay.toFixed(0) + ' |');
-  }
-}
-
-// 8. Save results
-var outDir = path.join(__dirname, '..', 'public', 'data');
-if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir, { recursive: true });
-}
-
-var outFile = path.join(outDir, 'hedged_straddle_results.json');
-var output = {
-  baseline: {
-    params: BASE,
-    metrics: {
-      netProfit: baselineResult.netProfit,
-      winRate: baselineResult.winRate,
-      totalTrades: baselineResult.totalTrades,
-      wins: baselineResult.wins,
-      losses: baselineResult.losses,
-      maxDrawdown: baselineResult.maxDrawdown,
-      recoveryFactor: baselineResult.recoveryFactor,
-    }
-  },
-  hedgedResults: results,
-  viableResults: viable,
-};
-
-fs.writeFileSync(outFile, JSON.stringify(output, null, 2));
-console.log('\nResults saved to ' + outFile);
+console.log('\n========================================================================');
+console.log('  OPTIMIZATION COMPLETE');
+console.log('========================================================================\n');

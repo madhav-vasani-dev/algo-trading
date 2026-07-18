@@ -333,18 +333,50 @@ export class BacktestComponent implements OnInit {
         const toLimit = new Date(this.toDate);
         toLimit.setHours(23, 59, 59, 999);
 
-        const monthsNeeded = this.getMonthsInRange(fromLimit, toLimit);
+        const fromStr = this.fromDate; // 'YYYY-MM-DD'
+        const toStr = this.toDate;     // 'YYYY-MM-DD'
         let loadedCandles: any[] = [];
 
-        for (const month of monthsNeeded) {
-          try {
-            const res = await axios.get(`/data/nifty_1min/${month}.json`);
-            if (res.data && Array.isArray(res.data)) {
-              loadedCandles = loadedCandles.concat(res.data);
+        const fetchLocalJson = async (relPath: string) => {
+          const ts = Date.now();
+          const urls = [
+            `/data/nifty_1min/${relPath}?v=${ts}`,
+            `./data/nifty_1min/${relPath}?v=${ts}`,
+            `/algo-trading/data/nifty_1min/${relPath}?v=${ts}`
+          ];
+          for (const url of urls) {
+            try {
+              const res = await axios.get(url);
+              return res.data;
+            } catch (e) {
+              // try next
             }
-          } catch (err) {
-            console.warn(`[BacktestComponent] Could not load monthly file /data/nifty_1min/${month}.json. Skip/Continue.`);
           }
+          throw new Error(`Could not load ${relPath}`);
+        };
+
+        try {
+          const indexData = await fetchLocalJson('index.json');
+          if (indexData && indexData.daysByMonth) {
+            const monthsNeeded = this.getMonthsInRange(fromLimit, toLimit);
+            for (const month of monthsNeeded) {
+              const days = indexData.daysByMonth[month] || [];
+              for (const day of days) {
+                if (day >= fromStr && day <= toStr) {
+                  try {
+                    const data = await fetchLocalJson(`${month}/${day}.json`);
+                    if (data && Array.isArray(data)) {
+                      loadedCandles = loadedCandles.concat(data);
+                    }
+                  } catch (err) {
+                    console.warn(`[BacktestComponent] Could not load daily file for ${day}. Skip.`);
+                  }
+                }
+              }
+            }
+          }
+        } catch (err) {
+          console.error('[BacktestComponent] Failed to load index.json or daily data:', err);
         }
 
         candles = loadedCandles

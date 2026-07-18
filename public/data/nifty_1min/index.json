@@ -21,7 +21,8 @@
     "2026-03",
     "2026-04",
     "2026-05",
-    "2026-06"
+    "2026-06",
+    "2026-07"
   ],
   "daysByMonth": {
     "2024-09": [
@@ -483,7 +484,33 @@
       "2026-06-02",
       "2026-06-03",
       "2026-06-04",
-      "2026-06-05"
+      "2026-06-05",
+      "2026-06-08",
+      "2026-06-09",
+      "2026-06-10",
+      "2026-06-11",
+      "2026-06-12",
+      "2026-06-15",
+      "2026-06-16",
+      "2026-06-17",
+      "2026-06-18",
+      "2026-06-19",
+      "2026-06-22",
+      "2026-06-23",
+      "2026-06-24",
+      "2026-06-25",
+      "2026-06-29",
+      "2026-06-30"
+    ],
+    "2026-07": [
+      "2026-07-01",
+      "2026-07-02",
+      "2026-07-03",
+      "2026-07-06",
+      "2026-07-07",
+      "2026-07-08",
+      "2026-07-09",
+      "2026-07-10"
     ]
   },
   "summaryByDay": {
@@ -496,8 +523,8 @@
       "atmStrike": 26250,
       "callClose": 115.25,
       "putClose": 133.75,
-      "futClose": 26345.75,
-      "maxOI": 16613450
+      "futClose": 26175,
+      "maxOI": 0
     },
     "2024-09-30": {
       "open": 26061.3,
@@ -508,8 +535,8 @@
       "atmStrike": 26050,
       "callClose": 43.35,
       "putClose": 248,
-      "futClose": 25989.85,
-      "maxOI": 16259525
+      "futClose": 25822.8,
+      "maxOI": 0
     },
     "2024-10-01": {
       "open": 25788.45,
@@ -520,8 +547,8 @@
       "atmStrike": 25800,
       "callClose": 82,
       "putClose": 61.75,
-      "futClose": 25977.7,
-      "maxOI": 14895000
+      "futClose": 25812.55,
+      "maxOI": 0
     },
     "2024-10-03": {
       "open": 25452.85,
@@ -532,8 +559,8 @@
       "atmStrike": 25450,
       "callClose": 0.05,
       "putClose": 200.1,
-      "futClose": 25478.2,
-      "maxOI": 14734300
+      "futClose": 25266,
+      "maxOI": 0
     },
     "2024-10-04": {
       "open": 25181.9,
@@ -544,8 +571,8 @@
       "atmStrike": 25200,
       "callClose": 110.6,
       "putClose": 249.5,
-      "futClose": 25193,
-      "maxOI": 14244425
+      "futClose": 25049.1,
+      "maxOI": 0
     },
     "2024-10-07": {
       "open": 25084.1,
@@ -556,8 +583,8 @@
       "atmStrike": 25100,
       "callClose": 70.34,
       "putClose": 311.75,
-      "futClose": 25004,
-      "maxOI": 14762200
+      "futClose": 24819,
+      "maxOI": 0
     },
     "2024-10-08": {
       "open": 24832.2,
@@ -568,8 +595,8 @@
       "atmStrike": 24850,
       "callClose": 227.25,
       "putClose": 76,
-      "futClose": 25147.1,
-      "maxOI": 14461550
+      "futClose": 25039.5,
+      "maxOI": 0
     },
     "2024-10-09": {
       "open": 25065.8,
@@ -580,8 +607,8 @@
       "atmStrike": 25050,
       "callClose": 58.9,
       "putClose": 113.25,
-      "futClose": 25119.75,
-      "maxOI": 14421250
+      "futClose": 25019.55,
+      "maxOI": 0
     },
     "2024-10-10": {
       "open": 25067.05,
@@ -592,8 +619,8 @@
       "atmStrike": 25050,
       "callClose": 0.05,
       "putClose": 51.45,
-      "futClose": 25124,
-      "maxOI": 14365475
+      "futClose": 25007.55,
+      "maxOI": 0
     },
     "2024-10-11": {
       "open": 24985.3,
@@ -604,8 +631,8 @@
       "atmStrike": 25000,
       "callClose": 125.05,
       "putClose": 165,
-      "futClose": 25048,
-      "maxOI": 14125550
+      "futClose": 24975.05,
+      "maxOI": 0
     },
     "2024-10-14": {
       "open": 25023.45,
@@ -616,8 +643,8 @@
       "atmStrike": 25000,
       "callClose": 198.1,
       "putClose": 55,
-      "futClose": 25235,
-      "maxOI": 13916125
+      "futClose": 25142.3,
+      "maxOI": 0
     },
     "2024-10-15": {
       "open": 25186.3,
@@ -628,8 +655,8 @@
       "atmStrike": 25200,
       "callClose": 38.4,
       "putClose": 183.85,
-      "futClose": 25132,
-      "maxOI": 13794000
+      "futClose": 25065.15,
+      "maxOI": 0
     },
     "2024-10-16": {
       "open": 25008.55,
@@ -640,8 +667,8 @@
       "atmStrike": 25000,
       "callClose": 49.2,
       "putClose": 85,
-      "futClose": 25032.1,
-      "maxOI": 13886750
+      "futClose": 24959.9,
+      "maxOI": 0
     },
     "2024-10-17": {
       "open": 25027.4,
@@ -652,8 +679,8 @@
       "atmStrike": 25050,
       "callClose": 0.1,
       "putClose": 300.8,
-      "futClose": 24845,
-      "maxOI": 13917900
+      "futClose": 24750.2,
+      "maxOI": 0
     },
     "2024-10-18": {
       "open": 24664.95,
@@ -664,8 +691,8 @@
       "atmStrike": 24650,
       "callClose": 311.8,
       "putClose": 52.4,
-      "futClose": 24962,
-      "maxOI": 13663625
+      "futClose": 24862.65,
+      "maxOI": 0
     },
     "2024-10-21": {
       "open": 24956.15,
@@ -676,8 +703,8 @@
       "atmStrike": 24950,
       "callClose": 36.79,
       "putClose": 269.1,
-      "futClose": 24752.1,
-      "maxOI": 13289750
+      "futClose": 24739.45,
+      "maxOI": 0
     },
     "2024-10-22": {
       "open": 24798.65,
@@ -688,8 +715,8 @@
       "atmStrike": 24800,
       "callClose": 21.3,
       "putClose": 340,
-      "futClose": 24527,
-      "maxOI": 13452525
+      "futClose": 24481.75,
+      "maxOI": 0
     },
     "2024-10-23": {
       "open": 24378.15,
@@ -700,8 +727,8 @@
       "atmStrike": 24400,
       "callClose": 97.4,
       "putClose": 61.35,
-      "futClose": 24483,
-      "maxOI": 13384100
+      "futClose": 24436,
+      "maxOI": 0
     },
     "2024-10-24": {
       "open": 24412.7,
@@ -712,8 +739,8 @@
       "atmStrike": 24400,
       "callClose": 0.05,
       "putClose": 0.5,
-      "futClose": 24474.95,
-      "maxOI": 13125950
+      "futClose": 24414.6,
+      "maxOI": 0
     },
     "2024-10-25": {
       "open": 24418.05,
@@ -724,8 +751,8 @@
       "atmStrike": 24400,
       "callClose": 68.75,
       "putClose": 253.05,
-      "futClose": 24215,
-      "maxOI": 13110025
+      "futClose": 24211.8,
+      "maxOI": 0
     },
     "2024-10-28": {
       "open": 24251.1,
@@ -736,8 +763,8 @@
       "atmStrike": 24250,
       "callClose": 178.5,
       "putClose": 63.2,
-      "futClose": 24366,
-      "maxOI": 11978750
+      "futClose": 24367.7,
+      "maxOI": 0
     },
     "2024-10-29": {
       "open": 24328.85,
@@ -748,8 +775,8 @@
       "atmStrike": 24350,
       "callClose": 166.2,
       "putClose": 44.25,
-      "futClose": 24472.1,
-      "maxOI": 10791875
+      "futClose": 24454,
+      "maxOI": 0
     },
     "2024-10-30": {
       "open": 24371.45,
@@ -760,8 +787,8 @@
       "atmStrike": 24350,
       "callClose": 84.7,
       "putClose": 64.65,
-      "futClose": 24367.05,
-      "maxOI": 8773200
+      "futClose": 24350.3,
+      "maxOI": 0
     },
     "2024-10-31": {
       "open": 24349.85,
@@ -772,8 +799,8 @@
       "atmStrike": 24350,
       "callClose": 0.05,
       "putClose": 144.65,
-      "futClose": 24403,
-      "maxOI": 10608700
+      "futClose": 24238.5,
+      "maxOI": 0
     },
     "2024-11-01": {
       "open": 24302.75,
@@ -784,8 +811,8 @@
       "atmStrike": 24300,
       "callClose": 185.55,
       "putClose": 213.8,
-      "futClose": 24383.05,
-      "maxOI": 10664250
+      "futClose": 24300.55,
+      "maxOI": 0
     },
     "2024-11-04": {
       "open": 24315.75,
@@ -796,8 +823,8 @@
       "atmStrike": 24300,
       "callClose": 67.5,
       "putClose": 376.15,
-      "futClose": 24105,
-      "maxOI": 11752150
+      "futClose": 23990.95,
+      "maxOI": 0
     },
     "2024-11-05": {
       "open": 23916.5,
@@ -808,8 +835,8 @@
       "atmStrike": 23900,
       "callClose": 339.35,
       "putClose": 69,
-      "futClose": 24297,
-      "maxOI": 11673375
+      "futClose": 24198.15,
+      "maxOI": 0
     },
     "2024-11-06": {
       "open": 24308.75,
@@ -820,8 +847,8 @@
       "atmStrike": 24300,
       "callClose": 191.7,
       "putClose": 21,
-      "futClose": 24592,
-      "maxOI": 11435700
+      "futClose": 24493.9,
+      "maxOI": 0
     },
     "2024-11-07": {
       "open": 24489.6,
@@ -832,8 +859,8 @@
       "atmStrike": 24500,
       "callClose": 0.05,
       "putClose": 301.14,
-      "futClose": 24281,
-      "maxOI": 11645725
+      "futClose": 24194.6,
+      "maxOI": 0
     },
     "2024-11-08": {
       "open": 24207.7,
@@ -844,8 +871,8 @@
       "atmStrike": 24200,
       "callClose": 112.85,
       "putClose": 182,
-      "futClose": 24196.4,
-      "maxOI": 11531725
+      "futClose": 24110.35,
+      "maxOI": 0
     },
     "2024-11-11": {
       "open": 24087.25,
@@ -856,8 +883,8 @@
       "atmStrike": 24100,
       "callClose": 144,
       "putClose": 91.2,
-      "futClose": 24223,
-      "maxOI": 11430000
+      "futClose": 24122.1,
+      "maxOI": 0
     },
     "2024-11-12": {
       "open": 24225.8,
@@ -868,8 +895,8 @@
       "atmStrike": 24250,
       "callClose": 16.39,
       "putClose": 402,
-      "futClose": 23933.9,
-      "maxOI": 11804250
+      "futClose": 23842.95,
+      "maxOI": 0
     },
     "2024-11-13": {
       "open": 23822.45,
@@ -880,8 +907,8 @@
       "atmStrike": 23800,
       "callClose": 22.9,
       "putClose": 213,
-      "futClose": 23696.6,
-      "maxOI": 12261700
+      "futClose": 23602.9,
+      "maxOI": 0
     },
     "2024-11-14": {
       "open": 23542.15,
@@ -892,8 +919,8 @@
       "atmStrike": 23550,
       "callClose": 0.05,
       "putClose": 17.25,
-      "futClose": 23621.35,
-      "maxOI": 12360175
+      "futClose": 23559.6,
+      "maxOI": 0
     },
     "2024-11-18": {
       "open": 23605.3,
@@ -904,8 +931,8 @@
       "atmStrike": 23600,
       "callClose": 56.45,
       "putClose": 195,
-      "futClose": 23517.9,
-      "maxOI": 12521275
+      "futClose": 23465.3,
+      "maxOI": 0
     },
     "2024-11-19": {
       "open": 23529.55,
@@ -916,8 +943,8 @@
       "atmStrike": 23550,
       "callClose": 67.25,
       "putClose": 158,
-      "futClose": 23491.05,
-      "maxOI": 12129350
+      "futClose": 23468.7,
+      "maxOI": 0
     },
     "2024-11-21": {
       "open": 23488.45,
@@ -928,8 +955,8 @@
       "atmStrike": 23500,
       "callClose": 0.05,
       "putClose": 149.65,
-      "futClose": 23349,
-      "maxOI": 11780550
+      "futClose": 23346.75,
+      "maxOI": 0
     },
     "2024-11-22": {
       "open": 23411.8,
@@ -940,8 +967,8 @@
       "atmStrike": 23400,
       "callClose": 555.35,
       "putClose": 55.7,
-      "futClose": 23900,
-      "maxOI": 11275400
+      "futClose": 23873.5,
+      "maxOI": 0
     },
     "2024-11-25": {
       "open": 24253.55,
@@ -952,8 +979,8 @@
       "atmStrike": 24250,
       "callClose": 160.25,
       "putClose": 116.9,
-      "futClose": 24300.9,
-      "maxOI": 10321025
+      "futClose": 24250.8,
+      "maxOI": 0
     },
     "2024-11-26": {
       "open": 24343.3,
@@ -964,8 +991,8 @@
       "atmStrike": 24350,
       "callClose": 48.45,
       "putClose": 191.5,
-      "futClose": 24207,
-      "maxOI": 9411750
+      "futClose": 24192.95,
+      "maxOI": 0
     },
     "2024-11-27": {
       "open": 24204.8,
@@ -976,8 +1003,8 @@
       "atmStrike": 24200,
       "callClose": 143.9,
       "putClose": 31.4,
-      "futClose": 24309,
-      "maxOI": 8845350
+      "futClose": 24277.35,
+      "maxOI": 0
     },
     "2024-11-28": {
       "open": 24274.15,
@@ -988,8 +1015,8 @@
       "atmStrike": 24250,
       "callClose": 0.15,
       "putClose": 336.35,
-      "futClose": 23912.55,
-      "maxOI": 6837150
+      "futClose": 23957.45,
+      "maxOI": 0
     },
     "2024-11-29": {
       "open": 23927.15,
@@ -1216,8 +1243,8 @@
       "atmStrike": 23800,
       "callClose": 0,
       "putClose": 39.7,
-      "futClose": 23923.95,
-      "maxOI": 11379275
+      "futClose": 23760.3,
+      "maxOI": 0
     },
     "2024-12-27": {
       "open": 23801.4,
@@ -1228,8 +1255,8 @@
       "atmStrike": 23800,
       "callClose": 184.3,
       "putClose": 104.2,
-      "futClose": 24000,
-      "maxOI": 11753225
+      "futClose": 23832.45,
+      "maxOI": 0
     },
     "2024-12-30": {
       "open": 23796.9,
@@ -1240,8 +1267,8 @@
       "atmStrike": 23800,
       "callClose": 87.5,
       "putClose": 179.85,
-      "futClose": 23828,
-      "maxOI": 12453150
+      "futClose": 23658.65,
+      "maxOI": 0
     },
     "2024-12-31": {
       "open": 23560.6,
@@ -1252,8 +1279,8 @@
       "atmStrike": 23550,
       "callClose": 228.1,
       "putClose": 70.8,
-      "futClose": 23818.9,
-      "maxOI": 13493175
+      "futClose": 23668.8,
+      "maxOI": 0
     },
     "2025-01-01": {
       "open": 23637.65,
@@ -1264,8 +1291,8 @@
       "atmStrike": 23650,
       "callClose": 215.7,
       "putClose": 59,
-      "futClose": 23914,
-      "maxOI": 13397450
+      "futClose": 23758.7,
+      "maxOI": 0
     },
     "2025-01-02": {
       "open": 23783,
@@ -1276,8 +1303,8 @@
       "atmStrike": 23800,
       "callClose": 389.05,
       "putClose": 0.1,
-      "futClose": 24270.1,
-      "maxOI": 13283375
+      "futClose": 24167.95,
+      "maxOI": 0
     },
     "2025-01-03": {
       "open": 24196.4,
@@ -1288,8 +1315,8 @@
       "atmStrike": 24200,
       "callClose": 72.4,
       "putClose": 285.85,
-      "futClose": 24074.8,
-      "maxOI": 12814900
+      "futClose": 23990.15,
+      "maxOI": 0
     },
     "2025-01-06": {
       "open": 24045.8,
@@ -1300,8 +1327,8 @@
       "atmStrike": 24050,
       "callClose": 47.7,
       "putClose": 460,
-      "futClose": 23729.95,
-      "maxOI": 12873700
+      "futClose": 23629.6,
+      "maxOI": 0
     },
     "2025-01-07": {
       "open": 23679.9,
@@ -1312,8 +1339,8 @@
       "atmStrike": 23700,
       "callClose": 117.15,
       "putClose": 115.45,
-      "futClose": 23789.95,
-      "maxOI": 12804050
+      "futClose": 23694.6,
+      "maxOI": 0
     },
     "2025-01-08": {
       "open": 23746.65,
@@ -1324,8 +1351,8 @@
       "atmStrike": 23750,
       "callClose": 42.25,
       "putClose": 110.7,
-      "futClose": 23776.35,
-      "maxOI": 13170900
+      "futClose": 23675.2,
+      "maxOI": 0
     },
     "2025-01-09": {
       "open": 23674.75,
@@ -1336,8 +1363,8 @@
       "atmStrike": 23650,
       "callClose": 0.05,
       "putClose": 123.1,
-      "futClose": 23666,
-      "maxOI": 13783025
+      "futClose": 23557.2,
+      "maxOI": 0
     },
     "2025-01-10": {
       "open": 23551.9,
@@ -1348,8 +1375,8 @@
       "atmStrike": 23550,
       "callClose": 113.95,
       "putClose": 198.3,
-      "futClose": 23514.25,
-      "maxOI": 13941525
+      "futClose": 23437.35,
+      "maxOI": 0
     },
     "2025-01-13": {
       "open": 23195.4,
@@ -1360,8 +1387,8 @@
       "atmStrike": 23200,
       "callClose": 101.3,
       "putClose": 160.69,
-      "futClose": 23168.25,
-      "maxOI": 14461925
+      "futClose": 23088.7,
+      "maxOI": 0
     },
     "2025-01-14": {
       "open": 23165.9,
@@ -1372,8 +1399,8 @@
       "atmStrike": 23150,
       "callClose": 147.5,
       "putClose": 48.55,
-      "futClose": 23279.75,
-      "maxOI": 13908525
+      "futClose": 23206.85,
+      "maxOI": 0
     },
     "2025-01-15": {
       "open": 23250.45,
@@ -1384,8 +1411,8 @@
       "atmStrike": 23250,
       "callClose": 38.5,
       "putClose": 70,
-      "futClose": 23275.5,
-      "maxOI": 13792550
+      "futClose": 23228.1,
+      "maxOI": 0
     },
     "2025-01-16": {
       "open": 23377.25,
@@ -1396,8 +1423,8 @@
       "atmStrike": 23400,
       "callClose": 0.05,
       "putClose": 87.9,
-      "futClose": 23406.65,
-      "maxOI": 13768875
+      "futClose": 23350.8,
+      "maxOI": 0
     },
     "2025-01-17": {
       "open": 23277.1,
@@ -1408,8 +1435,8 @@
       "atmStrike": 23300,
       "callClose": 132.35,
       "putClose": 198.2,
-      "futClose": 23260,
-      "maxOI": 14278400
+      "futClose": 23203.1,
+      "maxOI": 0
     },
     "2025-01-20": {
       "open": 23290.4,
@@ -1420,8 +1447,8 @@
       "atmStrike": 23300,
       "callClose": 172.25,
       "putClose": 107.65,
-      "futClose": 23388.65,
-      "maxOI": 14270025
+      "futClose": 23337.05,
+      "maxOI": 0
     },
     "2025-01-21": {
       "open": 23421.65,
@@ -1432,8 +1459,8 @@
       "atmStrike": 23400,
       "callClose": 25.75,
       "putClose": 340,
-      "futClose": 23105.1,
-      "maxOI": 14675950
+      "futClose": 23053.05,
+      "maxOI": 0
     },
     "2025-01-22": {
       "open": 23099.15,
@@ -1444,8 +1471,8 @@
       "atmStrike": 23100,
       "callClose": 99.25,
       "putClose": 33.1,
-      "futClose": 23198,
-      "maxOI": 14731050
+      "futClose": 23161.75,
+      "maxOI": 0
     },
     "2025-01-23": {
       "open": 23128.3,
@@ -1456,8 +1483,8 @@
       "atmStrike": 23150,
       "callClose": 55.3,
       "putClose": 0.05,
-      "futClose": 23267,
-      "maxOI": 14153975
+      "futClose": 23216.3,
+      "maxOI": 0
     },
     "2025-01-24": {
       "open": 23183.9,
@@ -1468,8 +1495,8 @@
       "atmStrike": 23200,
       "callClose": 125.5,
       "putClose": 211,
-      "futClose": 23114,
-      "maxOI": 13655500
+      "futClose": 23090.35,
+      "maxOI": 0
     },
     "2025-01-27": {
       "open": 22940.15,
@@ -1480,8 +1507,8 @@
       "atmStrike": 22950,
       "callClose": 103.15,
       "putClose": 218.65,
-      "futClose": 22831.55,
-      "maxOI": 13221800
+      "futClose": 22816.85,
+      "maxOI": 0
     },
     "2025-01-28": {
       "open": 22960.45,
@@ -1492,8 +1519,8 @@
       "atmStrike": 22950,
       "callClose": 156.25,
       "putClose": 120.5,
-      "futClose": 22982.85,
-      "maxOI": 12343700
+      "futClose": 22976.3,
+      "maxOI": 0
     },
     "2025-01-29": {
       "open": 23026.75,
@@ -1504,8 +1531,8 @@
       "atmStrike": 23050,
       "callClose": 223,
       "putClose": 101.8,
-      "futClose": 23176.9,
-      "maxOI": 9875200
+      "futClose": 23176.2,
+      "maxOI": 0
     },
     "2025-01-30": {
       "open": 23169.5,
@@ -1516,8 +1543,8 @@
       "atmStrike": 23150,
       "callClose": 99.75,
       "putClose": 0.1,
-      "futClose": 23446,
-      "maxOI": 17325900
+      "futClose": 23297.95,
+      "maxOI": 0
     },
     "2025-01-31": {
       "open": 23296.75,
@@ -1528,8 +1555,8 @@
       "atmStrike": 23300,
       "callClose": 421.55,
       "putClose": 132.9,
-      "futClose": 23639,
-      "maxOI": 18007125
+      "futClose": 23533.85,
+      "maxOI": 0
     },
     "2025-02-01": {
       "open": 23538.3,
@@ -1540,8 +1567,8 @@
       "atmStrike": 23550,
       "callClose": 117,
       "putClose": 168.9,
-      "futClose": 23560,
-      "maxOI": 18180675
+      "futClose": 23495.3,
+      "maxOI": 0
     },
     "2025-02-03": {
       "open": 23319.35,
@@ -1552,8 +1579,8 @@
       "atmStrike": 23300,
       "callClose": 166.7,
       "putClose": 78,
-      "futClose": 23440,
-      "maxOI": 17662500
+      "futClose": 23359.7,
+      "maxOI": 0
     },
     "2025-02-04": {
       "open": 23509.9,
@@ -1564,8 +1591,8 @@
       "atmStrike": 23500,
       "callClose": 231.1,
       "putClose": 27.75,
-      "futClose": 23784.05,
-      "maxOI": 17420175
+      "futClose": 23707.7,
+      "maxOI": 0
     },
     "2025-02-05": {
       "open": 23801.75,
@@ -1576,8 +1603,8 @@
       "atmStrike": 23800,
       "callClose": 32.04,
       "putClose": 171.55,
-      "futClose": 23757,
-      "maxOI": 16783875
+      "futClose": 23686.75,
+      "maxOI": 0
     },
     "2025-02-06": {
       "open": 23761.95,
@@ -1588,8 +1615,8 @@
       "atmStrike": 23750,
       "callClose": 0.05,
       "putClose": 146.44,
-      "futClose": 23706,
-      "maxOI": 17027175
+      "futClose": 23628.05,
+      "maxOI": 0
     },
     "2025-02-07": {
       "open": 23649.5,
@@ -1600,8 +1627,8 @@
       "atmStrike": 23650,
       "callClose": 115.7,
       "putClose": 192.1,
-      "futClose": 23622.95,
-      "maxOI": 16991400
+      "futClose": 23563.15,
+      "maxOI": 0
     },
     "2025-02-10": {
       "open": 23543.8,
@@ -1612,8 +1639,8 @@
       "atmStrike": 23550,
       "callClose": 80.7,
       "putClose": 219.65,
-      "futClose": 23454.95,
-      "maxOI": 17524650
+      "futClose": 23376.05,
+      "maxOI": 0
     },
     "2025-02-11": {
       "open": 23383.55,
@@ -1624,8 +1651,8 @@
       "atmStrike": 23400,
       "callClose": 24,
       "putClose": 338,
-      "futClose": 23140.05,
-      "maxOI": 17769600
+      "futClose": 23070.5,
+      "maxOI": 0
     },
     "2025-02-12": {
       "open": 23050.8,
@@ -1636,8 +1663,8 @@
       "atmStrike": 23050,
       "callClose": 89.9,
       "putClose": 75.9,
-      "futClose": 23131,
-      "maxOI": 18346725
+      "futClose": 23057.8,
+      "maxOI": 0
     },
     "2025-02-13": {
       "open": 23055.75,
@@ -1648,8 +1675,8 @@
       "atmStrike": 23050,
       "callClose": 0.05,
       "putClose": 18.6,
-      "futClose": 23091.2,
-      "maxOI": 17606550
+      "futClose": 23019.4,
+      "maxOI": 0
     },
     "2025-02-14": {
       "open": 23096.45,
@@ -1660,8 +1687,8 @@
       "atmStrike": 23100,
       "callClose": 95.05,
       "putClose": 254.15,
-      "futClose": 22976.95,
-      "maxOI": 18005625
+      "futClose": 22897.25,
+      "maxOI": 0
     },
     "2025-02-17": {
       "open": 22809.9,
@@ -1672,8 +1699,8 @@
       "atmStrike": 22800,
       "callClose": 278.75,
       "putClose": 74.5,
-      "futClose": 23043.5,
-      "maxOI": 17812275
+      "futClose": 22963.5,
+      "maxOI": 0
     },
     "2025-02-18": {
       "open": 22963.65,
@@ -1684,8 +1711,8 @@
       "atmStrike": 22950,
       "callClose": 106.65,
       "putClose": 129,
-      "futClose": 22950,
-      "maxOI": 17548350
+      "futClose": 22923.15,
+      "maxOI": 0
     },
     "2025-02-19": {
       "open": 22847.25,
@@ -1696,8 +1723,8 @@
       "atmStrike": 22850,
       "callClose": 123.8,
       "putClose": 53.15,
-      "futClose": 22958,
-      "maxOI": 17245350
+      "futClose": 22914.4,
+      "maxOI": 0
     },
     "2025-02-20": {
       "open": 22821.1,
@@ -1708,8 +1735,8 @@
       "atmStrike": 22800,
       "callClose": 112.85,
       "putClose": 0.05,
-      "futClose": 22934.9,
-      "maxOI": 16939500
+      "futClose": 22906.25,
+      "maxOI": 0
     },
     "2025-02-21": {
       "open": 22857.2,
@@ -1720,8 +1747,8 @@
       "atmStrike": 22850,
       "callClose": 116.55,
       "putClose": 170.55,
-      "futClose": 22799.6,
-      "maxOI": 16913925
+      "futClose": 22764.35,
+      "maxOI": 0
     },
     "2025-02-24": {
       "open": 22609.35,
@@ -1732,8 +1759,8 @@
       "atmStrike": 22600,
       "callClose": 103.9,
       "putClose": 95.4,
-      "futClose": 22604.25,
-      "maxOI": 15549750
+      "futClose": 22548.85,
+      "maxOI": 0
     },
     "2025-02-25": {
       "open": 22516.45,
@@ -1744,8 +1771,8 @@
       "atmStrike": 22500,
       "callClose": 101.65,
       "putClose": 34.79,
-      "futClose": 22565.75,
-      "maxOI": 11966100
+      "futClose": 22526.3,
+      "maxOI": 0
     },
     "2025-02-27": {
       "open": 22568.95,
@@ -1756,8 +1783,8 @@
       "atmStrike": 22550,
       "callClose": 0.05,
       "putClose": 5,
-      "futClose": 22660,
-      "maxOI": 16825650
+      "futClose": 22510.85,
+      "maxOI": 0
     },
     "2025-02-28": {
       "open": 22433.4,
@@ -1768,8 +1795,8 @@
       "atmStrike": 22450,
       "callClose": 42.25,
       "putClose": 312.05,
-      "futClose": 22272.05,
-      "maxOI": 18926625
+      "futClose": 22127.4,
+      "maxOI": 0
     },
     "2025-03-03": {
       "open": 22194.55,
@@ -1780,8 +1807,8 @@
       "atmStrike": 22200,
       "callClose": 94.7,
       "putClose": 131.85,
-      "futClose": 22267,
-      "maxOI": 18659025
+      "futClose": 22143.15,
+      "maxOI": 0
     },
     "2025-03-04": {
       "open": 21974.45,
@@ -1792,8 +1819,8 @@
       "atmStrike": 21950,
       "callClose": 177.4,
       "putClose": 50.5,
-      "futClose": 22184.8,
-      "maxOI": 18615225
+      "futClose": 22080.3,
+      "maxOI": 0
     },
     "2025-03-05": {
       "open": 22073.05,
@@ -1804,8 +1831,8 @@
       "atmStrike": 22050,
       "callClose": 304.8,
       "putClose": 11.8,
-      "futClose": 22445,
-      "maxOI": 18266175
+      "futClose": 22346.65,
+      "maxOI": 0
     },
     "2025-03-06": {
       "open": 22476.35,
@@ -1816,8 +1843,8 @@
       "atmStrike": 22500,
       "callClose": 44.6,
       "putClose": 0.05,
-      "futClose": 22620.2,
-      "maxOI": 18413250
+      "futClose": 22529.2,
+      "maxOI": 0
     },
     "2025-03-07": {
       "open": 22508.65,
@@ -1828,8 +1855,8 @@
       "atmStrike": 22500,
       "callClose": 178.95,
       "putClose": 101.1,
-      "futClose": 22639,
-      "maxOI": 18266850
+      "futClose": 22536.95,
+      "maxOI": 0
     },
     "2025-03-10": {
       "open": 22521.85,
@@ -1840,8 +1867,8 @@
       "atmStrike": 22500,
       "callClose": 93,
       "putClose": 143.3,
-      "futClose": 22500.1,
-      "maxOI": 18108450
+      "futClose": 22441.1,
+      "maxOI": 0
     },
     "2025-03-11": {
       "open": 22345.95,
@@ -1852,8 +1879,8 @@
       "atmStrike": 22350,
       "callClose": 222.8,
       "putClose": 43,
-      "futClose": 22590,
-      "maxOI": 17924550
+      "futClose": 22520.5,
+      "maxOI": 0
     },
     "2025-03-12": {
       "open": 22536.35,
@@ -1864,8 +1891,8 @@
       "atmStrike": 22550,
       "callClose": 33.75,
       "putClose": 111.3,
-      "futClose": 22525.95,
-      "maxOI": 17914425
+      "futClose": 22468.5,
+      "maxOI": 0
     },
     "2025-03-13": {
       "open": 22541.5,
@@ -1876,8 +1903,8 @@
       "atmStrike": 22550,
       "callClose": 0.05,
       "putClose": 152.4,
-      "futClose": 22435.05,
-      "maxOI": 17777100
+      "futClose": 22383.3,
+      "maxOI": 0
     },
     "2025-03-17": {
       "open": 22353.15,
@@ -1888,8 +1915,8 @@
       "atmStrike": 22350,
       "callClose": 238,
       "putClose": 45.15,
-      "futClose": 22589.5,
-      "maxOI": 17583750
+      "futClose": 22515.25,
+      "maxOI": 0
     },
     "2025-03-18": {
       "open": 22662.25,
@@ -1900,8 +1927,8 @@
       "atmStrike": 22650,
       "callClose": 249,
       "putClose": 32.15,
-      "futClose": 22902.25,
-      "maxOI": 17456025
+      "futClose": 22848.75,
+      "maxOI": 0
     },
     "2025-03-19": {
       "open": 22874.95,
@@ -1912,8 +1939,8 @@
       "atmStrike": 22850,
       "callClose": 128.9,
       "putClose": 45,
-      "futClose": 22969,
-      "maxOI": 17000550
+      "futClose": 22911.8,
+      "maxOI": 0
     },
     "2025-03-20": {
       "open": 23036.6,
@@ -1924,8 +1951,8 @@
       "atmStrike": 23050,
       "callClose": 140.9,
       "putClose": 0.1,
-      "futClose": 23191,
-      "maxOI": 16494300
+      "futClose": 23165.7,
+      "maxOI": 0
     },
     "2025-03-21": {
       "open": 23168.25,
@@ -1936,8 +1963,8 @@
       "atmStrike": 23150,
       "callClose": 276.2,
       "putClose": 46.5,
-      "futClose": 23382.1,
-      "maxOI": 15554475
+      "futClose": 23355.65,
+      "maxOI": 0
     },
     "2025-03-24": {
       "open": 23515.4,
@@ -1948,8 +1975,8 @@
       "atmStrike": 23500,
       "callClose": 274.7,
       "putClose": 56.25,
-      "futClose": 23720,
-      "maxOI": 15228150
+      "futClose": 23674.15,
+      "maxOI": 0
     },
     "2025-03-25": {
       "open": 23751.5,
@@ -1960,8 +1987,8 @@
       "atmStrike": 23750,
       "callClose": 72.15,
       "putClose": 153.9,
-      "futClose": 23665.15,
-      "maxOI": 14504175
+      "futClose": 23605.95,
+      "maxOI": 0
     },
     "2025-03-26": {
       "open": 23700.95,
@@ -1972,8 +1999,8 @@
       "atmStrike": 23700,
       "callClose": 19.7,
       "putClose": 210.35,
-      "futClose": 23512.55,
-      "maxOI": 11897475
+      "futClose": 23464.3,
+      "maxOI": 0
     },
     "2025-03-27": {
       "open": 23433.95,
@@ -1984,8 +2011,8 @@
       "atmStrike": 23450,
       "callClose": 142.3,
       "putClose": 0.05,
-      "futClose": 23595,
-      "maxOI": 7048725
+      "futClose": 23601.05,
+      "maxOI": 0
     },
     "2025-03-28": {
       "open": 23600.4,
@@ -2225,7 +2252,7 @@
       "callClose": 0,
       "putClose": 15.8,
       "futClose": 24334.2,
-      "maxOI": 13694175
+      "maxOI": 0
     },
     "2025-05-02": {
       "open": 24311.9,
@@ -2236,8 +2263,8 @@
       "atmStrike": 24300,
       "callClose": 171.95,
       "putClose": 147.69,
-      "futClose": 24395.1,
-      "maxOI": 13970325
+      "futClose": 24313.65,
+      "maxOI": 0
     },
     "2025-05-05": {
       "open": 24419.5,
@@ -2248,8 +2275,8 @@
       "atmStrike": 24400,
       "callClose": 140.35,
       "putClose": 70.7,
-      "futClose": 24567.1,
-      "maxOI": 13703100
+      "futClose": 24459.5,
+      "maxOI": 0
     },
     "2025-05-06": {
       "open": 24500.75,
@@ -2260,8 +2287,8 @@
       "atmStrike": 24500,
       "callClose": 21.3,
       "putClose": 185.05,
-      "futClose": 24415,
-      "maxOI": 13604100
+      "futClose": 24335.9,
+      "maxOI": 0
     },
     "2025-05-07": {
       "open": 24233.3,
@@ -2272,8 +2299,8 @@
       "atmStrike": 24250,
       "callClose": 153.85,
       "putClose": 26.45,
-      "futClose": 24472,
-      "maxOI": 13881975
+      "futClose": 24409.3,
+      "maxOI": 0
     },
     "2025-05-08": {
       "open": 24431.5,
@@ -2285,7 +2312,7 @@
       "callClose": 0,
       "putClose": 176.2,
       "futClose": 24273.8,
-      "maxOI": 14043600
+      "maxOI": 0
     },
     "2025-05-09": {
       "open": 23935.75,
@@ -2296,8 +2323,8 @@
       "atmStrike": 23950,
       "callClose": 269.75,
       "putClose": 196.85,
-      "futClose": 24082.9,
-      "maxOI": 13941375
+      "futClose": 24038.65,
+      "maxOI": 0
     },
     "2025-05-12": {
       "open": 24420.1,
@@ -2308,8 +2335,8 @@
       "atmStrike": 24400,
       "callClose": 615,
       "putClose": 53.25,
-      "futClose": 25051,
-      "maxOI": 13255500
+      "futClose": 24920.25,
+      "maxOI": 0
     },
     "2025-05-13": {
       "open": 24864.05,
@@ -2321,7 +2348,7 @@
       "callClose": 0,
       "putClose": 271.65,
       "futClose": 24578.35,
-      "maxOI": 12969900
+      "maxOI": 0
     },
     "2025-05-14": {
       "open": 24613.8,
@@ -2332,8 +2359,8 @@
       "atmStrike": 24600,
       "callClose": 118.85,
       "putClose": 61.45,
-      "futClose": 24728,
-      "maxOI": 12210450
+      "futClose": 24685.75,
+      "maxOI": 0
     },
     "2025-05-15": {
       "open": 24694.45,
@@ -2344,8 +2371,8 @@
       "atmStrike": 24700,
       "callClose": 363,
       "putClose": 0.1,
-      "futClose": 25075,
-      "maxOI": 13160250
+      "futClose": 25035.3,
+      "maxOI": 0
     },
     "2025-05-16": {
       "open": 25064.65,
@@ -2356,8 +2383,8 @@
       "atmStrike": 25050,
       "callClose": 169.95,
       "putClose": 187.15,
-      "futClose": 25080,
-      "maxOI": 12317850
+      "futClose": 25013.1,
+      "maxOI": 0
     },
     "2025-05-19": {
       "open": 25005.35,
@@ -2368,8 +2395,8 @@
       "atmStrike": 25000,
       "callClose": 117.7,
       "putClose": 192.8,
-      "futClose": 24965,
-      "maxOI": 12125175
+      "futClose": 24935.35,
+      "maxOI": 0
     },
     "2025-05-20": {
       "open": 24996.2,
@@ -2380,8 +2407,8 @@
       "atmStrike": 25000,
       "callClose": 41.45,
       "putClose": 302.6,
-      "futClose": 24782,
-      "maxOI": 12300600
+      "futClose": 24713.85,
+      "maxOI": 0
     },
     "2025-05-21": {
       "open": 24744.25,
@@ -2393,7 +2420,7 @@
       "callClose": 63.45,
       "putClose": 0,
       "futClose": 24813.45,
-      "maxOI": 11302725
+      "maxOI": 0
     },
     "2025-05-22": {
       "open": 24733.95,
@@ -2404,8 +2431,8 @@
       "atmStrike": 24750,
       "callClose": 0.05,
       "putClose": 140.3,
-      "futClose": 24665.1,
-      "maxOI": 11743875
+      "futClose": 24637,
+      "maxOI": 0
     },
     "2025-05-23": {
       "open": 24639.5,
@@ -2416,8 +2443,8 @@
       "atmStrike": 24650,
       "callClose": 346.9,
       "putClose": 110.1,
-      "futClose": 24885.2,
-      "maxOI": 10948725
+      "futClose": 24845.15,
+      "maxOI": 0
     },
     "2025-05-26": {
       "open": 24919.35,
@@ -2428,8 +2455,8 @@
       "atmStrike": 24900,
       "callClose": 281.89,
       "putClose": 147.55,
-      "futClose": 25035,
-      "maxOI": 11033775
+      "futClose": 24996.35,
+      "maxOI": 0
     },
     "2025-05-27": {
       "open": 24956.65,
@@ -2440,8 +2467,8 @@
       "atmStrike": 24950,
       "callClose": 144.15,
       "putClose": 234.1,
-      "futClose": 24860,
-      "maxOI": 10329225
+      "futClose": 24837.7,
+      "maxOI": 0
     },
     "2025-05-28": {
       "open": 24832.5,
@@ -2452,8 +2479,8 @@
       "atmStrike": 24850,
       "callClose": 70.45,
       "putClose": 170.1,
-      "futClose": 24746.3,
-      "maxOI": 8684025
+      "futClose": 24757.15,
+      "maxOI": 0
     },
     "2025-05-29": {
       "open": 24825.1,
@@ -2464,8 +2491,8 @@
       "atmStrike": 24850,
       "callClose": 0.05,
       "putClose": 16,
-      "futClose": 24965,
-      "maxOI": 14732475
+      "futClose": 24880.85,
+      "maxOI": 0
     },
     "2025-05-30": {
       "open": 24812.6,
@@ -2476,8 +2503,8 @@
       "atmStrike": 24800,
       "callClose": 194.85,
       "putClose": 220.05,
-      "futClose": 24852,
-      "maxOI": 13322925
+      "futClose": 24736.65,
+      "maxOI": 0
     },
     "2025-06-02": {
       "open": 24669.7,
@@ -2488,8 +2515,8 @@
       "atmStrike": 24650,
       "callClose": 248.95,
       "putClose": 185.55,
-      "futClose": 24809,
-      "maxOI": 13635000
+      "futClose": 24690.35,
+      "maxOI": 0
     },
     "2025-06-03": {
       "open": 24786.3,
@@ -2500,8 +2527,8 @@
       "atmStrike": 24800,
       "callClose": 58.15,
       "putClose": 305,
-      "futClose": 24654,
-      "maxOI": 13052025
+      "futClose": 24538.4,
+      "maxOI": 0
     },
     "2025-06-04": {
       "open": 24560.45,
@@ -2512,8 +2539,8 @@
       "atmStrike": 24550,
       "callClose": 107.5,
       "putClose": 49.95,
-      "futClose": 24721,
-      "maxOI": 12954375
+      "futClose": 24612,
+      "maxOI": 0
     },
     "2025-06-05": {
       "open": 24691.2,
@@ -2524,8 +2551,8 @@
       "atmStrike": 24700,
       "callClose": 50.85,
       "putClose": 0.05,
-      "futClose": 24874,
-      "maxOI": 12636525
+      "futClose": 24761.1,
+      "maxOI": 0
     },
     "2025-06-06": {
       "open": 24748.7,
@@ -2536,8 +2563,8 @@
       "atmStrike": 24750,
       "callClose": 338.05,
       "putClose": 72.3,
-      "futClose": 25090.6,
-      "maxOI": 12445800
+      "futClose": 25000.3,
+      "maxOI": 0
     },
     "2025-06-09": {
       "open": 25160.1,
@@ -2548,8 +2575,8 @@
       "atmStrike": 25150,
       "callClose": 112.55,
       "putClose": 154.4,
-      "futClose": 25185,
-      "maxOI": 12344250
+      "futClose": 25103.1,
+      "maxOI": 0
     },
     "2025-06-10": {
       "open": 25196.05,
@@ -2560,8 +2587,8 @@
       "atmStrike": 25200,
       "callClose": 41.75,
       "putClose": 163.9,
-      "futClose": 25150,
-      "maxOI": 12004500
+      "futClose": 25091.5,
+      "maxOI": 0
     },
     "2025-06-11": {
       "open": 25134.15,
@@ -2572,8 +2599,8 @@
       "atmStrike": 25150,
       "callClose": 59.15,
       "putClose": 90.15,
-      "futClose": 25204,
-      "maxOI": 11670000
+      "futClose": 25126.8,
+      "maxOI": 0
     },
     "2025-06-12": {
       "open": 25164.45,
@@ -2584,8 +2611,8 @@
       "atmStrike": 25150,
       "callClose": 0.05,
       "putClose": 262.2,
-      "futClose": 24909.2,
-      "maxOI": 12228750
+      "futClose": 24856,
+      "maxOI": 0
     },
     "2025-06-13": {
       "open": 24473,
@@ -2596,8 +2623,8 @@
       "atmStrike": 24450,
       "callClose": 343,
       "putClose": 95,
-      "futClose": 24736.2,
-      "maxOI": 12325350
+      "futClose": 24735.55,
+      "maxOI": 0
     },
     "2025-06-16": {
       "open": 24732.35,
@@ -2608,8 +2635,8 @@
       "atmStrike": 24750,
       "callClose": 277.65,
       "putClose": 66.4,
-      "futClose": 24998,
-      "maxOI": 12047250
+      "futClose": 24940.95,
+      "maxOI": 0
     },
     "2025-06-17": {
       "open": 24977.85,
@@ -2620,8 +2647,8 @@
       "atmStrike": 25000,
       "callClose": 42.25,
       "putClose": 209.8,
-      "futClose": 24859.8,
-      "maxOI": 12003750
+      "futClose": 24841.5,
+      "maxOI": 0
     },
     "2025-06-18": {
       "open": 24788.35,
@@ -2632,8 +2659,8 @@
       "atmStrike": 24800,
       "callClose": 73.4,
       "putClose": 83.35,
-      "futClose": 24813,
-      "maxOI": 11674575
+      "futClose": 24798.75,
+      "maxOI": 0
     },
     "2025-06-19": {
       "open": 24803.25,
@@ -2644,8 +2671,8 @@
       "atmStrike": 24800,
       "callClose": 0.05,
       "putClose": 6.75,
-      "futClose": 24778,
-      "maxOI": 11330850
+      "futClose": 24744.7,
+      "maxOI": 0
     },
     "2025-06-20": {
       "open": 24787.65,
@@ -2656,8 +2683,8 @@
       "atmStrike": 24800,
       "callClose": 364.8,
       "putClose": 64.3,
-      "futClose": 25096.5,
-      "maxOI": 11504475
+      "futClose": 25079.75,
+      "maxOI": 0
     },
     "2025-06-23": {
       "open": 24939.75,
@@ -2668,8 +2695,8 @@
       "atmStrike": 24950,
       "callClose": 155,
       "putClose": 115.1,
-      "futClose": 24993,
-      "maxOI": 11352900
+      "futClose": 24958.9,
+      "maxOI": 0
     },
     "2025-06-24": {
       "open": 25179.9,
@@ -2680,8 +2707,8 @@
       "atmStrike": 25200,
       "callClose": 56.25,
       "putClose": 167.3,
-      "futClose": 25090,
-      "maxOI": 10604400
+      "futClose": 25071.55,
+      "maxOI": 0
     },
     "2025-06-25": {
       "open": 25150.35,
@@ -2692,8 +2719,8 @@
       "atmStrike": 25150,
       "callClose": 132.75,
       "putClose": 30.35,
-      "futClose": 25250,
-      "maxOI": 8117625
+      "futClose": 25236.35,
+      "maxOI": 0
     },
     "2025-06-26": {
       "open": 25268.95,
@@ -2704,8 +2731,8 @@
       "atmStrike": 25250,
       "callClose": 299,
       "putClose": 0.05,
-      "futClose": 25618,
-      "maxOI": 15189900
+      "futClose": 25530.4,
+      "maxOI": 0
     },
     "2025-06-27": {
       "open": 25576.65,
@@ -2716,8 +2743,8 @@
       "atmStrike": 25600,
       "callClose": 170,
       "putClose": 107.4,
-      "futClose": 25757,
-      "maxOI": 15090900
+      "futClose": 25632.45,
+      "maxOI": 0
     },
     "2025-06-30": {
       "open": 25661.65,
@@ -2728,8 +2755,8 @@
       "atmStrike": 25650,
       "callClose": 73.55,
       "putClose": 192,
-      "futClose": 25615,
-      "maxOI": 15033525
+      "futClose": 25507.45,
+      "maxOI": 0
     },
     "2025-07-01": {
       "open": 25551.35,
@@ -2740,8 +2767,8 @@
       "atmStrike": 25550,
       "callClose": 92.55,
       "putClose": 85,
-      "futClose": 25638,
-      "maxOI": 14650200
+      "futClose": 25533,
+      "maxOI": 0
     },
     "2025-07-02": {
       "open": 25588.3,
@@ -2752,8 +2779,8 @@
       "atmStrike": 25600,
       "callClose": 20.85,
       "putClose": 168.85,
-      "futClose": 25539.9,
-      "maxOI": 14754900
+      "futClose": 25442.85,
+      "maxOI": 0
     },
     "2025-07-03": {
       "open": 25505.1,
@@ -2764,8 +2791,8 @@
       "atmStrike": 25500,
       "callClose": 0.05,
       "putClose": 94.65,
-      "futClose": 25500,
-      "maxOI": 14137950
+      "futClose": 25397.4,
+      "maxOI": 0
     },
     "2025-07-04": {
       "open": 25428.85,
@@ -2776,8 +2803,8 @@
       "atmStrike": 25450,
       "callClose": 150.5,
       "putClose": 122.8,
-      "futClose": 25552,
-      "maxOI": 13876500
+      "futClose": 25467.8,
+      "maxOI": 0
     },
     "2025-07-07": {
       "open": 25450.45,
@@ -2788,8 +2815,8 @@
       "atmStrike": 25450,
       "callClose": 125.5,
       "putClose": 107.15,
-      "futClose": 25541.1,
-      "maxOI": 13654500
+      "futClose": 25454.95,
+      "maxOI": 0
     },
     "2025-07-08": {
       "open": 25427.85,
@@ -2800,8 +2827,8 @@
       "atmStrike": 25450,
       "callClose": 147.15,
       "putClose": 45,
-      "futClose": 25625,
-      "maxOI": 13407975
+      "futClose": 25523.1,
+      "maxOI": 0
     },
     "2025-07-09": {
       "open": 25514.6,
@@ -2812,8 +2839,8 @@
       "atmStrike": 25500,
       "callClose": 54.9,
       "putClose": 66.95,
-      "futClose": 25550,
-      "maxOI": 13569225
+      "futClose": 25464.65,
+      "maxOI": 0
     },
     "2025-07-10": {
       "open": 25511.65,
@@ -2824,8 +2851,8 @@
       "atmStrike": 25500,
       "callClose": 0.05,
       "putClose": 144.25,
-      "futClose": 25414,
-      "maxOI": 13965000
+      "futClose": 25348.15,
+      "maxOI": 0
     },
     "2025-07-11": {
       "open": 25255.5,
@@ -2836,8 +2863,8 @@
       "atmStrike": 25250,
       "callClose": 89,
       "putClose": 162.4,
-      "futClose": 25208,
-      "maxOI": 14040150
+      "futClose": 25140.55,
+      "maxOI": 0
     },
     "2025-07-14": {
       "open": 25149.5,
@@ -2848,8 +2875,8 @@
       "atmStrike": 25150,
       "callClose": 89.65,
       "putClose": 108.65,
-      "futClose": 25173,
-      "maxOI": 14480625
+      "futClose": 25087.1,
+      "maxOI": 0
     },
     "2025-07-15": {
       "open": 25089.5,
@@ -2860,8 +2887,8 @@
       "atmStrike": 25100,
       "callClose": 167.45,
       "putClose": 23.2,
-      "futClose": 25283,
-      "maxOI": 13808175
+      "futClose": 25219.65,
+      "maxOI": 0
     },
     "2025-07-16": {
       "open": 25196.6,
@@ -2872,8 +2899,8 @@
       "atmStrike": 25200,
       "callClose": 57.8,
       "putClose": 40.9,
-      "futClose": 25236.6,
-      "maxOI": 14003475
+      "futClose": 25198.55,
+      "maxOI": 0
     },
     "2025-07-17": {
       "open": 25230.75,
@@ -2884,8 +2911,8 @@
       "atmStrike": 25250,
       "callClose": 0.05,
       "putClose": 138.2,
-      "futClose": 25170.5,
-      "maxOI": 14093025
+      "futClose": 25109.5,
+      "maxOI": 0
     },
     "2025-07-18": {
       "open": 25108.55,
@@ -2896,8 +2923,8 @@
       "atmStrike": 25100,
       "callClose": 90.35,
       "putClose": 175.2,
-      "futClose": 25026.8,
-      "maxOI": 14108850
+      "futClose": 24967.45,
+      "maxOI": 0
     },
     "2025-07-21": {
       "open": 24999,
@@ -2908,8 +2935,8 @@
       "atmStrike": 25000,
       "callClose": 162.4,
       "putClose": 44.6,
-      "futClose": 25139.7,
-      "maxOI": 13938750
+      "futClose": 25093.3,
+      "maxOI": 0
     },
     "2025-07-22": {
       "open": 25166.65,
@@ -2920,8 +2947,8 @@
       "atmStrike": 25150,
       "callClose": 38.9,
       "putClose": 110,
-      "futClose": 25095,
-      "maxOI": 13506300
+      "futClose": 25064.9,
+      "maxOI": 0
     },
     "2025-07-23": {
       "open": 25139.35,
@@ -2932,8 +2959,8 @@
       "atmStrike": 25150,
       "callClose": 98.3,
       "putClose": 21.65,
-      "futClose": 25254,
-      "maxOI": 13205550
+      "futClose": 25209.2,
+      "maxOI": 0
     },
     "2025-07-24": {
       "open": 25243.3,
@@ -2944,8 +2971,8 @@
       "atmStrike": 25250,
       "callClose": 0.05,
       "putClose": 187.5,
-      "futClose": 25082,
-      "maxOI": 13011825
+      "futClose": 25051.9,
+      "maxOI": 0
     },
     "2025-07-25": {
       "open": 25010.35,
@@ -2956,8 +2983,8 @@
       "atmStrike": 25000,
       "callClose": 62.55,
       "putClose": 211.75,
-      "futClose": 24846.8,
-      "maxOI": 12720225
+      "futClose": 24832.2,
+      "maxOI": 0
     },
     "2025-07-28": {
       "open": 24782.45,
@@ -2968,8 +2995,8 @@
       "atmStrike": 24800,
       "callClose": 66.45,
       "putClose": 156.85,
-      "futClose": 24706.2,
-      "maxOI": 12394650
+      "futClose": 24673.95,
+      "maxOI": 0
     },
     "2025-07-29": {
       "open": 24609.65,
@@ -2980,8 +3007,8 @@
       "atmStrike": 24600,
       "callClose": 260.4,
       "putClose": 14.25,
-      "futClose": 24843.4,
-      "maxOI": 11760975
+      "futClose": 24830.4,
+      "maxOI": 0
     },
     "2025-07-30": {
       "open": 24890.4,
@@ -2992,8 +3019,8 @@
       "atmStrike": 24900,
       "callClose": 41.5,
       "putClose": 79.45,
-      "futClose": 24860,
-      "maxOI": 9168000
+      "futClose": 24844.55,
+      "maxOI": 0
     },
     "2025-07-31": {
       "open": 24642.25,
@@ -3004,8 +3031,8 @@
       "atmStrike": 24650,
       "callClose": 117.95,
       "putClose": 0.05,
-      "futClose": 24868.5,
-      "maxOI": 15988275
+      "futClose": 24765.6,
+      "maxOI": 0
     },
     "2025-08-01": {
       "open": 24734.9,
@@ -3016,8 +3043,8 @@
       "atmStrike": 24750,
       "callClose": 71.3,
       "putClose": 257.95,
-      "futClose": 24618,
-      "maxOI": 17059500
+      "futClose": 24572.15,
+      "maxOI": 0
     },
     "2025-08-04": {
       "open": 24596.05,
@@ -3028,8 +3055,8 @@
       "atmStrike": 24600,
       "callClose": 195.95,
       "putClose": 60.8,
-      "futClose": 24803,
-      "maxOI": 16901550
+      "futClose": 24726.9,
+      "maxOI": 0
     },
     "2025-08-05": {
       "open": 24720.25,
@@ -3040,8 +3067,8 @@
       "atmStrike": 24700,
       "callClose": 69.45,
       "putClose": 110.9,
-      "futClose": 24716,
-      "maxOI": 16844775
+      "futClose": 24649.5,
+      "maxOI": 0
     },
     "2025-08-06": {
       "open": 24641.35,
@@ -3052,8 +3079,8 @@
       "atmStrike": 24650,
       "callClose": 43.75,
       "putClose": 116.45,
-      "futClose": 24628,
-      "maxOI": 16851150
+      "futClose": 24569.6,
+      "maxOI": 0
     },
     "2025-08-07": {
       "open": 24464.2,
@@ -3064,8 +3091,8 @@
       "atmStrike": 24450,
       "callClose": 146,
       "putClose": 0.05,
-      "futClose": 24715,
-      "maxOI": 17118225
+      "futClose": 24626.65,
+      "maxOI": 0
     },
     "2025-08-08": {
       "open": 24544.25,
@@ -3076,8 +3103,8 @@
       "atmStrike": 24550,
       "callClose": 66.7,
       "putClose": 223.75,
-      "futClose": 24430,
-      "maxOI": 17508975
+      "futClose": 24350.85,
+      "maxOI": 0
     },
     "2025-08-11": {
       "open": 24371.5,
@@ -3088,8 +3115,8 @@
       "atmStrike": 24350,
       "callClose": 248.8,
       "putClose": 33.2,
-      "futClose": 24614,
-      "maxOI": 17371350
+      "futClose": 24562.15,
+      "maxOI": 0
     },
     "2025-08-12": {
       "open": 24563.35,
@@ -3100,8 +3127,8 @@
       "atmStrike": 24550,
       "callClose": 58.75,
       "putClose": 102.55,
-      "futClose": 24550,
-      "maxOI": 17190150
+      "futClose": 24485.85,
+      "maxOI": 0
     },
     "2025-08-13": {
       "open": 24586.2,
@@ -3112,8 +3139,8 @@
       "atmStrike": 24600,
       "callClose": 81.6,
       "putClose": 36.2,
-      "futClose": 24718.9,
-      "maxOI": 17023725
+      "futClose": 24630.4,
+      "maxOI": 0
     },
     "2025-08-14": {
       "open": 24607.25,
@@ -3124,8 +3151,8 @@
       "atmStrike": 24600,
       "callClose": 31.2,
       "putClose": 0.05,
-      "futClose": 24671,
-      "maxOI": 16912650
+      "futClose": 24616.05,
+      "maxOI": 0
     },
     "2025-08-18": {
       "open": 24938.2,
@@ -3136,8 +3163,8 @@
       "atmStrike": 24950,
       "callClose": 101.6,
       "putClose": 109.9,
-      "futClose": 24971.6,
-      "maxOI": 17012850
+      "futClose": 24884.05,
+      "maxOI": 0
     },
     "2025-08-19": {
       "open": 24891.35,
@@ -3148,8 +3175,8 @@
       "atmStrike": 24900,
       "callClose": 143.85,
       "putClose": 37.75,
-      "futClose": 25036,
-      "maxOI": 16443450
+      "futClose": 24989.7,
+      "maxOI": 0
     },
     "2025-08-20": {
       "open": 24965.8,
@@ -3160,8 +3187,8 @@
       "atmStrike": 24950,
       "callClose": 117.95,
       "putClose": 24.2,
-      "futClose": 25077,
-      "maxOI": 16304475
+      "futClose": 25047.15,
+      "maxOI": 0
     },
     "2025-08-21": {
       "open": 25142,
@@ -3172,8 +3199,8 @@
       "atmStrike": 25150,
       "callClose": 0.05,
       "putClose": 66.15,
-      "futClose": 25110.4,
-      "maxOI": 15927150
+      "futClose": 25076.95,
+      "maxOI": 0
     },
     "2025-08-22": {
       "open": 25064.15,
@@ -3184,8 +3211,8 @@
       "atmStrike": 25050,
       "callClose": 55,
       "putClose": 211.7,
-      "futClose": 24890,
-      "maxOI": 14981100
+      "futClose": 24869.45,
+      "maxOI": 0
     },
     "2025-08-25": {
       "open": 24949.15,
@@ -3196,8 +3223,8 @@
       "atmStrike": 24950,
       "callClose": 102.5,
       "putClose": 55,
-      "futClose": 24992.2,
-      "maxOI": 14887575
+      "futClose": 24978.55,
+      "maxOI": 0
     },
     "2025-08-26": {
       "open": 24899.5,
@@ -3208,8 +3235,8 @@
       "atmStrike": 24900,
       "callClose": 21.35,
       "putClose": 193.7,
-      "futClose": 24724.1,
-      "maxOI": 11349150
+      "futClose": 24710.7,
+      "maxOI": 0
     },
     "2025-08-28": {
       "open": 24695.8,
@@ -3220,8 +3247,8 @@
       "atmStrike": 24700,
       "callClose": 0.05,
       "putClose": 199,
-      "futClose": 24668.4,
-      "maxOI": 16381725
+      "futClose": 24533.1,
+      "maxOI": 0
     },
     "2025-08-29": {
       "open": 24466.7,
@@ -3232,8 +3259,8 @@
       "atmStrike": 24450,
       "callClose": 97.85,
       "putClose": 71.7,
-      "futClose": 24577.3,
-      "maxOI": 16697925
+      "futClose": 24433.65,
+      "maxOI": 0
     },
     "2025-09-01": {
       "open": 24432.7,
@@ -3244,8 +3271,8 @@
       "atmStrike": 24450,
       "callClose": 199.65,
       "putClose": 8.2,
-      "futClose": 24759,
-      "maxOI": 16805400
+      "futClose": 24624.3,
+      "maxOI": 0
     },
     "2025-09-02": {
       "open": 24653,
@@ -3256,8 +3283,8 @@
       "atmStrike": 24650,
       "callClose": 0.05,
       "putClose": 70.3,
-      "futClose": 24682.2,
-      "maxOI": 16694250
+      "futClose": 24575,
+      "maxOI": 0
     },
     "2025-09-03": {
       "open": 24616.5,
@@ -3268,8 +3295,8 @@
       "atmStrike": 24600,
       "callClose": 196,
       "putClose": 57,
-      "futClose": 24820,
-      "maxOI": 16848150
+      "futClose": 24713.6,
+      "maxOI": 0
     },
     "2025-09-04": {
       "open": 24980.75,
@@ -3280,8 +3307,8 @@
       "atmStrike": 25000,
       "callClose": 24.5,
       "putClose": 264.55,
-      "futClose": 24836,
-      "maxOI": 17093775
+      "futClose": 24739.8,
+      "maxOI": 0
     },
     "2025-09-05": {
       "open": 24818.85,
@@ -3292,8 +3319,8 @@
       "atmStrike": 24800,
       "callClose": 66.2,
       "putClose": 96.95,
-      "futClose": 24849.6,
-      "maxOI": 17391225
+      "futClose": 24743.95,
+      "maxOI": 0
     },
     "2025-09-08": {
       "open": 24802.6,
@@ -3304,8 +3331,8 @@
       "atmStrike": 24800,
       "callClose": 60.1,
       "putClose": 43.4,
-      "futClose": 24900.8,
-      "maxOI": 17279475
+      "futClose": 24791.2,
+      "maxOI": 0
     },
     "2025-09-09": {
       "open": 24864.1,
@@ -3316,8 +3343,8 @@
       "atmStrike": 24850,
       "callClose": 18.55,
       "putClose": 0.05,
-      "futClose": 24961,
-      "maxOI": 17104725
+      "futClose": 24878.8,
+      "maxOI": 0
     },
     "2025-09-10": {
       "open": 24991,
@@ -3328,8 +3355,8 @@
       "atmStrike": 25000,
       "callClose": 124.2,
       "putClose": 95.25,
-      "futClose": 25079,
-      "maxOI": 17644575
+      "futClose": 24977.55,
+      "maxOI": 0
     },
     "2025-09-11": {
       "open": 24945.5,
@@ -3340,8 +3367,8 @@
       "atmStrike": 24950,
       "callClose": 154.9,
       "putClose": 52.25,
-      "futClose": 25110,
-      "maxOI": 17244150
+      "futClose": 25008.1,
+      "maxOI": 0
     },
     "2025-09-12": {
       "open": 25074.45,
@@ -3352,8 +3379,8 @@
       "atmStrike": 25050,
       "callClose": 128.3,
       "putClose": 39.15,
-      "futClose": 25210.1,
-      "maxOI": 17115000
+      "futClose": 25107.7,
+      "maxOI": 0
     },
     "2025-09-15": {
       "open": 25118.9,
@@ -3364,8 +3391,8 @@
       "atmStrike": 25100,
       "callClose": 45.4,
       "putClose": 44.95,
-      "futClose": 25169,
-      "maxOI": 16807350
+      "futClose": 25069.7,
+      "maxOI": 0
     },
     "2025-09-16": {
       "open": 25073.6,
@@ -3376,8 +3403,8 @@
       "atmStrike": 25050,
       "callClose": 188.6,
       "putClose": 0.05,
-      "futClose": 25351.1,
-      "maxOI": 16722525
+      "futClose": 25254.45,
+      "maxOI": 0
     },
     "2025-09-17": {
       "open": 25276.6,
@@ -3388,8 +3415,8 @@
       "atmStrike": 25300,
       "callClose": 156.5,
       "putClose": 73.6,
-      "futClose": 25422,
-      "maxOI": 16102425
+      "futClose": 25330.15,
+      "maxOI": 0
     },
     "2025-09-18": {
       "open": 25441.05,
@@ -3400,8 +3427,8 @@
       "atmStrike": 25450,
       "callClose": 89.7,
       "putClose": 70.9,
-      "futClose": 25510,
-      "maxOI": 15749775
+      "futClose": 25420.75,
+      "maxOI": 0
     },
     "2025-09-19": {
       "open": 25410.2,
@@ -3412,8 +3439,8 @@
       "atmStrike": 25400,
       "callClose": 54.5,
       "putClose": 75.2,
-      "futClose": 25426.7,
-      "maxOI": 15569775
+      "futClose": 25352.5,
+      "maxOI": 0
     },
     "2025-09-22": {
       "open": 25238.1,
@@ -3424,8 +3451,8 @@
       "atmStrike": 25250,
       "callClose": 41.2,
       "putClose": 58.8,
-      "futClose": 25276,
-      "maxOI": 15115650
+      "futClose": 25200.2,
+      "maxOI": 0
     },
     "2025-09-23": {
       "open": 25209,
@@ -3436,8 +3463,8 @@
       "atmStrike": 25200,
       "callClose": 0.05,
       "putClose": 30.45,
-      "futClose": 25252,
-      "maxOI": 14845125
+      "futClose": 25185.8,
+      "maxOI": 0
     },
     "2025-09-24": {
       "open": 25108.75,
@@ -3448,8 +3475,8 @@
       "atmStrike": 25100,
       "callClose": 110.4,
       "putClose": 95.4,
-      "futClose": 25113,
-      "maxOI": 14973225
+      "futClose": 25060.9,
+      "maxOI": 0
     },
     "2025-09-25": {
       "open": 25034.5,
@@ -3460,8 +3487,8 @@
       "atmStrike": 25050,
       "callClose": 56.85,
       "putClose": 146.6,
-      "futClose": 24962,
-      "maxOI": 15165900
+      "futClose": 24904.55,
+      "maxOI": 0
     },
     "2025-09-26": {
       "open": 24818.55,
@@ -3472,8 +3499,8 @@
       "atmStrike": 24800,
       "callClose": 45.1,
       "putClose": 145.45,
-      "futClose": 24700,
-      "maxOI": 13373700
+      "futClose": 24673.1,
+      "maxOI": 0
     },
     "2025-09-29": {
       "open": 24728.55,
@@ -3484,8 +3511,8 @@
       "atmStrike": 24750,
       "callClose": 29.6,
       "putClose": 84.6,
-      "futClose": 24695,
-      "maxOI": 9675675
+      "futClose": 24677.55,
+      "maxOI": 0
     },
     "2025-09-30": {
       "open": 24691.95,
@@ -3496,8 +3523,8 @@
       "atmStrike": 24700,
       "callClose": 0.05,
       "putClose": 88.6,
-      "futClose": 24787,
-      "maxOI": 17288700
+      "futClose": 24633.6,
+      "maxOI": 0
     },
     "2025-10-01": {
       "open": 24620.55,
@@ -3508,8 +3535,8 @@
       "atmStrike": 24600,
       "callClose": 301.5,
       "putClose": 21.5,
-      "futClose": 24982.8,
-      "maxOI": 17399550
+      "futClose": 24853.4,
+      "maxOI": 0
     },
     "2025-10-03": {
       "open": 24759.55,
@@ -3520,8 +3547,8 @@
       "atmStrike": 24750,
       "callClose": 188.75,
       "putClose": 20.4,
-      "futClose": 25007.1,
-      "maxOI": 18178200
+      "futClose": 24895,
+      "maxOI": 0
     },
     "2025-10-06": {
       "open": 24916.55,
@@ -3532,7 +3559,7 @@
       "atmStrike": 24900,
       "callClose": 199.05,
       "putClose": 8,
-      "futClose": 25181.1,
+      "futClose": 25072.55,
       "maxOI": 0
     },
     "2025-10-07": {
@@ -3544,7 +3571,7 @@
       "atmStrike": 25100,
       "callClose": 8.25,
       "putClose": 0.05,
-      "futClose": 25229,
+      "futClose": 25112.8,
       "maxOI": 0
     },
     "2025-10-08": {
@@ -3556,8 +3583,8 @@
       "atmStrike": 25100,
       "callClose": 82.8,
       "putClose": 123,
-      "futClose": 25112.5,
-      "maxOI": 18225450
+      "futClose": 25023.8,
+      "maxOI": 0
     },
     "2025-10-09": {
       "open": 25074.3,
@@ -3568,8 +3595,8 @@
       "atmStrike": 25050,
       "callClose": 193.1,
       "putClose": 30.1,
-      "futClose": 25280,
-      "maxOI": 17846175
+      "futClose": 25170.3,
+      "maxOI": 0
     },
     "2025-10-10": {
       "open": 25167.65,
@@ -3580,8 +3607,8 @@
       "atmStrike": 25150,
       "callClose": 211,
       "putClose": 19.6,
-      "futClose": 25415,
-      "maxOI": 17660250
+      "futClose": 25278.2,
+      "maxOI": 0
     },
     "2025-10-13": {
       "open": 25177.3,
@@ -3592,8 +3619,8 @@
       "atmStrike": 25200,
       "callClose": 87,
       "putClose": 33.1,
-      "futClose": 25321.9,
-      "maxOI": 17310525
+      "futClose": 25237.15,
+      "maxOI": 0
     },
     "2025-10-14": {
       "open": 25277.55,
@@ -3604,8 +3631,8 @@
       "atmStrike": 25300,
       "callClose": 0.05,
       "putClose": 154.05,
-      "futClose": 25185.5,
-      "maxOI": 18462300
+      "futClose": 25123.35,
+      "maxOI": 0
     },
     "2025-10-15": {
       "open": 25181.95,
@@ -3616,8 +3643,8 @@
       "atmStrike": 25200,
       "callClose": 240.9,
       "putClose": 43.65,
-      "futClose": 25435,
-      "maxOI": 18013275
+      "futClose": 25327.75,
+      "maxOI": 0
     },
     "2025-10-16": {
       "open": 25394.9,
@@ -3628,8 +3655,8 @@
       "atmStrike": 25400,
       "callClose": 235.2,
       "putClose": 32.3,
-      "futClose": 25648.4,
-      "maxOI": 18410400
+      "futClose": 25566.3,
+      "maxOI": 0
     },
     "2025-10-17": {
       "open": 25546.85,
@@ -3640,8 +3667,8 @@
       "atmStrike": 25550,
       "callClose": 197.25,
       "putClose": 29.65,
-      "futClose": 25751.2,
-      "maxOI": 17799900
+      "futClose": 25704.7,
+      "maxOI": 0
     },
     "2025-10-20": {
       "open": 25824.6,
@@ -3652,8 +3679,8 @@
       "atmStrike": 25800,
       "callClose": 43.1,
       "putClose": 0.05,
-      "futClose": 25930.2,
-      "maxOI": 17423100
+      "futClose": 25850.7,
+      "maxOI": 0
     },
     "2025-10-21": {
       "open": 25901.2,
@@ -3664,8 +3691,8 @@
       "atmStrike": 25900,
       "callClose": 115.55,
       "putClose": 144.95,
-      "futClose": 25865.1,
-      "maxOI": 17475525
+      "futClose": 25833.3,
+      "maxOI": 0
     },
     "2025-10-23": {
       "open": 26057.2,
@@ -3676,8 +3703,8 @@
       "atmStrike": 26050,
       "callClose": 72,
       "putClose": 169.6,
-      "futClose": 25950,
-      "maxOI": 17683275
+      "futClose": 25870.3,
+      "maxOI": 0
     },
     "2025-10-24": {
       "open": 25935.1,
@@ -3688,8 +3715,8 @@
       "atmStrike": 25950,
       "callClose": 45.9,
       "putClose": 177.35,
-      "futClose": 25814.3,
-      "maxOI": 15754200
+      "futClose": 25797.45,
+      "maxOI": 0
     },
     "2025-10-27": {
       "open": 25843.2,
@@ -3700,8 +3727,8 @@
       "atmStrike": 25850,
       "callClose": 200,
       "putClose": 19.2,
-      "futClose": 26036.7,
-      "maxOI": 13480275
+      "futClose": 25974,
+      "maxOI": 0
     },
     "2025-10-28": {
       "open": 25939.95,
@@ -3712,8 +3739,8 @@
       "atmStrike": 25950,
       "callClose": 0.05,
       "putClose": 13.8,
-      "futClose": 26099,
-      "maxOI": 14335425
+      "futClose": 25965.4,
+      "maxOI": 0
     },
     "2025-10-29": {
       "open": 25982,
@@ -3724,8 +3751,8 @@
       "atmStrike": 26000,
       "callClose": 232.8,
       "putClose": 86.45,
-      "futClose": 26261.3,
-      "maxOI": 14864250
+      "futClose": 26068.3,
+      "maxOI": 0
     },
     "2025-10-30": {
       "open": 25984.4,
@@ -3736,8 +3763,8 @@
       "atmStrike": 26000,
       "callClose": 91.6,
       "putClose": 151.55,
-      "futClose": 26037.4,
-      "maxOI": 16001700
+      "futClose": 25891.2,
+      "maxOI": 0
     },
     "2025-10-31": {
       "open": 25863.8,
@@ -3748,8 +3775,8 @@
       "atmStrike": 25850,
       "callClose": 83,
       "putClose": 119.45,
-      "futClose": 25907.1,
-      "maxOI": 17103450
+      "futClose": 25732.55,
+      "maxOI": 0
     },
     "2025-11-03": {
       "open": 25696.85,
@@ -3760,8 +3787,8 @@
       "atmStrike": 25700,
       "callClose": 123.5,
       "putClose": 33.5,
-      "futClose": 25904.4,
-      "maxOI": 17107800
+      "futClose": 25774.3,
+      "maxOI": 0
     },
     "2025-11-04": {
       "open": 25744.75,
@@ -3772,8 +3799,8 @@
       "atmStrike": 25750,
       "callClose": 0.1,
       "putClose": 152.05,
-      "futClose": 25699,
-      "maxOI": 18055350
+      "futClose": 25586.25,
+      "maxOI": 0
     },
     "2025-11-06": {
       "open": 25593.35,
@@ -3784,8 +3811,8 @@
       "atmStrike": 25600,
       "callClose": 83.05,
       "putClose": 127.2,
-      "futClose": 25637.2,
-      "maxOI": 17798925
+      "futClose": 25519.95,
+      "maxOI": 0
     },
     "2025-11-07": {
       "open": 25433.8,
@@ -3796,8 +3823,8 @@
       "atmStrike": 25450,
       "callClose": 131.9,
       "putClose": 53.3,
-      "futClose": 25605,
-      "maxOI": 18657225
+      "futClose": 25510.05,
+      "maxOI": 0
     },
     "2025-11-10": {
       "open": 25503.5,
@@ -3808,8 +3835,8 @@
       "atmStrike": 25500,
       "callClose": 135.65,
       "putClose": 20.3,
-      "futClose": 25696.9,
-      "maxOI": 18688425
+      "futClose": 25574.25,
+      "maxOI": 0
     },
     "2025-11-11": {
       "open": 25617,
@@ -3820,8 +3847,8 @@
       "atmStrike": 25600,
       "callClose": 94.75,
       "putClose": 0.05,
-      "futClose": 25831.8,
-      "maxOI": 19005825
+      "futClose": 25705.55,
+      "maxOI": 0
     },
     "2025-11-12": {
       "open": 25834.3,
@@ -3832,8 +3859,8 @@
       "atmStrike": 25850,
       "callClose": 178.75,
       "putClose": 98.15,
-      "futClose": 25979.1,
-      "maxOI": 18538950
+      "futClose": 25874,
+      "maxOI": 0
     },
     "2025-11-13": {
       "open": 25906.1,
@@ -3844,8 +3871,8 @@
       "atmStrike": 25900,
       "callClose": 142.5,
       "putClose": 133.25,
-      "futClose": 25951,
-      "maxOI": 17742525
+      "futClose": 25884.1,
+      "maxOI": 0
     },
     "2025-11-14": {
       "open": 25767.9,
@@ -3856,8 +3883,8 @@
       "atmStrike": 25750,
       "callClose": 222.3,
       "putClose": 35.1,
-      "futClose": 25971.6,
-      "maxOI": 18434625
+      "futClose": 25916.8,
+      "maxOI": 0
     },
     "2025-11-17": {
       "open": 25948.2,
@@ -3868,8 +3895,8 @@
       "atmStrike": 25950,
       "callClose": 106,
       "putClose": 38.5,
-      "futClose": 26061.9,
-      "maxOI": 18342450
+      "futClose": 26014.3,
+      "maxOI": 0
     },
     "2025-11-18": {
       "open": 26021.8,
@@ -3880,8 +3907,8 @@
       "atmStrike": 26000,
       "callClose": 0.05,
       "putClose": 89.9,
-      "futClose": 25933.9,
-      "maxOI": 18098700
+      "futClose": 25894.7,
+      "maxOI": 0
     },
     "2025-11-19": {
       "open": 25918.1,
@@ -3892,8 +3919,8 @@
       "atmStrike": 25900,
       "callClose": 251.4,
       "putClose": 75.5,
-      "futClose": 26078,
-      "maxOI": 17610000
+      "futClose": 26052.7,
+      "maxOI": 0
     },
     "2025-11-20": {
       "open": 26132.1,
@@ -3904,8 +3931,8 @@
       "atmStrike": 26150,
       "callClose": 167,
       "putClose": 81.2,
-      "futClose": 26235.4,
-      "maxOI": 16813350
+      "futClose": 26197.4,
+      "maxOI": 0
     },
     "2025-11-21": {
       "open": 26109.55,
@@ -3916,8 +3943,8 @@
       "atmStrike": 26100,
       "callClose": 89.55,
       "putClose": 116.5,
-      "futClose": 26074,
-      "maxOI": 15294675
+      "futClose": 26063.95,
+      "maxOI": 0
     },
     "2025-11-24": {
       "open": 26122.8,
@@ -3928,8 +3955,8 @@
       "atmStrike": 26100,
       "callClose": 23.15,
       "putClose": 156.45,
-      "futClose": 25962.1,
-      "maxOI": 12576450
+      "futClose": 25943.35,
+      "maxOI": 0
     },
     "2025-11-25": {
       "open": 25998.5,
@@ -3940,8 +3967,8 @@
       "atmStrike": 26000,
       "callClose": 0.05,
       "putClose": 114.85,
-      "futClose": 26051,
-      "maxOI": 13972950
+      "futClose": 25860.3,
+      "maxOI": 0
     },
     "2025-11-26": {
       "open": 25842.95,
@@ -3952,8 +3979,8 @@
       "atmStrike": 25850,
       "callClose": 415.95,
       "putClose": 29.35,
-      "futClose": 26390,
-      "maxOI": 14335125
+      "futClose": 26203.5,
+      "maxOI": 0
     },
     "2025-11-27": {
       "open": 26261.25,
@@ -3964,8 +3991,8 @@
       "atmStrike": 26250,
       "callClose": 102.7,
       "putClose": 107.5,
-      "futClose": 26393.3,
-      "maxOI": 14028825
+      "futClose": 26219.85,
+      "maxOI": 0
     },
     "2025-11-28": {
       "open": 26237.45,
@@ -3976,8 +4003,8 @@
       "atmStrike": 26250,
       "callClose": 85.1,
       "putClose": 84.2,
-      "futClose": 26396,
-      "maxOI": 13878150
+      "futClose": 26204.55,
+      "maxOI": 0
     },
     "2025-12-01": {
       "open": 26325.8,
@@ -3988,8 +4015,8 @@
       "atmStrike": 26350,
       "callClose": 11.9,
       "putClose": 174.5,
-      "futClose": 26335,
-      "maxOI": 14437050
+      "futClose": 26175.95,
+      "maxOI": 0
     },
     "2025-12-02": {
       "open": 26087.95,
@@ -4000,8 +4027,8 @@
       "atmStrike": 26100,
       "callClose": 0.05,
       "putClose": 67.55,
-      "futClose": 26228.9,
-      "maxOI": 14669625
+      "futClose": 26057,
+      "maxOI": 0
     },
     "2025-12-03": {
       "open": 26004.9,
@@ -4012,8 +4039,8 @@
       "atmStrike": 26000,
       "callClose": 136.2,
       "putClose": 106,
-      "futClose": 26142.7,
-      "maxOI": 15290775
+      "futClose": 25985.1,
+      "maxOI": 0
     },
     "2025-12-04": {
       "open": 25981.85,
@@ -4024,8 +4051,8 @@
       "atmStrike": 26000,
       "callClose": 140.2,
       "putClose": 70.25,
-      "futClose": 26189,
-      "maxOI": 15246750
+      "futClose": 26017.1,
+      "maxOI": 0
     },
     "2025-12-05": {
       "open": 25999.8,
@@ -4036,8 +4063,8 @@
       "atmStrike": 26000,
       "callClose": 222.35,
       "putClose": 18.2,
-      "futClose": 26335,
-      "maxOI": 15202725
+      "futClose": 26176.65,
+      "maxOI": 0
     },
     "2025-12-08": {
       "open": 26159.8,
@@ -4048,8 +4075,8 @@
       "atmStrike": 26150,
       "callClose": 9.75,
       "putClose": 216.5,
-      "futClose": 26049,
-      "maxOI": 16147275
+      "futClose": 25932.8,
+      "maxOI": 0
     },
     "2025-12-09": {
       "open": 25867.1,
@@ -4060,8 +4087,8 @@
       "atmStrike": 25850,
       "callClose": 0.05,
       "putClose": 10.4,
-      "futClose": 25958.8,
-      "maxOI": 16973775
+      "futClose": 25841.75,
+      "maxOI": 0
     },
     "2025-12-10": {
       "open": 25864.05,
@@ -4072,8 +4099,8 @@
       "atmStrike": 25850,
       "callClose": 101,
       "putClose": 161.85,
-      "futClose": 25855,
-      "maxOI": 17080575
+      "futClose": 25742.65,
+      "maxOI": 0
     },
     "2025-12-11": {
       "open": 25771.4,
@@ -4084,8 +4111,8 @@
       "atmStrike": 25750,
       "callClose": 215.95,
       "putClose": 37.35,
-      "futClose": 26014,
-      "maxOI": 16889325
+      "futClose": 25898.4,
+      "maxOI": 0
     },
     "2025-12-12": {
       "open": 25971.2,
@@ -4096,8 +4123,8 @@
       "atmStrike": 25950,
       "callClose": 148,
       "putClose": 34.05,
-      "futClose": 26148,
-      "maxOI": 16569975
+      "futClose": 26043,
+      "maxOI": 0
     },
     "2025-12-15": {
       "open": 25930.05,
@@ -4108,8 +4135,8 @@
       "atmStrike": 25950,
       "callClose": 104.65,
       "putClose": 30.05,
-      "futClose": 26103.3,
-      "maxOI": 16418250
+      "futClose": 26014,
+      "maxOI": 0
     },
     "2025-12-16": {
       "open": 25951.5,
@@ -4120,8 +4147,8 @@
       "atmStrike": 25950,
       "callClose": 0.05,
       "putClose": 89.55,
-      "futClose": 25932,
-      "maxOI": 16234425
+      "futClose": 25851.35,
+      "maxOI": 0
     },
     "2025-12-17": {
       "open": 25902.4,
@@ -4132,8 +4159,8 @@
       "atmStrike": 25900,
       "callClose": 101.2,
       "putClose": 130.5,
-      "futClose": 25912.9,
-      "maxOI": 16451775
+      "futClose": 25821.8,
+      "maxOI": 0
     },
     "2025-12-18": {
       "open": 25764.7,
@@ -4144,8 +4171,8 @@
       "atmStrike": 25750,
       "callClose": 150.5,
       "putClose": 65.85,
-      "futClose": 25882.2,
-      "maxOI": 16602300
+      "futClose": 25815.65,
+      "maxOI": 0
     },
     "2025-12-19": {
       "open": 25911.5,
@@ -4156,8 +4183,8 @@
       "atmStrike": 25900,
       "callClose": 128,
       "putClose": 43.2,
-      "futClose": 26039.8,
-      "maxOI": 16043550
+      "futClose": 25961.4,
+      "maxOI": 0
     },
     "2025-12-22": {
       "open": 26055.85,
@@ -4168,8 +4195,8 @@
       "atmStrike": 26050,
       "callClose": 125.65,
       "putClose": 20.95,
-      "futClose": 26202,
-      "maxOI": 15299250
+      "futClose": 26162.75,
+      "maxOI": 0
     },
     "2025-12-23": {
       "open": 26205.2,
@@ -4180,8 +4207,8 @@
       "atmStrike": 26200,
       "callClose": 0.05,
       "putClose": 22.85,
-      "futClose": 26202.1,
-      "maxOI": 14494350
+      "futClose": 26165.95,
+      "maxOI": 0
     },
     "2025-12-24": {
       "open": 26170.65,
@@ -4192,8 +4219,8 @@
       "atmStrike": 26150,
       "callClose": 93.25,
       "putClose": 75.84,
-      "futClose": 26164.1,
-      "maxOI": 13665900
+      "futClose": 26141.65,
+      "maxOI": 0
     },
     "2025-12-26": {
       "open": 26121.25,
@@ -4204,8 +4231,8 @@
       "atmStrike": 26100,
       "callClose": 47,
       "putClose": 88.8,
-      "futClose": 26058,
-      "maxOI": 13891275
+      "futClose": 26047.65,
+      "maxOI": 0
     },
     "2025-12-29": {
       "open": 26063.35,
@@ -4216,8 +4243,8 @@
       "atmStrike": 26050,
       "callClose": 18.2,
       "putClose": 111,
-      "futClose": 25955.8,
-      "maxOI": 11327100
+      "futClose": 25949.8,
+      "maxOI": 0
     },
     "2025-12-30": {
       "open": 25940.9,
@@ -4228,8 +4255,8 @@
       "atmStrike": 25950,
       "callClose": 0.05,
       "putClose": 11,
-      "futClose": 26135,
-      "maxOI": 14097525
+      "futClose": 25970.55,
+      "maxOI": 0
     },
     "2025-12-31": {
       "open": 25971.05,
@@ -4240,8 +4267,8 @@
       "atmStrike": 25950,
       "callClose": 258.05,
       "putClose": 29.1,
-      "futClose": 26304.8,
-      "maxOI": 14191970
+      "futClose": 26141.85,
+      "maxOI": 0
     },
     "2026-01-01": {
       "open": 26173.3,
@@ -4252,8 +4279,8 @@
       "atmStrike": 26150,
       "callClose": 86.5,
       "putClose": 70.5,
-      "futClose": 26291,
-      "maxOI": 14092780
+      "futClose": 26140.25,
+      "maxOI": 0
     },
     "2026-01-02": {
       "open": 26155.1,
@@ -4264,8 +4291,8 @@
       "atmStrike": 26150,
       "callClose": 210.1,
       "putClose": 16.25,
-      "futClose": 26478.3,
-      "maxOI": 14088295
+      "futClose": 26335.7,
+      "maxOI": 0
     },
     "2026-01-05": {
       "open": 26333.7,
@@ -4276,8 +4303,8 @@
       "atmStrike": 26350,
       "callClose": 9.35,
       "putClose": 133.44,
-      "futClose": 26329,
-      "maxOI": 14272375
+      "futClose": 26244.65,
+      "maxOI": 0
     },
     "2026-01-06": {
       "open": 26189.7,
@@ -4288,8 +4315,8 @@
       "atmStrike": 26200,
       "callClose": 0.05,
       "putClose": 21.25,
-      "futClose": 26281.9,
-      "maxOI": 14294020
+      "futClose": 26174.65,
+      "maxOI": 0
     },
     "2026-01-07": {
       "open": 26143.1,
@@ -4300,8 +4327,8 @@
       "atmStrike": 26150,
       "callClose": 102.1,
       "putClose": 90.4,
-      "futClose": 26237.9,
-      "maxOI": 14278095
+      "futClose": 26142.9,
+      "maxOI": 0
     },
     "2026-01-08": {
       "open": 26106.5,
@@ -4312,8 +4339,8 @@
       "atmStrike": 26100,
       "callClose": 27.05,
       "putClose": 227.75,
-      "futClose": 25965,
-      "maxOI": 16463460
+      "futClose": 25868.9,
+      "maxOI": 0
     },
     "2026-01-09": {
       "open": 25840.4,
@@ -4324,8 +4351,8 @@
       "atmStrike": 25850,
       "callClose": 54.2,
       "putClose": 155.85,
-      "futClose": 25810.8,
-      "maxOI": 17095325
+      "futClose": 25703.7,
+      "maxOI": 0
     },
     "2026-01-12": {
       "open": 25669.05,
@@ -4336,8 +4363,8 @@
       "atmStrike": 25650,
       "callClose": 175.1,
       "putClose": 17.39,
-      "futClose": 25880,
-      "maxOI": 17202900
+      "futClose": 25806.1,
+      "maxOI": 0
     },
     "2026-01-13": {
       "open": 25897.35,
@@ -4348,8 +4375,8 @@
       "atmStrike": 25900,
       "callClose": 0.05,
       "putClose": 167.75,
-      "futClose": 25780.4,
-      "maxOI": 17548960
+      "futClose": 25714.2,
+      "maxOI": 0
     },
     "2026-01-14": {
       "open": 25648.55,
@@ -4360,8 +4387,8 @@
       "atmStrike": 25650,
       "callClose": 146.75,
       "putClose": 107.4,
-      "futClose": 25728,
-      "maxOI": 17249440
+      "futClose": 25669.1,
+      "maxOI": 0
     },
     "2026-01-16": {
       "open": 25696.05,
@@ -4372,8 +4399,8 @@
       "atmStrike": 25700,
       "callClose": 108.6,
       "putClose": 90.25,
-      "futClose": 25749.4,
-      "maxOI": 17080115
+      "futClose": 25701.9,
+      "maxOI": 0
     },
     "2026-01-19": {
       "open": 25653.1,
@@ -4384,8 +4411,8 @@
       "atmStrike": 25650,
       "callClose": 23.25,
       "putClose": 121.95,
-      "futClose": 25574,
-      "maxOI": 17110080
+      "futClose": 25555.5,
+      "maxOI": 0
     },
     "2026-01-20": {
       "open": 25580.3,
@@ -4396,8 +4423,8 @@
       "atmStrike": 25600,
       "callClose": 0.05,
       "putClose": 366.5,
-      "futClose": 25268,
-      "maxOI": 17024735
+      "futClose": 25225.35,
+      "maxOI": 0
     },
     "2026-01-21": {
       "open": 25141,
@@ -4408,8 +4435,8 @@
       "atmStrike": 25150,
       "callClose": 171.4,
       "putClose": 131.55,
-      "futClose": 25190,
-      "maxOI": 16663075
+      "futClose": 25168.1,
+      "maxOI": 0
     },
     "2026-01-22": {
       "open": 25344.15,
@@ -4420,8 +4447,8 @@
       "atmStrike": 25350,
       "callClose": 131.5,
       "putClose": 102.2,
-      "futClose": 25375,
-      "maxOI": 16192020
+      "futClose": 25320.45,
+      "maxOI": 0
     },
     "2026-01-23": {
       "open": 25344.6,
@@ -4432,8 +4459,8 @@
       "atmStrike": 25350,
       "callClose": 27.6,
       "putClose": 286.7,
-      "futClose": 25080,
-      "maxOI": 12767235
+      "futClose": 25064.75,
+      "maxOI": 0
     },
     "2026-01-27": {
       "open": 25063.35,
@@ -4444,8 +4471,8 @@
       "atmStrike": 25050,
       "callClose": 125,
       "putClose": 0.05,
-      "futClose": 25427.2,
-      "maxOI": 16363880
+      "futClose": 25234.1,
+      "maxOI": 0
     },
     "2026-01-28": {
       "open": 25258.85,
@@ -4456,8 +4483,8 @@
       "atmStrike": 25250,
       "callClose": 272.6,
       "putClose": 151.75,
-      "futClose": 25456,
-      "maxOI": 16855020
+      "futClose": 25348.05,
+      "maxOI": 0
     },
     "2026-01-29": {
       "open": 25345,
@@ -4468,8 +4495,8 @@
       "atmStrike": 25350,
       "callClose": 244.05,
       "putClose": 143,
-      "futClose": 25539,
-      "maxOI": 17888975
+      "futClose": 25422.1,
+      "maxOI": 0
     },
     "2026-01-30": {
       "open": 25247.55,
@@ -4480,8 +4507,8 @@
       "atmStrike": 25250,
       "callClose": 241,
       "putClose": 141.9,
-      "futClose": 25425,
-      "maxOI": 18481320
+      "futClose": 25315.8,
+      "maxOI": 0
     },
     "2026-02-01": {
       "open": 25333.75,
@@ -4492,8 +4519,8 @@
       "atmStrike": 25350,
       "callClose": 18.85,
       "putClose": 638.95,
-      "futClose": 24791.8,
-      "maxOI": 19360445
+      "futClose": 24768,
+      "maxOI": 0
     },
     "2026-02-02": {
       "open": 24796.5,
@@ -4504,8 +4531,8 @@
       "atmStrike": 24800,
       "callClose": 291,
       "putClose": 18.9,
-      "futClose": 25149.6,
-      "maxOI": 18871970
+      "futClose": 25079.9,
+      "maxOI": 0
     },
     "2026-02-03": {
       "open": 26308.05,
@@ -4516,8 +4543,8 @@
       "atmStrike": 26300,
       "callClose": 0.05,
       "putClose": 571.8,
-      "futClose": 25823.1,
-      "maxOI": 18200065
+      "futClose": 25714.8,
+      "maxOI": 0
     },
     "2026-02-04": {
       "open": 25675.05,
@@ -4528,8 +4555,8 @@
       "atmStrike": 25700,
       "callClose": 201.7,
       "putClose": 129.8,
-      "futClose": 25830,
-      "maxOI": 16075670
+      "futClose": 25737.5,
+      "maxOI": 0
     },
     "2026-02-05": {
       "open": 25755.9,
@@ -4540,8 +4567,8 @@
       "atmStrike": 25750,
       "callClose": 90.45,
       "putClose": 189,
-      "futClose": 25720,
-      "maxOI": 16033485
+      "futClose": 25641.6,
+      "maxOI": 0
     },
     "2026-02-06": {
       "open": 25605.8,
@@ -4552,8 +4579,8 @@
       "atmStrike": 25600,
       "callClose": 145.45,
       "putClose": 72,
-      "futClose": 25729.8,
-      "maxOI": 16070795
+      "futClose": 25673.6,
+      "maxOI": 0
     },
     "2026-02-09": {
       "open": 25888.7,
@@ -4564,8 +4591,8 @@
       "atmStrike": 25900,
       "callClose": 48.6,
       "putClose": 92.6,
-      "futClose": 25909,
-      "maxOI": 16027310
+      "futClose": 25863.3,
+      "maxOI": 0
     },
     "2026-02-10": {
       "open": 25922.65,
@@ -4576,8 +4603,8 @@
       "atmStrike": 25900,
       "callClose": 35.05,
       "putClose": 0.05,
-      "futClose": 25969.2,
-      "maxOI": 15339415
+      "futClose": 25916.8,
+      "maxOI": 0
     },
     "2026-02-11": {
       "open": 25997.45,
@@ -4588,8 +4615,8 @@
       "atmStrike": 26000,
       "callClose": 102.3,
       "putClose": 137.5,
-      "futClose": 25989.7,
-      "maxOI": 15325895
+      "futClose": 25945.35,
+      "maxOI": 0
     },
     "2026-02-12": {
       "open": 25906.7,
@@ -4600,8 +4627,8 @@
       "atmStrike": 25900,
       "callClose": 75.8,
       "putClose": 148.4,
-      "futClose": 25849.1,
-      "maxOI": 15462395
+      "futClose": 25796.15,
+      "maxOI": 0
     },
     "2026-02-13": {
       "open": 25571.15,
@@ -4612,8 +4639,8 @@
       "atmStrike": 25550,
       "callClose": 78.15,
       "putClose": 172.05,
-      "futClose": 25481,
-      "maxOI": 16335475
+      "futClose": 25460.55,
+      "maxOI": 0
     },
     "2026-02-16": {
       "open": 25423.6,
@@ -4624,8 +4651,8 @@
       "atmStrike": 25400,
       "callClose": 320.75,
       "putClose": 16.65,
-      "futClose": 25728,
-      "maxOI": 16174535
+      "futClose": 25682.45,
+      "maxOI": 0
     },
     "2026-02-17": {
       "open": 25637.95,
@@ -4636,8 +4663,8 @@
       "atmStrike": 25650,
       "callClose": 75.25,
       "putClose": 0.05,
-      "futClose": 25736,
-      "maxOI": 15740140
+      "futClose": 25716,
+      "maxOI": 0
     },
     "2026-02-18": {
       "open": 25752.65,
@@ -4648,8 +4675,8 @@
       "atmStrike": 25750,
       "callClose": 174.5,
       "putClose": 97.8,
-      "futClose": 25827,
-      "maxOI": 15747485
+      "futClose": 25805.7,
+      "maxOI": 0
     },
     "2026-02-19": {
       "open": 25873.35,
@@ -4660,8 +4687,8 @@
       "atmStrike": 25850,
       "callClose": 26,
       "putClose": 464.1,
-      "futClose": 25410,
-      "maxOI": 15462460
+      "futClose": 25416.45,
+      "maxOI": 0
     },
     "2026-02-20": {
       "open": 25406.55,
@@ -4672,8 +4699,8 @@
       "atmStrike": 25400,
       "callClose": 241.6,
       "putClose": 59.7,
-      "futClose": 25584.7,
-      "maxOI": 14846130
+      "futClose": 25565.9,
+      "maxOI": 0
     },
     "2026-02-23": {
       "open": 25678.4,
@@ -4684,8 +4711,8 @@
       "atmStrike": 25700,
       "callClose": 81.65,
       "putClose": 82,
-      "futClose": 25700.3,
-      "maxOI": 14152320
+      "futClose": 25704,
+      "maxOI": 0
     },
     "2026-02-24": {
       "open": 25641.8,
@@ -4696,8 +4723,8 @@
       "atmStrike": 25650,
       "callClose": 0.05,
       "putClose": 224.65,
-      "futClose": 25613.8,
-      "maxOI": 13489775
+      "futClose": 25460.25,
+      "maxOI": 0
     },
     "2026-02-25": {
       "open": 25512.6,
@@ -4708,8 +4735,8 @@
       "atmStrike": 25500,
       "callClose": 148.69,
       "putClose": 138.85,
-      "futClose": 25624.9,
-      "maxOI": 13272870
+      "futClose": 25478.65,
+      "maxOI": 0
     },
     "2026-02-26": {
       "open": 25556.3,
@@ -4720,8 +4747,8 @@
       "atmStrike": 25550,
       "callClose": 100.45,
       "putClose": 134.3,
-      "futClose": 25637,
-      "maxOI": 13306865
+      "futClose": 25493.3,
+      "maxOI": 0
     },
     "2026-02-27": {
       "open": 25459.85,
@@ -4732,8 +4759,8 @@
       "atmStrike": 25450,
       "callClose": 29.9,
       "putClose": 254.55,
-      "futClose": 25341,
-      "maxOI": 14333605
+      "futClose": 25181.8,
+      "maxOI": 0
     },
     "2026-03-02": {
       "open": 24659.25,
@@ -4744,8 +4771,8 @@
       "atmStrike": 24650,
       "callClose": 215.05,
       "putClose": 0.05,
-      "futClose": 24988,
-      "maxOI": 15418195
+      "futClose": 24849.75,
+      "maxOI": 0
     },
     "2026-03-04": {
       "open": 24388.8,
@@ -4756,8 +4783,8 @@
       "atmStrike": 24400,
       "callClose": 360.4,
       "putClose": 272.55,
-      "futClose": 24578,
-      "maxOI": 16649100
+      "futClose": 24473.95,
+      "maxOI": 0
     },
     "2026-03-05": {
       "open": 24615.95,
@@ -4768,8 +4795,8 @@
       "atmStrike": 24600,
       "callClose": 301.9,
       "putClose": 160.8,
-      "futClose": 24832,
-      "maxOI": 16126435
+      "futClose": 24737.45,
+      "maxOI": 0
     },
     "2026-03-06": {
       "open": 24656.4,
@@ -4780,8 +4807,8 @@
       "atmStrike": 24650,
       "callClose": 123.85,
       "putClose": 300,
-      "futClose": 24565.2,
-      "maxOI": 15950870
+      "futClose": 24469.4,
+      "maxOI": 0
     },
     "2026-03-09": {
       "open": 23868.05,
@@ -4792,8 +4819,8 @@
       "atmStrike": 23850,
       "callClose": 285.45,
       "putClose": 122.05,
-      "futClose": 24090.1,
-      "maxOI": 17826250
+      "futClose": 24005.8,
+      "maxOI": 0
     },
     "2026-03-10": {
       "open": 24280.8,
@@ -4804,8 +4831,8 @@
       "atmStrike": 24300,
       "callClose": 0.05,
       "putClose": 38.2,
-      "futClose": 24405.7,
-      "maxOI": 17966000
+      "futClose": 24286.15,
+      "maxOI": 0
     },
     "2026-03-11": {
       "open": 24231.85,
@@ -4816,8 +4843,8 @@
       "atmStrike": 24250,
       "callClose": 126.4,
       "putClose": 506.05,
-      "futClose": 23918,
-      "maxOI": 18694325
+      "futClose": 23848.2,
+      "maxOI": 0
     },
     "2026-03-12": {
       "open": 23674.85,
@@ -4828,8 +4855,8 @@
       "atmStrike": 23650,
       "callClose": 259.75,
       "putClose": 242.2,
-      "futClose": 23718,
-      "maxOI": 18891470
+      "futClose": 23639.35,
+      "maxOI": 0
     },
     "2026-03-13": {
       "open": 23462.5,
@@ -4840,8 +4867,8 @@
       "atmStrike": 23450,
       "callClose": 128.45,
       "putClose": 395,
-      "futClose": 23228.4,
-      "maxOI": 20799220
+      "futClose": 23170.9,
+      "maxOI": 0
     },
     "2026-03-16": {
       "open": 23116.1,
@@ -4852,8 +4879,8 @@
       "atmStrike": 23100,
       "callClose": 311.75,
       "putClose": 61.65,
-      "futClose": 23390,
-      "maxOI": 19965140
+      "futClose": 23355.6,
+      "maxOI": 0
     },
     "2026-03-17": {
       "open": 23493.2,
@@ -4864,8 +4891,8 @@
       "atmStrike": 23500,
       "callClose": 81.1,
       "putClose": 0.05,
-      "futClose": 23613,
-      "maxOI": 18374915
+      "futClose": 23558.8,
+      "maxOI": 0
     },
     "2026-03-18": {
       "open": 23632.9,
@@ -4876,8 +4903,8 @@
       "atmStrike": 23650,
       "callClose": 272.7,
       "putClose": 168.75,
-      "futClose": 23774.4,
-      "maxOI": 18410470
+      "futClose": 23764.1,
+      "maxOI": 0
     },
     "2026-03-19": {
       "open": 23197.75,
@@ -4888,8 +4915,8 @@
       "atmStrike": 23200,
       "callClose": 213.35,
       "putClose": 320.6,
-      "futClose": 23125.7,
-      "maxOI": 17984200
+      "futClose": 23087.85,
+      "maxOI": 0
     },
     "2026-03-20": {
       "open": 23110.15,
@@ -4900,8 +4927,8 @@
       "atmStrike": 23100,
       "callClose": 237.35,
       "putClose": 214.5,
-      "futClose": 23146,
-      "maxOI": 17653025
+      "futClose": 23134.65,
+      "maxOI": 0
     },
     "2026-03-23": {
       "open": 22824.35,
@@ -4912,8 +4939,8 @@
       "atmStrike": 22800,
       "callClose": 77.25,
       "putClose": 389.95,
-      "futClose": 22497.8,
-      "maxOI": 17683835
+      "futClose": 22492.65,
+      "maxOI": 0
     },
     "2026-03-24": {
       "open": 22878.45,
@@ -4924,8 +4951,8 @@
       "atmStrike": 22900,
       "callClose": 12.4,
       "putClose": 0.05,
-      "futClose": 22984,
-      "maxOI": 17224805
+      "futClose": 22958.4,
+      "maxOI": 0
     },
     "2026-03-25": {
       "open": 23064.4,
@@ -4936,8 +4963,8 @@
       "atmStrike": 23050,
       "callClose": 445.65,
       "putClose": 180.85,
-      "futClose": 23310.1,
-      "maxOI": 16198650
+      "futClose": 23309,
+      "maxOI": 0
     },
     "2026-03-27": {
       "open": 23173.55,
@@ -4948,8 +4975,8 @@
       "atmStrike": 23150,
       "callClose": 80,
       "putClose": 426.6,
-      "futClose": 22801.7,
-      "maxOI": 13501735
+      "futClose": 22839.5,
+      "maxOI": 0
     },
     "2026-03-30": {
       "open": 22549.65,
@@ -4960,8 +4987,8 @@
       "atmStrike": 22550,
       "callClose": 0.05,
       "putClose": 217.55,
-      "futClose": 22454.6,
-      "maxOI": 21112195
+      "futClose": 22379.2,
+      "maxOI": 0
     },
     "2026-04-01": {
       "open": 22899,
@@ -4972,8 +4999,8 @@
       "atmStrike": 22900,
       "callClose": 233.5,
       "putClose": 373.55,
-      "futClose": 22830,
-      "maxOI": 21175765
+      "futClose": 22703.15,
+      "maxOI": 0
     },
     "2026-04-02": {
       "open": 22383.4,
@@ -4984,8 +5011,8 @@
       "atmStrike": 22400,
       "callClose": 460.4,
       "putClose": 154.8,
-      "futClose": 22773,
-      "maxOI": 21872890
+      "futClose": 22700.7,
+      "maxOI": 0
     },
     "2026-04-06": {
       "open": 22780.3,
@@ -4996,8 +5023,8 @@
       "atmStrike": 22800,
       "callClose": 281.2,
       "putClose": 117.9,
-      "futClose": 23050.2,
-      "maxOI": 22037340
+      "futClose": 22959.45,
+      "maxOI": 0
     },
     "2026-04-07": {
       "open": 22838.7,
@@ -5008,8 +5035,8 @@
       "atmStrike": 22850,
       "callClose": 273,
       "putClose": 0.05,
-      "futClose": 23165,
-      "maxOI": 22380865
+      "futClose": 23129.95,
+      "maxOI": 0
     },
     "2026-04-08": {
       "open": 23855.15,
@@ -5020,8 +5047,8 @@
       "atmStrike": 23850,
       "callClose": 317.1,
       "putClose": 131.7,
-      "futClose": 24087.1,
-      "maxOI": 21605610
+      "futClose": 24012.35,
+      "maxOI": 0
     },
     "2026-04-09": {
       "open": 23909.05,
@@ -5032,8 +5059,8 @@
       "atmStrike": 23900,
       "callClose": 151.3,
       "putClose": 239.1,
-      "futClose": 23864.5,
-      "maxOI": 20262775
+      "futClose": 23766.05,
+      "maxOI": 0
     },
     "2026-04-10": {
       "open": 23880.55,
@@ -5044,8 +5071,8 @@
       "atmStrike": 23900,
       "callClose": 231.65,
       "putClose": 82.05,
-      "futClose": 24110,
-      "maxOI": 19778720
+      "futClose": 24050.5,
+      "maxOI": 0
     },
     "2026-04-13": {
       "open": 23589.6,
@@ -5056,8 +5083,8 @@
       "atmStrike": 23600,
       "callClose": 242.5,
       "putClose": 0.05,
-      "futClose": 23850,
-      "maxOI": 19133530
+      "futClose": 23818.9,
+      "maxOI": 0
     },
     "2026-04-15": {
       "open": 24163.8,
@@ -5068,8 +5095,8 @@
       "atmStrike": 24150,
       "callClose": 254.3,
       "putClose": 196.2,
-      "futClose": 24225,
-      "maxOI": 18871060
+      "futClose": 24211.9,
+      "maxOI": 0
     },
     "2026-04-16": {
       "open": 24385.2,
@@ -5080,8 +5107,8 @@
       "atmStrike": 24400,
       "callClose": 93.15,
       "putClose": 321.35,
-      "futClose": 24186.3,
-      "maxOI": 18141500
+      "futClose": 24188.4,
+      "maxOI": 0
     },
     "2026-04-17": {
       "open": 24165.9,
@@ -5092,8 +5119,8 @@
       "atmStrike": 24150,
       "callClose": 302.55,
       "putClose": 77.9,
-      "futClose": 24394,
-      "maxOI": 17798235
+      "futClose": 24366.9,
+      "maxOI": 0
     },
     "2026-04-20": {
       "open": 24391.5,
@@ -5104,8 +5131,8 @@
       "atmStrike": 24400,
       "callClose": 84.2,
       "putClose": 178.55,
-      "futClose": 24312,
-      "maxOI": 17289415
+      "futClose": 24330.9,
+      "maxOI": 0
     },
     "2026-04-21": {
       "open": 24374.55,
@@ -5116,8 +5143,8 @@
       "atmStrike": 24350,
       "callClose": 226.05,
       "putClose": 0.05,
-      "futClose": 24585.5,
-      "maxOI": 16894475
+      "futClose": 24580.6,
+      "maxOI": 0
     },
     "2026-04-22": {
       "open": 24470.85,
@@ -5128,8 +5155,8 @@
       "atmStrike": 24450,
       "callClose": 186,
       "putClose": 246.2,
-      "futClose": 24385,
-      "maxOI": 16492970
+      "futClose": 24367.65,
+      "maxOI": 0
     },
     "2026-04-23": {
       "open": 24202.35,
@@ -5140,8 +5167,8 @@
       "atmStrike": 24200,
       "callClose": 165.95,
       "putClose": 204.3,
-      "futClose": 24166,
-      "maxOI": 16349840
+      "futClose": 24156.05,
+      "maxOI": 0
     },
     "2026-04-24": {
       "open": 24100.55,
@@ -5152,8 +5179,8 @@
       "atmStrike": 24100,
       "callClose": 106.65,
       "putClose": 273.55,
-      "futClose": 23935,
-      "maxOI": 14812785
+      "futClose": 23903.95,
+      "maxOI": 0
     },
     "2026-04-27": {
       "open": 23945.45,
@@ -5164,8 +5191,8 @@
       "atmStrike": 23950,
       "callClose": 207.05,
       "putClose": 32.3,
-      "futClose": 24127,
-      "maxOI": 12542920
+      "futClose": 24110.2,
+      "maxOI": 0
     },
     "2026-04-28": {
       "open": 24049.9,
@@ -5176,8 +5203,8 @@
       "atmStrike": 24050,
       "callClose": 0.05,
       "putClose": 53.95,
-      "futClose": 24081.1,
-      "maxOI": 14805440
+      "futClose": 24016.5,
+      "maxOI": 0
     },
     "2026-04-29": {
       "open": 24096.9,
@@ -5188,8 +5215,8 @@
       "atmStrike": 24100,
       "callClose": 224.95,
       "putClose": 156.2,
-      "futClose": 24232,
-      "maxOI": 14797835
+      "futClose": 24163.6,
+      "maxOI": 0
     },
     "2026-04-30": {
       "open": 23996.95,
@@ -5200,8 +5227,8 @@
       "atmStrike": 24000,
       "callClose": 221.5,
       "putClose": 142.8,
-      "futClose": 24136.7,
-      "maxOI": 15489955
+      "futClose": 24043.7,
+      "maxOI": 0
     },
     "2026-05-04": {
       "open": 24063.55,
@@ -5212,8 +5239,8 @@
       "atmStrike": 24050,
       "callClose": 155.95,
       "putClose": 60.4,
-      "futClose": 24199,
-      "maxOI": 15774785
+      "futClose": 24123.8,
+      "maxOI": 0
     },
     "2026-05-05": {
       "open": 24052.6,
@@ -5224,8 +5251,8 @@
       "atmStrike": 24050,
       "callClose": 0.05,
       "putClose": 17.05,
-      "futClose": 24128,
-      "maxOI": 16144765
+      "futClose": 24052.15,
+      "maxOI": 0
     },
     "2026-05-06": {
       "open": 24171,
@@ -5236,8 +5263,8 @@
       "atmStrike": 24150,
       "callClose": 363.8,
       "putClose": 83,
-      "futClose": 24466.3,
-      "maxOI": 16520270
+      "futClose": 24339.3,
+      "maxOI": 0
     },
     "2026-05-07": {
       "open": 24398.5,
@@ -5248,8 +5275,8 @@
       "atmStrike": 24400,
       "callClose": 155.85,
       "putClose": 176.25,
-      "futClose": 24405,
-      "maxOI": 16951220
+      "futClose": 24336.4,
+      "maxOI": 0
     },
     "2026-05-08": {
       "open": 24233.65,
@@ -5260,8 +5287,8 @@
       "atmStrike": 24250,
       "callClose": 122.55,
       "putClose": 162.45,
-      "futClose": 24228.7,
-      "maxOI": 17340700
+      "futClose": 24179.8,
+      "maxOI": 0
     },
     "2026-05-11": {
       "open": 23970.1,
@@ -5272,8 +5299,8 @@
       "atmStrike": 23950,
       "callClose": 50.5,
       "putClose": 150.45,
-      "futClose": 23860,
-      "maxOI": 18105945
+      "futClose": 23820.35,
+      "maxOI": 0
     },
     "2026-05-12": {
       "open": 23722.6,
@@ -5284,8 +5311,8 @@
       "atmStrike": 23700,
       "callClose": 0.05,
       "putClose": 319.05,
-      "futClose": 23470,
-      "maxOI": 19305715
+      "futClose": 23430.55,
+      "maxOI": 0
     },
     "2026-05-13": {
       "open": 23362.45,
@@ -5296,8 +5323,8 @@
       "atmStrike": 23350,
       "callClose": 281.1,
       "putClose": 161.55,
-      "futClose": 23481,
-      "maxOI": 19125730
+      "futClose": 23428.7,
+      "maxOI": 0
     },
     "2026-05-14": {
       "open": 23530.25,
@@ -5308,8 +5335,8 @@
       "atmStrike": 23550,
       "callClose": 285.25,
       "putClose": 100.2,
-      "futClose": 23730,
-      "maxOI": 18480410
+      "futClose": 23713.75,
+      "maxOI": 0
     },
     "2026-05-15": {
       "open": 23731.4,
@@ -5320,8 +5347,8 @@
       "atmStrike": 23750,
       "callClose": 113.4,
       "putClose": 205.85,
-      "futClose": 23673.4,
-      "maxOI": 17761575
+      "futClose": 23659.35,
+      "maxOI": 0
     },
     "2026-05-18": {
       "open": 23482.2,
@@ -5332,8 +5359,8 @@
       "atmStrike": 23500,
       "callClose": 202,
       "putClose": 50.35,
-      "futClose": 23659,
-      "maxOI": 17226950
+      "futClose": 23644.45,
+      "maxOI": 0
     },
     "2026-05-19": {
       "open": 23675.3,
@@ -5344,8 +5371,8 @@
       "atmStrike": 23700,
       "callClose": 0.05,
       "putClose": 81.75,
-      "futClose": 23605,
-      "maxOI": 16254030
+      "futClose": 23606.2,
+      "maxOI": 0
     },
     "2026-05-20": {
       "open": 23457.25,
@@ -5356,8 +5383,8 @@
       "atmStrike": 23450,
       "callClose": 354.55,
       "putClose": 106,
-      "futClose": 23695,
-      "maxOI": 16042715
+      "futClose": 23664.15,
+      "maxOI": 0
     },
     "2026-05-21": {
       "open": 23830.05,
@@ -5368,8 +5395,8 @@
       "atmStrike": 23850,
       "callClose": 84,
       "putClose": 303.95,
-      "futClose": 23635,
-      "maxOI": 17118205
+      "futClose": 23648.6,
+      "maxOI": 0
     },
     "2026-05-22": {
       "open": 23671.2,
@@ -5380,8 +5407,8 @@
       "atmStrike": 23650,
       "callClose": 213.55,
       "putClose": 85.25,
-      "futClose": 23776.3,
-      "maxOI": 14732900
+      "futClose": 23748.85,
+      "maxOI": 0
     },
     "2026-05-25": {
       "open": 23940.25,
@@ -5392,8 +5419,8 @@
       "atmStrike": 23950,
       "callClose": 189.7,
       "putClose": 29.3,
-      "futClose": 24119,
-      "maxOI": 11343605
+      "futClose": 24049.9,
+      "maxOI": 0
     },
     "2026-05-26": {
       "open": 24004.1,
@@ -5404,8 +5431,8 @@
       "atmStrike": 24000,
       "callClose": 0.05,
       "putClose": 85.85,
-      "futClose": 23997.2,
-      "maxOI": 14602705
+      "futClose": 23933.75,
+      "maxOI": 0
     },
     "2026-05-27": {
       "open": 23880.35,
@@ -5416,8 +5443,8 @@
       "atmStrike": 23900,
       "callClose": 188.25,
       "putClose": 123.85,
-      "futClose": 24006.2,
-      "maxOI": 14924845
+      "futClose": 23920.65,
+      "maxOI": 0
     },
     "2026-05-29": {
       "open": 23902.15,
@@ -5428,8 +5455,8 @@
       "atmStrike": 23900,
       "callClose": 71.5,
       "putClose": 253,
-      "futClose": 23740,
-      "maxOI": 18699135
+      "futClose": 23609.3,
+      "maxOI": 0
     },
     "2026-06-01": {
       "open": 23654.5,
@@ -5440,8 +5467,8 @@
       "atmStrike": 23650,
       "callClose": 20.65,
       "putClose": 250.05,
-      "futClose": 23459.9,
-      "maxOI": 18334095
+      "futClose": 23379.2,
+      "maxOI": 0
     },
     "2026-06-02": {
       "open": 23229.15,
@@ -5452,8 +5479,8 @@
       "atmStrike": 23250,
       "callClose": 232.85,
       "putClose": 0.05,
-      "futClose": 23605,
-      "maxOI": 18081635
+      "futClose": 23523.3,
+      "maxOI": 0
     },
     "2026-06-03": {
       "open": 23415.95,
@@ -5464,8 +5491,8 @@
       "atmStrike": 23400,
       "callClose": 221.4,
       "putClose": 153.45,
-      "futClose": 23490,
-      "maxOI": 19463275
+      "futClose": 23396.95,
+      "maxOI": 0
     },
     "2026-06-04": {
       "open": 23282.45,
@@ -5476,8 +5503,8 @@
       "atmStrike": 23300,
       "callClose": 285,
       "putClose": 72.45,
-      "futClose": 23535,
-      "maxOI": 20317765
+      "futClose": 23438,
+      "maxOI": 0
     },
     "2026-06-05": {
       "open": 23478.95,
@@ -5488,8 +5515,296 @@
       "atmStrike": 23500,
       "callClose": 91.75,
       "putClose": 185.15,
-      "futClose": 23440,
-      "maxOI": 19965010
+      "futClose": 23368.85,
+      "maxOI": 0
+    },
+    "2026-06-08": {
+      "open": 23080.7,
+      "high": 23267.3,
+      "low": 23070.15,
+      "close": 23103.7,
+      "volume": 0,
+      "atmStrike": 23100,
+      "callClose": 100,
+      "putClose": 86.2,
+      "futClose": 23103.7,
+      "maxOI": 0
+    },
+    "2026-06-09": {
+      "open": 23259.05,
+      "high": 23279.4,
+      "low": 23104.45,
+      "close": 23257.75,
+      "volume": 0,
+      "atmStrike": 23250,
+      "callClose": 0.05,
+      "putClose": 7.85,
+      "futClose": 23257.75,
+      "maxOI": 0
+    },
+    "2026-06-10": {
+      "open": 23233.95,
+      "high": 23425.35,
+      "low": 23184.6,
+      "close": 23216.1,
+      "volume": 0,
+      "atmStrike": 23250,
+      "callClose": 154.8,
+      "putClose": 187.7,
+      "futClose": 23216.1,
+      "maxOI": 0
+    },
+    "2026-06-11": {
+      "open": 23104.4,
+      "high": 23327.45,
+      "low": 23072.05,
+      "close": 23186.55,
+      "volume": 0,
+      "atmStrike": 23100,
+      "callClose": 208,
+      "putClose": 105.45,
+      "futClose": 23186.55,
+      "maxOI": 0
+    },
+    "2026-06-12": {
+      "open": 23412.55,
+      "high": 23645.35,
+      "low": 23313.9,
+      "close": 23631.75,
+      "volume": 0,
+      "atmStrike": 23400,
+      "callClose": 320.05,
+      "putClose": 44.7,
+      "futClose": 23631.75,
+      "maxOI": 0
+    },
+    "2026-06-15": {
+      "open": 23984.85,
+      "high": 24011.4,
+      "low": 23817.8,
+      "close": 23856.55,
+      "volume": 0,
+      "atmStrike": 24000,
+      "callClose": 36.7,
+      "putClose": 159.7,
+      "futClose": 23856.55,
+      "maxOI": 0
+    },
+    "2026-06-16": {
+      "open": 23923.9,
+      "high": 24002.6,
+      "low": 23888.2,
+      "close": 23995,
+      "volume": 0,
+      "atmStrike": 23900,
+      "callClose": 89,
+      "putClose": 0.05,
+      "futClose": 23995,
+      "maxOI": 0
+    },
+    "2026-06-17": {
+      "open": 24044.5,
+      "high": 24108.2,
+      "low": 23969.7,
+      "close": 24081.95,
+      "volume": 0,
+      "atmStrike": 24050,
+      "callClose": 158.5,
+      "putClose": 135.2,
+      "futClose": 24081.95,
+      "maxOI": 0
+    },
+    "2026-06-18": {
+      "open": 24073.8,
+      "high": 24189.25,
+      "low": 24036.95,
+      "close": 24179.4,
+      "volume": 0,
+      "atmStrike": 24050,
+      "callClose": 197.35,
+      "putClose": 60.3,
+      "futClose": 24179.4,
+      "maxOI": 0
+    },
+    "2026-06-19": {
+      "open": 23991.2,
+      "high": 24047.2,
+      "low": 23901.9,
+      "close": 24042.7,
+      "volume": 0,
+      "atmStrike": 24000,
+      "callClose": 120,
+      "putClose": 72.35,
+      "futClose": 24042.7,
+      "maxOI": 0
+    },
+    "2026-06-22": {
+      "open": 24106.6,
+      "high": 24168.05,
+      "low": 24073.15,
+      "close": 24086.85,
+      "volume": 0,
+      "atmStrike": 24100,
+      "callClose": 64.55,
+      "putClose": 54.45,
+      "futClose": 24086.85,
+      "maxOI": 0
+    },
+    "2026-06-23": {
+      "open": 24071.3,
+      "high": 24135.5,
+      "low": 23784.95,
+      "close": 23795.25,
+      "volume": 0,
+      "atmStrike": 24050,
+      "callClose": 0.05,
+      "putClose": 225.4,
+      "futClose": 23795.25,
+      "maxOI": 0
+    },
+    "2026-06-24": {
+      "open": 23795.8,
+      "high": 24090.05,
+      "low": 23789.25,
+      "close": 24013.15,
+      "volume": 0,
+      "atmStrike": 23800,
+      "callClose": 305.75,
+      "putClose": 48.7,
+      "futClose": 24013.15,
+      "maxOI": 0
+    },
+    "2026-06-25": {
+      "open": 24125.85,
+      "high": 24261.6,
+      "low": 24039,
+      "close": 24052.95,
+      "volume": 0,
+      "atmStrike": 24150,
+      "callClose": 78.1,
+      "putClose": 131.2,
+      "futClose": 24052.95,
+      "maxOI": 0
+    },
+    "2026-06-29": {
+      "open": 24061.75,
+      "high": 24120,
+      "low": 23924.55,
+      "close": 23978.5,
+      "volume": 0,
+      "atmStrike": 24050,
+      "callClose": 42.75,
+      "putClose": 122.1,
+      "futClose": 23978.5,
+      "maxOI": 0
+    },
+    "2026-06-30": {
+      "open": 24032.05,
+      "high": 24035.55,
+      "low": 23829.2,
+      "close": 23917.75,
+      "volume": 0,
+      "atmStrike": 24050,
+      "callClose": 0.05,
+      "putClose": 183.75,
+      "futClose": 23917.75,
+      "maxOI": 0
+    },
+    "2026-07-01": {
+      "open": 23897.65,
+      "high": 24049.9,
+      "low": 23895.1,
+      "close": 23987.95,
+      "volume": 0,
+      "atmStrike": 23900,
+      "callClose": 212,
+      "putClose": 90.05,
+      "futClose": 23987.95,
+      "maxOI": 0
+    },
+    "2026-07-02": {
+      "open": 24062.2,
+      "high": 24194.55,
+      "low": 24058.8,
+      "close": 24167.2,
+      "volume": 0,
+      "atmStrike": 24050,
+      "callClose": 199.25,
+      "putClose": 56.75,
+      "futClose": 24167.2,
+      "maxOI": 0
+    },
+    "2026-07-03": {
+      "open": 24375.65,
+      "high": 24378.15,
+      "low": 24252.35,
+      "close": 24271.2,
+      "volume": 0,
+      "atmStrike": 24400,
+      "callClose": 37.15,
+      "putClose": 154.85,
+      "futClose": 24271.2,
+      "maxOI": 0
+    },
+    "2026-07-06": {
+      "open": 24306.85,
+      "high": 24458.65,
+      "low": 24287.1,
+      "close": 24423.95,
+      "volume": 0,
+      "atmStrike": 24300,
+      "callClose": 140.65,
+      "putClose": 21.65,
+      "futClose": 24423.95,
+      "maxOI": 0
+    },
+    "2026-07-07": {
+      "open": 24464.45,
+      "high": 24530.9,
+      "low": 24348.95,
+      "close": 24355.1,
+      "volume": 0,
+      "atmStrike": 24450,
+      "callClose": 0.05,
+      "putClose": 51.3,
+      "futClose": 24355.1,
+      "maxOI": 0
+    },
+    "2026-07-08": {
+      "open": 24259.55,
+      "high": 24300,
+      "low": 23805.2,
+      "close": 23895.7,
+      "volume": 0,
+      "atmStrike": 24250,
+      "callClose": 0,
+      "putClose": 354.3,
+      "futClose": 23895.7,
+      "maxOI": 0
+    },
+    "2026-07-09": {
+      "open": 23928.95,
+      "high": 24134.7,
+      "low": 23925.7,
+      "close": 23981.9,
+      "volume": 0,
+      "atmStrike": 23950,
+      "callClose": 31.9,
+      "putClose": 0,
+      "futClose": 23981.9,
+      "maxOI": 0
+    },
+    "2026-07-10": {
+      "open": 24124.7,
+      "high": 24228.45,
+      "low": 24120.35,
+      "close": 24211.65,
+      "volume": 0,
+      "atmStrike": 24100,
+      "callClose": 111.65,
+      "putClose": 0,
+      "futClose": 24211.65,
+      "maxOI": 0
     }
   }
 }

@@ -102,17 +102,22 @@ export class UpstoxService {
 
   // Ensure we have a valid token (local or global)
   public async getValidToken(): Promise<string | null> {
-    if (this.accessToken) return this.accessToken;
+    if (this.accessToken) {
+      console.log('UPSTOX_TOKEN_LOG:', this.accessToken);
+      return this.accessToken;
+    }
 
     let localToken = localStorage.getItem('upstox_access_token');
     if (localToken) {
       this.accessToken = localToken;
+      console.log('UPSTOX_TOKEN_LOG:', localToken);
       return localToken;
     }
 
     const globalToken = await this.credentials.getGlobalAccessToken();
     if (globalToken) {
       this.accessToken = globalToken;
+      console.log('UPSTOX_TOKEN_LOG:', globalToken);
       return globalToken;
     }
 
