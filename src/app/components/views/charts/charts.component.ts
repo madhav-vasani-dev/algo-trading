@@ -138,6 +138,7 @@ export class ChartsComponent implements OnInit, AfterViewInit, OnDestroy {
   private callSeries?: ISeriesApi<'Line'>;
   private putSeries?: ISeriesApi<'Line'>;
   private optionCeCandleSeries?: ISeriesApi<'Candlestick'>;
+  private optionPeCandleSeries?: ISeriesApi<'Candlestick'>;
   private volumeSeries?: ISeriesApi<'Histogram'>;
   private oiSeries?: ISeriesApi<'Line'>;
 
@@ -342,7 +343,7 @@ export class ChartsComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       const data = await this.fetchJsonData(`${month}/${day}.json`);
       this.rawDayCandles = Array.isArray(data) ? data : [];
-      this.onFilterChange();
+      this.onFilterChange(true);
     } catch (err: any) {
       console.error(`[ChartsComponent] Failed to load day data for ${day}:`, err);
       this.errorMessage = `Could not load day data for ${day}: ${err.message}`;
@@ -359,7 +360,12 @@ export class ChartsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onTimeframeChange(minutes: number) {
     this.selectedTimeframeMinutes = minutes;
-    this.onFilterChange();
+    this.onFilterChange(false);
+  }
+
+  onStrikeChange() {
+    this.selectedStrike = Number(this.selectedStrike);
+    this.onFilterChange(false);
   }
 
   onEngineChange(engine: 'PRIMENG' | 'LIGHTWEIGHT') {
@@ -371,7 +377,7 @@ export class ChartsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  onFilterChange() {
+  onFilterChange(resetStrike: boolean = false) {
     this.filteredCandles = this.resampleCandles(this.rawDayCandles, this.selectedTimeframeMinutes);
 
     if (this.filteredCandles.length > 0) {
@@ -382,8 +388,14 @@ export class ChartsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
       this.availableStrikes = Array.from(strikesSet).sort((a, b) => a - b);
-      const atm = this.filteredCandles[0].atmStrike || Math.round(this.filteredCandles[0].close / 50) * 50;
-      this.selectedStrike = this.availableStrikes.includes(atm) ? atm : (this.availableStrikes[Math.floor(this.availableStrikes.length / 2)] || 0);
+      
+      const currentSelected = Number(this.selectedStrike);
+      if (resetStrike || !currentSelected || !this.availableStrikes.includes(currentSelected)) {
+        const atm = this.filteredCandles[0].atmStrike || Math.round(this.filteredCandles[0].close / 50) * 50;
+        this.selectedStrike = this.availableStrikes.includes(atm) ? atm : (this.availableStrikes[Math.floor(this.availableStrikes.length / 2)] || 0);
+      } else {
+        this.selectedStrike = currentSelected;
+      }
 
       this.computeDayStats();
     }
@@ -837,6 +849,7 @@ export class ChartsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.callSeries) { try { this.mainChart.removeSeries(this.callSeries); } catch (e) {} this.callSeries = undefined; }
     if (this.putSeries) { try { this.mainChart.removeSeries(this.putSeries); } catch (e) {} this.putSeries = undefined; }
     if (this.optionCeCandleSeries) { try { this.mainChart.removeSeries(this.optionCeCandleSeries); } catch (e) {} this.optionCeCandleSeries = undefined; }
+    if (this.optionPeCandleSeries) { try { this.mainChart.removeSeries(this.optionPeCandleSeries); } catch (e) {} this.optionPeCandleSeries = undefined; }
     if (this.volumeSeries) { try { this.volumeChart.removeSeries(this.volumeSeries); } catch (e) {} this.volumeSeries = undefined; }
     if (this.oiSeries) { try { this.volumeChart.removeSeries(this.oiSeries); } catch (e) {} this.oiSeries = undefined; }
   }
@@ -916,10 +929,12 @@ export class ChartsComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       if (this.optionType === 'PE' || this.optionType === 'BOTH') {
-        this.callSeries = this.mainChart.addSeries(LineSeries, { color: '#f43f5e', lineWidth: 2, title: `${strikeStr} PE Close` });
-        this.callSeries.setData(this.filteredCandles.map((c, i) => {
+        this.optionPeCandleSeries = this.mainChart.addSeries(CandlestickSeries, {
+          upColor: '#f43f5e', downColor: '#9f1239', borderVisible: false, wickUpColor: '#f43f5e', wickDownColor: '#9f1239', title: `${strikeStr} PE`
+        });
+        this.optionPeCandleSeries.setData(this.filteredCandles.map((c, i) => {
           const opt = (c.options && c.options[strikeStr] && c.options[strikeStr].PE) ? c.options[strikeStr].PE : { open: 0, high: 0, low: 0, close: 0, volume: 0 };
-          return { time: times[i], value: opt.close };
+          return { time: times[i], open: opt.open, high: opt.high, low: opt.low, close: opt.close };
         }));
       }
 

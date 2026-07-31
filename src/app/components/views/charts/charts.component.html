@@ -90,7 +90,7 @@
       <!-- Strike Selector (Visible only in OPTION_STRIKE mode) -->
       <div class="control-group" *ngIf="viewMode === 'OPTION_STRIKE'">
         <label class="control-label">Strike Price</label>
-        <select [(ngModel)]="selectedStrike" (change)="onFilterChange()" class="form-select strike-select">
+        <select [(ngModel)]="selectedStrike" (change)="onStrikeChange()" class="form-select strike-select">
           <option *ngFor="let s of availableStrikes" [value]="s">{{ s }}</option>
         </select>
       </div>
